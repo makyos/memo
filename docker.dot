@@ -1,0 +1,116 @@
+digraph Docker {
+    rankdir = "TB";
+  // graph [label    = "Docker"
+  // 	,size     = "0.0 ,0.0"
+  // 	,labelloc = t
+  // 	];
+
+  REGISTER   [shape = box];
+  Dockerfile [shape = invhouse];
+  IMAGE      [shape = box];
+  CONTAINER  [shape = Msquare];
+  Running    [shape = Mdiamond];
+  Stoped     [shape = Mdiamond];
+
+  // EXPORTFILE [shape = box];
+  // SAVEFILE [shape = box];
+
+    Dockerfile -> build [dir = none, weight = 100];
+    build -> IMAGE [weight = 100];
+
+
+    login  -> REGISTER [dir = none];
+    search -> REGISTER [dir = none];
+    tag    -> REGISTER [dir = none];
+    push   -> REGISTER;
+    IMAGE -> push [dir = none];
+
+    pull   -> IMAGE ;
+    REGISTER -> pull [dir = none];
+
+
+
+
+
+    IMAGE -> history [dir = none];
+    IMAGE -> images  [dir = none];
+    IMAGE -> save    [dir = none];
+    IMAGE -> insert  [dir = none];
+    IMAGE -> rmi     [dir = none];
+  
+    IMAGE -> load    [dir = back];
+    IMAGE -> import  [dir = back];
+    IMAGE -> inspect [dir = none];
+
+
+
+    inspect -> CONTAINER [dir = none];
+
+    commit -> CONTAINER [dir = none];
+    commit -> IMAGE ;
+
+    CONTAINER  -> logs   [dir = none];
+    CONTAINER  -> port   [dir = none];
+    CONTAINER  -> ps     [dir = none];
+    CONTAINER  -> diff   [dir = none];
+    CONTAINER  -> export [dir = none];
+  
+
+
+    IMAGE -> run [dir = none, weight = 50];
+    run -> Running [weight = 100];
+
+    CONTAINER -> Running [dir = none];
+    CONTAINER -> Stoped  [dir = none];
+    
+    Running  -> attach   [dir = none];
+    Running  -> cp       [dir = none];
+    Running  -> top      [dir = none];
+    Running  -> stop     [dir = none, weight = 100];
+    Running  -> kill     [dir = none];
+    Running  -> restart  [dir = none];
+    Running  -> wait     [dir = none];
+
+    start -> Running [weight = 90];
+    start -> Stoped [dir = none , weight = 90] ;
+
+    stop  -> Stoped [weight = 100];
+
+    Stoped -> rm    [dir = none] ;
+
+
+  // {rank=same docker}
+  // {rank=same events info version}
+
+    // {rank=same; Dockerfile; REGISTER}
+    // {rank=same; login; pull; search; tag; push} 
+    // {rank=same; build}
+
+    // {rank=same; IMAGE}
+    // {rank=same; history; images; inspect; save; insert; rmi; load; import}
+    // {rank=same; pull; push}
+
+
+    // {rank=same; run}
+
+    // {rank=same; CONTAINER}
+    // {rank=same; cp; commit; diff; export; inspect; logs; port; ps}
+
+    // {rank=same; Running}
+    // {rank=same; attach; top; stop; kill; restart; wait}
+
+    // {rank=same; Stoped}
+    // {rank=same; rm; start}
+
+  // {rank=same EXPORTFILE SAVEFILE}
+
+    // export -> EXPORTFILE;
+    // EXPORTFILE -> import ;
+    
+    // save -> SAVEFILE;
+    // SAVEFILE -> load ;
+
+
+}
+
+
