@@ -1671,31 +1671,37 @@ vagrant box list
 
 ## Vagrantfile
 
-``` {.bash}
+``` {.ruby}
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 VAGRANTFILE_API_VERSION = "2"
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-     config.vm.box = "{{VAG_BOX_NAME}}"
-     
-     if Vagrant.has_plugin?("vagrant-cachier")
-          config.cache.auto_detect = true
-     end
+NUM_INSTANCES = 2
+BASE_IP_ADDR  = ENV['BASE_IP_ADDR'] || "192.168.100"
 
-     config.vm.define :{{VAG_VM_NAME}} do |node|
-          node.vm.hostname = "{{VAG_VM_NAME}}"
-          node.vm.network "public_network", :ip=>"{{VAG_VM_IP}}", :netmask=>"255.255.255.0", :bridge=>"eth0"
-          node.vm.network "forwarded_port", guest: "22", host: {{VAG_SSH_PORT}}
-          config.vm.provider "virtualbox" do |vbox|
-               vbox.gui = false
-               vbox.customize ["modifyvm", :id, "--memory", "1000"]
-               # centos 6.5 slow network fix
-               vbox.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-               vbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-          end
-     end
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "chef/centos-6.5"
+  config.vm.synced_folder "~/src/", "/vagrant/src"
+
+  (1..NUM_INSTANCES).each do |i|
+
+    config.vm.define "dummy-#{i}" do |dummy|
+      dummy.vm.hostname = "dummy-#{i}"
+      dummy.vm.network :private_network, ip: "#{BASE_IP_ADDR}.#{i}"
+    end
+
+    config.vm.provider "virtualbox" do |vbox|
+      vbox.gui = false
+      vbox.customize ["modifyvm", :id, "--memory", "1000"]
+      # centos 6.5 slow network fix
+      vbox.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      vbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    end
+
+  end
 
 end
 ```
