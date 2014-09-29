@@ -1,3 +1,63 @@
+
+# SCHEME
+
+## LIST
+
+OPE            内容
+------------- ----------------------------------
+(car LIST)     リストの先頭要素を返す
+(cdr LIST)     リストの先頭要素を除いた要素を返す
+
+
+
+# CLOSURE
+
+## What
+
+関数そのものに値を保持する仕組み。これが無いと大域汚染を伴うクラスやグローバル変数を使うことになる。この大域汚染は、特に複数のサードパーティライブラリを組み合わせる際に問題となる。
+
+なので、データセットのダーティフラグとかしょうもない用事には CLOSURE を使う。
+
+### example:javascript
+
+``` {.javascript}
+#!/bin/env node
+
+function outer(n) {
+    var x = n;
+    return function() {
+        console.log(x);
+        x = x + 1;
+    };
+}
+
+var f1 = outer(1);
+var f2 = outer(11);
+
+f1();
+f1();
+console.log("---")
+f2();
+f2();
+console.log("---")
+f1();
+f1();
+```
+
+``` {.bash}
+$ node ./closure.js 
+1
+2
+---
+11
+12
+---
+3
+4
+```
+
+
+
 # PYTHON
 
 ## DATE & TIME
@@ -258,6 +318,16 @@ rm -fr .ruby-build
 ``` {.bash}
 ruby-build 2.1.2 /usr/local
 ```
+
+## JSON
+
+パースするとき no ASCII とかいわれたら。
+
+``` {.bash}
+export LANG=en_US.UTF8
+locale
+```
+
 
 
 # LINUX
@@ -1167,8 +1237,7 @@ export LANG=en_US.UTF-8
 ### scp
 
 ``` {.bash}
-scp -P 22 -rq tcp/ vagrant@192.168.33.32:/home/vagrant/
-scp -P 22 -rq tcp/ vagrant@192.168.33.43:/home/vagrant/
+scp -P 22 -rq tcp/ username@192.168.33.32:/home/aaa/
 ```
 
 # VI
@@ -1668,6 +1737,11 @@ vagrant box add {{VAG_BOX_NAME}} {{VAG_BOX_FILE}}
 vagrant box list
 ```
 
+### VMs STATUS
+
+``` {.bash}
+vagrant global-status
+```
 
 ## Vagrantfile
 

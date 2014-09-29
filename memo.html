@@ -41,6 +41,61 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="scheme">SCHEME</h1>
+<h2 id="list">LIST</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">OPE</th>
+<th style="text-align: center;">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(car LIST)</td>
+<td style="text-align: center;">リストの先頭要素を返す</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(cdr LIST)</td>
+<td style="text-align: center;">リストの先頭要素を除いた要素を返す</td>
+</tr>
+</tbody>
+</table>
+<h1 id="closure">CLOSURE</h1>
+<h2 id="what">What</h2>
+<p>関数そのものに値を保持する仕組み。これが無いと大域汚染を伴うクラスやグローバル変数を使うことになる。この大域汚染は、特に複数のサードパーティライブラリを組み合わせる際に問題となる。</p>
+<p>なので、データセットのダーティフラグとかしょうもない用事には CLOSURE を使う。</p>
+<h3 id="examplejavascript">example:javascript</h3>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">#!/bin/env node</span>
+
+<span class="kw">function</span> <span class="fu">outer</span>(n) {
+    <span class="kw">var</span> x = n;
+    <span class="kw">return</span> <span class="kw">function</span>() {
+        <span class="ot">console</span>.<span class="fu">log</span>(x);
+        x = x + <span class="dv">1</span>;
+    };
+}
+
+<span class="kw">var</span> f1 = <span class="fu">outer</span>(<span class="dv">1</span>);
+<span class="kw">var</span> f2 = <span class="fu">outer</span>(<span class="dv">11</span>);
+
+<span class="fu">f1</span>();
+<span class="fu">f1</span>();
+<span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;---&quot;</span>)
+<span class="fu">f2</span>();
+<span class="fu">f2</span>();
+<span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;---&quot;</span>)
+<span class="fu">f1</span>();
+<span class="fu">f1</span>();</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">node</span> ./closure.js 
+<span class="kw">1</span>
+<span class="kw">2</span>
+<span class="kw">---</span>
+<span class="kw">11</span>
+<span class="kw">12</span>
+<span class="kw">---</span>
+<span class="kw">3</span>
+<span class="kw">4</span></code></pre>
 <h1 id="python">PYTHON</h1>
 <h2 id="date-time">DATE &amp; TIME</h2>
 <h3 id="what-time-now">what time now</h3>
@@ -156,7 +211,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h3 id="csv-data-import">CSV DATA IMPORT</h3>
 <pre class="sourceCode sql"><code class="sourceCode sql">.separator ,
 .import <span class="kw">FILE</span> TAB</code></pre>
-<h3 id="list">LIST</h3>
+<h3 id="list-1">LIST</h3>
 <pre class="sourceCode sql"><code class="sourceCode sql">.tables</code></pre>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> name <span class="kw">from</span> sqlite_master <span class="kw">where</span> type=<span class="st">&#39;table&#39;</span> <span class="kw">order</span> <span class="kw">by</span> name;</code></pre>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="st">&#39;.import ./csv/&#39;</span> || name || <span class="st">&#39;.csv &#39;</span> || name <span class="kw">from</span> sqlite_master <span class="kw">where</span> type=<span class="st">&#39;table&#39;</span> <span class="kw">order</span> <span class="kw">by</span> name;</code></pre>
@@ -225,6 +280,10 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rm</span> -fr .ruby-build</code></pre>
 <h3 id="install-version">install version</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ruby-build</span> 2.1.2 /usr/local</code></pre>
+<h2 id="json">JSON</h2>
+<p>パースするとき no ASCII とかいわれたら。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">LANG=</span>en_US.UTF8
+<span class="kw">locale</span></code></pre>
 <h1 id="linux">LINUX</h1>
 <h2 id="use-disc-media">USE DISC MEDIA</h2>
 <form class="form-horizontal">
@@ -714,8 +773,7 @@ var graph = new vis.Graph(container, data);
 <h3 id="lang">LANG</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">LANG=</span>en_US.UTF-8</code></pre>
 <h3 id="scp">scp</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">scp</span> -P 22 -rq tcp/ vagrant@192.168.33.32:/home/vagrant/
-<span class="kw">scp</span> -P 22 -rq tcp/ vagrant@192.168.33.43:/home/vagrant/</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">scp</span> -P 22 -rq tcp/ username@192.168.33.32:/home/aaa/</code></pre>
 <h1 id="vi">VI</h1>
 <h2 id="edit">EDIT</h2>
 <h3 id="置換え">置換え</h3>
@@ -986,7 +1044,7 @@ restart</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yumdownloader</span> --resolve <span class="dt">{{YUM_PKG}}</span></code></pre>
 <h3 id="install-local-rpm">INSTALL LOCAL RPM</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> --disablerepo=<span class="dt">\*</span> -y localinstall ./*.rpm</code></pre>
-<h3 id="list-1">LIST</h3>
+<h3 id="list-2">LIST</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> <span class="dt">{{YUM_OPT}}</span> list</code></pre>
 <h1 id="chef">CHEF</h1>
 <h2 id="misc-2">MISC</h2>
@@ -1035,6 +1093,8 @@ restart</code></pre>
 <h3 id="add">ADD</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> box add <span class="dt">{{VAG_BOX_NAME}}</span> <span class="dt">{{VAG_BOX_FILE}}</span>
 <span class="kw">vagrant</span> box list</code></pre>
+<h3 id="vms-status">VMs STATUS</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> global-status</code></pre>
 <h2 id="vagrantfile">Vagrantfile</h2>
 <pre class="sourceCode ruby"><code class="sourceCode ruby"><span class="co"># -*- mode: ruby -*-</span>
 <span class="co"># vi: set ft=ruby :</span>
