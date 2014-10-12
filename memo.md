@@ -1,3 +1,10 @@
+# TCPDUMP
+
+``` {.bash}
+tcpdump -Xs 256 -n -i eth1 dst port 50012
+```
+
+
 
 # SCHEME
 
@@ -323,11 +330,13 @@ ruby-build 2.1.2 /usr/local
 
 パースするとき no ASCII とかいわれたら。
 
+
 ``` {.bash}
 export LANG=en_US.UTF8
 locale
 ```
 
+ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず "ja_JP.UTF-8" になってしまう。
 
 
 # LINUX
@@ -415,6 +424,93 @@ swapon {{LINUX_SWAP_FILE}}
 {{LINUX_SWAP_FILE}} swap swap defaults
 ```
 
+
+# P2V
+
+## physical drive to image file
+
+### physical drive のセクタサイズを調べる
+
+``` {.bash}
+sudo fdisk -l /dev/sda
+```
+
+#### 出力例
+
+``` {.bash}
+ディスク /dev/sda: 500.1 GB, 500107862016 バイト
+ヘッド 255, セクタ 63, シリンダ 60801
+Units = シリンダ数 of 16065 * 512 = 8225280 バイト
+セクタサイズ (論理 / 物理): 512 バイト / 512 バイト
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+ディスク識別子: 0x6f16023a
+
+デバイス ブート      始点        終点     ブロック   Id  システム
+/dev/sda1   *           1          64      512000   83  Linux
+パーティション 1 は、シリンダ境界で終わっていません。
+/dev/sda2              64      121602   976254976   8e  Linux LVM
+```
+
+### dd コマンドでイメージファイル化
+
+``` {.bash}
+dd bs=セクタサイズ if=/dev/sda of=sda.dd conv=sync,noerror
+```
+
+``` {.bash}
+dd bs=セクタサイズ if=/dev/sda conv=sync,noerror | gzip -c9 > sda.dd.gz
+```
+
+
+#### dd の進捗表示
+
+``` {.bash}
+sudo watch -n 60 "pkill -USER1 dd"
+```
+
+#### イメージファイルの中身確認
+
+##### パーティションテーブル
+
+``` {.bash}
+fdisk -l sda.dd
+```
+
+##### マウントしてみる
+
+
+## image file to VDI
+
+自動的に圧縮（最小化ではない）される。
+
+``` {.bash}
+vboxmanage convertfromraw sda.dd sda.vdi
+```
+
+
+
+## 参考情報
+
+### fsck とかで起動しない場合
+
+``` {.bash}
+mount -o remount,rw
+```
+
+### ゼロ埋め
+
+対象ドライブに cd して、
+
+``` {.bash}
+dd if=/dev/zero of=zero bs=4k; \rm zero
+
+```
+
+### 圧縮
+
+``` {.bash}
+vboxmanage modifyhd sda.vdi --compact
+```
 
 
 # TMUX
@@ -1482,6 +1578,15 @@ cat ~/.ssh/id_rsa.pub
 
 # CENTOS
 
+## single user mode
+
+ + 起動カウントダウン中に [ENTER] を押す。
+ + karnel... の行を選んで [e] を押す。
+ + 起動オプションの末尾に [スペース]+single を追記して [ENTER] を押す。
+ + karnel... の行を選んで [b] を押す。
+
+
+
 ## SELINUX
 
 ### 状況確認
@@ -1905,6 +2010,10 @@ set feedback off
 ``` {.bash}
 emctl start dbconsole
 emctl stop dbconsole
+```
+
+``` {.bash}
+ORACLE_UNQNAME=KX emctl start dbconsole
 ```
 
 ## SQL
