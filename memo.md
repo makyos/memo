@@ -1,3 +1,10 @@
+# TCPDUMP
+
+``` {.bash}
+tcpdump -Xs 256 -n -i eth1 dst port 50012
+```
+
+
 
 # SCHEME
 
@@ -323,11 +330,13 @@ ruby-build 2.1.2 /usr/local
 
 パースするとき no ASCII とかいわれたら。
 
+
 ``` {.bash}
 export LANG=en_US.UTF8
 locale
 ```
 
+ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず "ja_JP.UTF-8" になってしまう。
 
 
 # LINUX
@@ -415,6 +424,93 @@ swapon {{LINUX_SWAP_FILE}}
 {{LINUX_SWAP_FILE}} swap swap defaults
 ```
 
+
+# P2V
+
+## physical drive to image file
+
+### physical drive のセクタサイズを調べる
+
+``` {.bash}
+sudo fdisk -l /dev/sda
+```
+
+#### 出力例
+
+``` {.bash}
+ディスク /dev/sda: 500.1 GB, 500107862016 バイト
+ヘッド 255, セクタ 63, シリンダ 60801
+Units = シリンダ数 of 16065 * 512 = 8225280 バイト
+セクタサイズ (論理 / 物理): 512 バイト / 512 バイト
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+ディスク識別子: 0x6f16023a
+
+デバイス ブート      始点        終点     ブロック   Id  システム
+/dev/sda1   *           1          64      512000   83  Linux
+パーティション 1 は、シリンダ境界で終わっていません。
+/dev/sda2              64      121602   976254976   8e  Linux LVM
+```
+
+### dd コマンドでイメージファイル化
+
+``` {.bash}
+dd bs=セクタサイズ if=/dev/sda of=sda.dd conv=sync,noerror
+```
+
+``` {.bash}
+dd bs=セクタサイズ if=/dev/sda conv=sync,noerror | gzip -c9 > sda.dd.gz
+```
+
+
+#### dd の進捗表示
+
+``` {.bash}
+sudo watch -n 60 "pkill -USER1 dd"
+```
+
+#### イメージファイルの中身確認
+
+##### パーティションテーブル
+
+``` {.bash}
+fdisk -l sda.dd
+```
+
+##### マウントしてみる
+
+
+## image file to VDI
+
+自動的に圧縮（最小化ではない）される。
+
+``` {.bash}
+vboxmanage convertfromraw sda.dd sda.vdi
+```
+
+
+
+## 参考情報
+
+### fsck とかで起動しない場合
+
+``` {.bash}
+mount -o remount,rw
+```
+
+### ゼロ埋め
+
+対象ドライブに cd して、
+
+``` {.bash}
+dd if=/dev/zero of=zero bs=4k; \rm zero
+
+```
+
+### 圧縮
+
+``` {.bash}
+vboxmanage modifyhd sda.vdi --compact
+```
 
 
 # TMUX
@@ -1003,12 +1099,17 @@ python -c 'import crypt; print crypt.crypt("REPLACE:username", "$1$SomeSalt$")'
 command もあるが、なんか違う。
 
 
+# test
 
-# COMMAND
+## ファイルの有無
 
-## GREP
+``` {.bash}
+test ! -e /vagrant/rpm/gitlab-7.3.2_omnibus-1.el6.x86_64.rpm; echo $?
+```
 
-### and
+# grep
+
+## AND
 
 ``` {.bash}
 grep 'AAA' | grep 'BBB'
@@ -1018,14 +1119,34 @@ grep 'AAA' | grep 'BBB'
 grep 'AAA.*BBB'
 ```
 
-### or
+## OR
 
 ``` {.bash}
 grep 'AAA\|BBB'
 ```
 
 
-### not
+## NOT
+
+``` {.bash}
+grep -v 'AAA'
+```
+
+
+## 前後も表示
+
+ * -B マッチ「前」の行数
+ * -A マッチ「後」の行数
+
+``` {.bash}
+grep -B 3 -A 3 'xyz' *.txt
+```
+
+
+
+# sed
+
+
 
 ``` {.bash}
 grep -v 'AAA'
@@ -1035,44 +1156,82 @@ grep -v 'AAA'
 
 
 
-## MISC
+# echo
 
-### BELL
+## 改行しない
 
 ``` {.bash}
-echo -n $'\a'
+echo -n 'ZZZ...'
+```
+
+## COLOR/STYLE
+
+### GREEN
+
+``` {.bash}
+          \e[32m  \e[m
+          <---->  <-->
+echo -e '[\e[32mOK\e[m]'
+```
+
+### RED
+
+``` {.bash}
+          \e[31m  \e[m
+          <---->  <-->
+echo -e '[\e[31mNG\e[m]'
+```
+
+### BOLD
+
+``` {.bash}
+         \e[1m         \e[m
+         <--->         <-->
+echo -e '\e[1mI AM BOLD\e[m'
+```
+
+### RED + BOLD
+
+``` {.bash}
+            \e[1m\e[31m        \e[m
+            <---><---->        <-->
+echo -e 'zzz\e[1m\e[31mRED+BOLD\e[mzzz'
 ```
 
 
-### iconv
+# iconv
 
+Windows SJIS は、 SHIFT_JISX0213 とすべし。
 
+## 文字コード一覧表示
 
 ``` {.bash}
 iconv -l
 ```
 
+## EUC -> UTF-8
+
 ``` {.bash}
 iconv -f EUC-JP -t UTF-8 FILE -o FILE.utf8
 ```
 
+## SJIS -> UTF-8
+
 ``` {.bash}
-iconv -f SJIS -t UTF-8 FILE -o FILE.utf8
+iconv -f SHIFT_JISX0213 -t UTF-8 FILE -o FILE.utf8
 ```
+
+## 一括処理
+
+### カレントディレクトリ以下
 
 ``` {.bash}
 find -type f | xargs file | grep ":.*text" | cut -d : -f1 | xargs -t -I{} iconv -f EUC-JP -t UTF-8 {} -o {}.utf8
 ```
 
 
-### FILE NAME
 
-``` {.bash}
-for x in *.csv.utf8;do mv $x ${x%.csv.utf8}".csv";done
-```
-
-
-### 一括置換
+# ファイルの内容置換
 
 <form class="form-horizontal">
 
@@ -1481,6 +1640,15 @@ cat ~/.ssh/id_rsa.pub
 
 
 # CENTOS
+
+## single user mode
+
+ + 起動カウントダウン中に [ENTER] を押す。
+ + karnel... の行を選んで [e] を押す。
+ + 起動オプションの末尾に [スペース]+single を追記して [ENTER] を押す。
+ + karnel... の行を選んで [b] を押す。
+
+
 
 ## SELINUX
 
@@ -1905,6 +2073,10 @@ set feedback off
 ``` {.bash}
 emctl start dbconsole
 emctl stop dbconsole
+```
+
+``` {.bash}
+ORACLE_UNQNAME=KX emctl start dbconsole
 ```
 
 ## SQL

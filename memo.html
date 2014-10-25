@@ -41,6 +41,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="tcpdump">TCPDUMP</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tcpdump</span> -Xs 256 -n -i eth1 dst port 50012</code></pre>
 <h1 id="scheme">SCHEME</h1>
 <h2 id="list">LIST</h2>
 <table>
@@ -152,7 +154,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h2 id="ftp">FTP</h2>
 <h3 id="ftp-get">FTP GET</h3>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-xs-6">SERVER NAME</label>
 <div class="col-xs-6">
@@ -178,11 +179,9 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </div>
 </form>
-
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> --ftp-user=<span class="dt">{{WGET_FTP_USER}}</span> --ftp-password=<span class="dt">{{WGET_FTP_PASS}}</span> ftp://<span class="dt">{{WGET_FTP_SERVER}}/{{WGET_GET_FILE}}</span></code></pre>
 <h1 id="sqlite3">SQLITE3</h1>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-xs-6">DATABASE NAME</label>
 <div class="col-xs-6">
@@ -202,7 +201,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </div>
 </form>
-
 <h2 id="database">DATABASE</h2>
 <h3 id="createconnect-database">create/connect DATABASE</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlite3</span> <span class="dt">{{SQLITE_DB_NAME}}</span>.sqlite3</code></pre>
@@ -253,7 +251,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <p>M-x packeage-list-packeage</p>
 <h1 id="escape-text">ESCAPE TEXT</h1>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-xs-6">TEXT</label>
 <div class="col-xs-6">
@@ -261,7 +258,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </div>
 </form>
-
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{esc_ret()}}</span></code></pre>
 <h1 id="ruby">RUBY</h1>
 <h2 id="rbenv">rbenv</h2>
@@ -284,6 +280,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <p>パースするとき no ASCII とかいわれたら。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">LANG=</span>en_US.UTF8
 <span class="kw">locale</span></code></pre>
+<p>ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず &quot;ja_JP.UTF-8&quot; になってしまう。</p>
 <h1 id="linux">LINUX</h1>
 <h2 id="use-disc-media">USE DISC MEDIA</h2>
 <form class="form-horizontal">
@@ -300,9 +297,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </div>
 </form>
-
-
-
 <h3 id="disc-to-iso-file">DISC to ISO FILE</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> /dev/dvd of=<span class="dt">{{ISO_FILEPATH}}</span></code></pre>
 <h3 id="mount-iso-file">MOUNT ISO FILE</h3>
@@ -327,7 +321,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </div>
 </form>
-
 <p>example 255MB(4096x65536)</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> if=/dev/zero  of=<span class="dt">{{LINUX_SWAP_FILE}}</span> bs=4096 count=65536
 <span class="ot">mkswap=</span><span class="dt">{{LINUX_SWAP_FILE}}</span>
@@ -335,6 +328,42 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <span class="kw">swapon</span> <span class="dt">{{LINUX_SWAP_FILE}}</span></code></pre>
 <h4 id="etcfstab-1">/etc/fstab</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{LINUX_SWAP_FILE}}</span> <span class="kw">swap</span> swap defaults</code></pre>
+<h1 id="p2v">P2V</h1>
+<h2 id="physical-drive-to-image-file">physical drive to image file</h2>
+<h3 id="physical-drive-のセクタサイズを調べる">physical drive のセクタサイズを調べる</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> fdisk -l /dev/sda</code></pre>
+<h4 id="出力例">出力例</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash">ディスク <span class="kw">/dev</span>/sda: <span class="kw">500.1</span> GB, 500107862016 バイト
+ヘッド <span class="kw">255</span>, セクタ 63, シリンダ 60801
+<span class="kw">Units</span> = シリンダ数 of 16065 * 512 = 8225280 バイト
+セクタサイズ <span class="kw">(</span>論理 <span class="kw">/</span> 物理<span class="kw">):</span> 512 バイト / 512 バイト
+<span class="kw">I/O</span> size (minimum/optimal)<span class="kw">:</span> 512 bytes / 512 bytes
+ディスク識別子: <span class="kw">0x6f16023a</span>
+
+デバイス ブート      始点        終点     ブロック   <span class="kw">Id</span>  システム
+<span class="kw">/dev/sda1</span>   *           1          64      512000   83  Linux
+パーティション <span class="kw">1</span> は、シリンダ境界で終わっていません。
+<span class="kw">/dev/sda2</span>              64      121602   976254976   8e  Linux LVM</code></pre>
+<h3 id="dd-コマンドでイメージファイル化">dd コマンドでイメージファイル化</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> bs=セクタサイズ if=/dev/sda of=sda.dd conv=sync,noerror</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> bs=セクタサイズ if=/dev/sda conv=sync,noerror <span class="kw">|</span> <span class="kw">gzip</span> -c9 <span class="kw">&gt;</span> sda.dd.gz</code></pre>
+<h4 id="dd-の進捗表示">dd の進捗表示</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> watch -n 60 <span class="st">&quot;pkill -USER1 dd&quot;</span></code></pre>
+<h4 id="イメージファイルの中身確認">イメージファイルの中身確認</h4>
+<h5 id="パーティションテーブル">パーティションテーブル</h5>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">fdisk</span> -l sda.dd</code></pre>
+<h5 id="マウントしてみる">マウントしてみる</h5>
+<h2 id="image-file-to-vdi">image file to VDI</h2>
+<p>自動的に圧縮（最小化ではない）される。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vboxmanage</span> convertfromraw sda.dd sda.vdi</code></pre>
+<h2 id="参考情報">参考情報</h2>
+<h3 id="fsck-とかで起動しない場合">fsck とかで起動しない場合</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mount</span> -o remount,rw</code></pre>
+<h3 id="ゼロ埋め">ゼロ埋め</h3>
+<p>対象ドライブに cd して、</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> if=/dev/zero of=zero bs=4k<span class="kw">;</span> \<span class="kw">rm</span> zero</code></pre>
+<h3 id="圧縮">圧縮</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vboxmanage</span> modifyhd sda.vdi --compact</code></pre>
 <h1 id="tmux">TMUX</h1>
 <h2 id="new">NEW</h2>
 <pre><code>tmux new -s &lt;session&gt;</code></pre>
@@ -373,9 +402,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </div>
 </form>
-
-
-
 <h2 id="on-the-serverremote">on the SERVER(REMOTE)</h2>
 <h3 id="create-remote-rep.">CREATE REMOTE REP.</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> mkdir -p <span class="dt">{{GIT_ROOT}}/{{GIT_REPONAME}}</span>
@@ -402,8 +428,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </div>
 </form>
-
-
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> add .
 <span class="kw">git</span> commit -a -m <span class="st">&quot;{{GIT_COMMENT}}&quot;</span></code></pre>
 <h3 id="commit-log">COMMIT LOG</h3>
@@ -525,13 +549,8 @@ Stoped -- rm ;    \
 }'};
 var graph = new vis.Graph(container, data);
 </script>
-
-
-
-
 <h2 id="use">USE</h2>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-sm-6">TARG REPOSITORY</label>
 <div class="col-sm-6">
@@ -557,9 +576,6 @@ var graph = new vis.Graph(container, data);
 </div>
 </div>
 </form>
-
-
-
 <h3 id="build">BUILD</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> build -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> build --rm=true -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre>
@@ -670,28 +686,58 @@ var graph = new vis.Graph(container, data);
 <pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="kw">-</span> <span class="fu">name:</span> yum install
   <span class="fu">shell:</span> yum --disablerepo=\* -y localinstall /opt/rpm/*.rpm &gt; /opt/rpm/res.txt</code></pre>
 <p>command もあるが、なんか違う。</p>
-<h1 id="command">COMMAND</h1>
-<h2 id="grep">GREP</h2>
-<h3 id="and">and</h3>
+<h1 id="test">test</h1>
+<h2 id="ファイルの有無">ファイルの有無</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">test</span> ! -e /vagrant/rpm/gitlab-7.3.2_omnibus-1.el6.x86_64.rpm<span class="kw">;</span> <span class="kw">echo</span> <span class="ot">$?</span></code></pre>
+<h1 id="grep">grep</h1>
+<h2 id="and">AND</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> <span class="st">&#39;AAA&#39;</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&#39;BBB&#39;</span></code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> <span class="st">&#39;AAA.*BBB&#39;</span></code></pre>
-<h3 id="or">or</h3>
+<h2 id="or">OR</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> <span class="st">&#39;AAA\|BBB&#39;</span></code></pre>
-<h3 id="not">not</h3>
+<h2 id="not">NOT</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -v <span class="st">&#39;AAA&#39;</span></code></pre>
-<h2 id="misc-1">MISC</h2>
-<h3 id="bell">BELL</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> -n <span class="st">$&#39;</span><span class="dt">\a</span><span class="st">&#39;</span></code></pre>
-<h3 id="iconv">iconv</h3>
+<h2 id="前後も表示">前後も表示</h2>
+<ul>
+<li>-B マッチ「前」の行数</li>
+<li>-A マッチ「後」の行数</li>
+</ul>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -B 3 -A 3 <span class="st">&#39;xyz&#39;</span> *.txt</code></pre>
+<h1 id="sed">sed</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -v <span class="st">&#39;AAA&#39;</span></code></pre>
+<h1 id="echo">echo</h1>
+<h2 id="改行しない">改行しない</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> -n <span class="st">&#39;ZZZ...&#39;</span></code></pre>
+<h2 id="colorstyle">COLOR/STYLE</h2>
+<h3 id="green">GREEN</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">          \<span class="kw">e</span>[32m  \e[m
+          <span class="kw">&lt;----&gt;</span>  <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
+<span class="kw">echo</span> -e <span class="st">&#39;[\e[32mOK\e[m]&#39;</span></code></pre>
+<h3 id="red">RED</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">          \<span class="kw">e</span>[31m  \e[m
+          <span class="kw">&lt;----&gt;</span>  <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
+<span class="kw">echo</span> -e <span class="st">&#39;[\e[31mNG\e[m]&#39;</span></code></pre>
+<h3 id="bold">BOLD</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">         \<span class="kw">e</span>[1m         \e[m
+         <span class="kw">&lt;---&gt;</span>         <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
+<span class="kw">echo</span> -e <span class="st">&#39;\e[1mI AM BOLD\e[m&#39;</span></code></pre>
+<h3 id="red-bold">RED + BOLD</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">            \<span class="kw">e</span>[1m\e[31m        \e[m
+            <span class="kw">&lt;---&gt;&lt;</span>----<span class="kw">&gt;</span>        <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
+<span class="kw">echo</span> -e <span class="st">&#39;zzz\e[1m\e[31mRED+BOLD\e[mzzz&#39;</span></code></pre>
+<h1 id="iconv">iconv</h1>
+<p>Windows SJIS は、 SHIFT_JISX0213 とすべし。</p>
+<h2 id="文字コード一覧表示">文字コード一覧表示</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">iconv</span> -l</code></pre>
+<h2 id="euc---utf-8">EUC -&gt; UTF-8</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">iconv</span> -f EUC-JP -t UTF-8 FILE -o FILE.utf8</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">iconv</span> -f SJIS -t UTF-8 FILE -o FILE.utf8</code></pre>
+<h2 id="sjis---utf-8">SJIS -&gt; UTF-8</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">iconv</span> -f SHIFT_JISX0213 -t UTF-8 FILE -o FILE.utf8</code></pre>
+<h2 id="一括処理">一括処理</h2>
+<h3 id="カレントディレクトリ以下">カレントディレクトリ以下</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> -type f <span class="kw">|</span> <span class="kw">xargs</span> file <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&quot;:.*text&quot;</span> <span class="kw">|</span> <span class="kw">cut</span> -d : -f1 <span class="kw">|</span> <span class="kw">xargs</span> -t -I<span class="dt">{}</span> iconv -f EUC-JP -t UTF-8 <span class="dt">{}</span> -o <span class="dt">{}</span>.utf8</code></pre>
-<h3 id="file-name">FILE NAME</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">x</span> in *.csv.utf8<span class="kw">;do</span> <span class="kw">mv</span> <span class="ot">$x</span> <span class="ot">${x%</span>.csv.utf8<span class="ot">}</span><span class="st">&quot;.csv&quot;</span><span class="kw">;done</span></code></pre>
-<h3 id="一括置換">一括置換</h3>
+<h1 id="ファイルの内容置換">ファイルの内容置換</h1>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-sm-6">BEFOR</label>
 <div class="col-sm-6">
@@ -711,8 +757,6 @@ var graph = new vis.Graph(container, data);
 </div>
 </div>
 </form>
-
-
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -rl <span class="st">&quot;{{CMD_REPLACE_BEFOR}}&quot;</span> */<span class="dt">{{CMD_REPLACE_FILENAME}}</span>
 <span class="kw">perl</span> -p -i.befor -e <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{{CMD_REPLACE_FILENAME}}</span></code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> . -name <span class="st">&#39;{{CMD_REPLACE_FILENAME}}&#39;</span> -type f -exec sed -i <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{}</span> <span class="dt">\;</span></code></pre>
@@ -731,9 +775,8 @@ var graph = new vis.Graph(container, data);
 <span class="ot">td=</span><span class="kw">`echo</span> <span class="st">&quot;</span><span class="ot">${t2[0]}</span><span class="st">-</span><span class="ot">${t1[0]}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="kw">bc`</span>
 <span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">${td}</span><span class="st"> sec.&quot;</span></code></pre>
 <h3 id="ファイル検索-コマンド実行">ファイル検索 &amp; コマンド実行</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="kw">&lt;</span>検索文字&gt; <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">&lt;</span>コマンド&gt;</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="kw">&lt;</span>検索文字<span class="kw">&gt;</span> <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">&lt;</span>コマンド<span class="kw">&gt;</span></code></pre>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-sm-6">FILE1</label>
 <div class="col-sm-6">
@@ -747,10 +790,6 @@ var graph = new vis.Graph(container, data);
 </div>
 </div>
 </form>
-
-
-
-
 <h3 id="ナイスな-diff">ナイスな diff</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">diff</span> -y --suppress-common-lines <span class="dt">{{CMD_FILE1}}</span> <span class="dt">{{CMD_FILE2}}</span></code></pre>
 <h3 id="ファイルの単純横結合">ファイルの単純横結合</h3>
@@ -778,9 +817,9 @@ var graph = new vis.Graph(container, data);
 <h2 id="edit">EDIT</h2>
 <h3 id="置換え">置換え</h3>
 <h4 id="確認あり">確認あり</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後/<span class="kw">gc</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後<span class="kw">/gc</span></code></pre>
 <h4 id="確認なし">確認なし</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後/<span class="kw">g</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後<span class="kw">/g</span></code></pre>
 <h2 id="view">VIEW</h2>
 <h3 id="カーソル移動">カーソル移動</h3>
 <table>
@@ -857,7 +896,6 @@ exit
 save config</code></pre>
 <h3 id="nat">1:1 NAT</h3>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-sm-6">ethernet0 IP</label>
 <div class="col-sm-6">
@@ -883,10 +921,6 @@ save config</code></pre>
 </div>
 </div>
 </form>
-
-
-
-
 <pre><code>show config
 configure terminal
 
@@ -949,6 +983,13 @@ restart</code></pre>
 <h4 id="paste">paste</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/home/USERNAME/.ssh/authorized_keys</span></code></pre>
 <h1 id="centos">CENTOS</h1>
+<h2 id="single-user-mode">single user mode</h2>
+<ul>
+<li>起動カウントダウン中に [ENTER] を押す。</li>
+<li>karnel... の行を選んで [e] を押す。</li>
+<li>起動オプションの末尾に [スペース]+single を追記して [ENTER] を押す。</li>
+<li>karnel... の行を選んで [b] を押す。</li>
+</ul>
 <h2 id="selinux">SELINUX</h2>
 <h3 id="状況確認">状況確認</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">getenforce</span></code></pre>
@@ -959,7 +1000,6 @@ restart</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">SELINUX=</span>disabled</code></pre>
 <h2 id="network-1">NETWORK</h2>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-sm-6">I/F NAME</label>
 <div class="col-sm-6">
@@ -967,9 +1007,6 @@ restart</code></pre>
 </div>
 </div>
 </form>
-
-
-
 <h3 id="ip-アドレスリンクスピード固定化">IP アドレス・リンクスピード固定化</h3>
 <h4 id="etcsysconfignetwork-scriptsifcfg-eth0">/etc/sysconfig/network-scripts/ifcfg-eth0</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">HWADDR=</span>XX:XX:XX:XX:XX:XX
@@ -1016,7 +1053,6 @@ restart</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">service</span> network restart</code></pre>
 <h2 id="yum">YUM</h2>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-sm-6">PKG NAME</label>
 <div class="col-sm-6">
@@ -1030,11 +1066,6 @@ restart</code></pre>
 </div>
 </div>
 </form>
-
-
-
-
-
 <h3 id="onoff-repo">ON/OFF REPO</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> --disablerepo=<span class="dt">\*</span> --enablerepo=c6-media ...</code></pre>
 <h3 id="packages-dependencies">package's dependencies</h3>
@@ -1047,7 +1078,7 @@ restart</code></pre>
 <h3 id="list-2">LIST</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> <span class="dt">{{YUM_OPT}}</span> list</code></pre>
 <h1 id="chef">CHEF</h1>
-<h2 id="misc-2">MISC</h2>
+<h2 id="misc-1">MISC</h2>
 <h3 id="create-cookbok">CREATE cookbok</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">knife</span> cookbook create app -o site-cookbooks</code></pre>
 <h1 id="virualbox">VirualBox</h1>
@@ -1056,7 +1087,6 @@ restart</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">VBoxManage</span> clonehd --format VDI cyua.vmdk cyua.vdi</code></pre>
 <h1 id="vagrant">VAGRANT</h1>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-sm-6">BOX FILE</label>
 <div class="col-sm-6">
@@ -1088,7 +1118,6 @@ restart</code></pre>
 </div>
 </div>
 </form>
-
 <h2 id="box">BOX</h2>
 <h3 id="add">ADD</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> box add <span class="dt">{{VAG_BOX_NAME}}</span> <span class="dt">{{VAG_BOX_FILE}}</span>
@@ -1185,9 +1214,9 @@ restart</code></pre>
 <h3 id="updown">UP/DOWN</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">emctl</span> start dbconsole
 <span class="kw">emctl</span> stop dbconsole</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ORACLE_UNQNAME=</span>KX <span class="kw">emctl</span> start dbconsole</code></pre>
 <h2 id="sql">SQL</h2>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-xs-6">TAB NAME</label>
 <div class="col-xs-6">
@@ -1195,7 +1224,6 @@ restart</code></pre>
 </div>
 </div>
 </form>
-
 <h3 id="insert">insert</h3>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">insert</span> <span class="kw">into</span> {{ORA_TAB_NAME}} (&lt;COL1&gt; ,&lt;COL2&gt;) <span class="kw">values</span> (&lt;COL1VAL&gt;,&lt;COL2VAL&gt;);</code></pre>
 <h3 id="update">update</h3>
@@ -1236,7 +1264,6 @@ col <span class="kw">PASSWORD</span> format a20
 ;</code></pre>
 <h2 id="multi-master-replication">MULTI MASTER REPLICATION</h2>
 <form class="form-horizontal">
-
 <div class="form-group">
 <label class="control-label col-xs-6">SITE A</label>
 <div class="col-xs-6">
@@ -1262,9 +1289,6 @@ col <span class="kw">PASSWORD</span> format a20
 </div>
 </div>
 </form>
-
-
-
 <h3 id="sqlplus-1">SQLPLUS</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlplus</span> /nolog</code></pre>
 <h3 id="create-repadmin">CREATE REPADMIN</h3>
