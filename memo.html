@@ -23,7 +23,7 @@
   <style type="text/css">
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
 code > span.kw { color: #007020; font-weight: bold; }
@@ -42,7 +42,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </head>
 <body  ng-controller="memoCtrl">
 <h1 id="tcpdump">TCPDUMP</h1>
+<<<<<<< HEAD
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tcpdump</span> -Xs 256 -n -i eth1 dst port 50012</code></pre>
+=======
+<pre class="sourceCode bash"><code class="sourceCode bash">tcpdump -Xs 256 -n -i eth1 dst port 50012</code></pre>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h1 id="scheme">SCHEME</h1>
 <h2 id="list">LIST</h2>
 <table>
@@ -68,36 +72,36 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>関数そのものに値を保持する仕組み。これが無いと大域汚染を伴うクラスやグローバル変数を使うことになる。この大域汚染は、特に複数のサードパーティライブラリを組み合わせる際に問題となる。</p>
 <p>なので、データセットのダーティフラグとかしょうもない用事には CLOSURE を使う。</p>
 <h3 id="examplejavascript">example:javascript</h3>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">#!/bin/env node</span>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">#!/bin/env node
 
-<span class="kw">function</span> <span class="fu">outer</span>(n) {
+<span class="kw">function</span> outer(n) {
     <span class="kw">var</span> x = n;
     <span class="kw">return</span> <span class="kw">function</span>() {
-        <span class="ot">console</span>.<span class="fu">log</span>(x);
+        <span class="kw">console</span>.<span class="fu">log</span>(x);
         x = x + <span class="dv">1</span>;
     };
 }
 
-<span class="kw">var</span> f1 = <span class="fu">outer</span>(<span class="dv">1</span>);
-<span class="kw">var</span> f2 = <span class="fu">outer</span>(<span class="dv">11</span>);
+<span class="kw">var</span> f1 = outer(<span class="dv">1</span>);
+<span class="kw">var</span> f2 = outer(<span class="dv">11</span>);
 
-<span class="fu">f1</span>();
-<span class="fu">f1</span>();
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;---&quot;</span>)
-<span class="fu">f2</span>();
-<span class="fu">f2</span>();
-<span class="ot">console</span>.<span class="fu">log</span>(<span class="st">&quot;---&quot;</span>)
-<span class="fu">f1</span>();
-<span class="fu">f1</span>();</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">node</span> ./closure.js 
-<span class="kw">1</span>
-<span class="kw">2</span>
-<span class="kw">---</span>
-<span class="kw">11</span>
-<span class="kw">12</span>
-<span class="kw">---</span>
-<span class="kw">3</span>
-<span class="kw">4</span></code></pre>
+f1();
+f1();
+<span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;---&quot;</span>)
+f2();
+f2();
+<span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;---&quot;</span>)
+f1();
+f1();</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ node ./closure.js 
+1
+2
+---
+11
+12
+---
+3
+4</code></pre>
 <h1 id="python">PYTHON</h1>
 <h2 id="date-time">DATE &amp; TIME</h2>
 <h3 id="what-time-now">what time now</h3>
@@ -149,7 +153,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h1 id="nkf">NKF</h1>
 <h3 id="改行変換">改行変換</h3>
 <h4 id="from-win">from Win</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">nkf</span> -Lu AAA.txt</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">nkf -Lu AAA.txt</code></pre>
 <h1 id="wget">WGET</h1>
 <h2 id="ftp">FTP</h2>
 <h3 id="ftp-get">FTP GET</h3>
@@ -160,24 +164,28 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <input class="form-control" type="text" onclick="this.select();" ng-model="WGET_FTP_SERVER" ng-init="WGET_FTP_SERVER='SERVER'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-xs-6">FTP USER</label>
 <div class="col-xs-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="WGET_FTP_USER" ng-init="WGET_FTP_USER='user'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-xs-6">FTP PASSWORD</label>
 <div class="col-xs-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="WGET_FTP_PASS" ng-init="WGET_FTP_PASS='passwd'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-xs-6">get FILE</label>
 <div class="col-xs-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="WGET_GET_FILE" ng-init="WGET_GET_FILE='filename'">
 </div>
 </div>
+
 </form>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> --ftp-user=<span class="dt">{{WGET_FTP_USER}}</span> --ftp-password=<span class="dt">{{WGET_FTP_PASS}}</span> ftp://<span class="dt">{{WGET_FTP_SERVER}}/{{WGET_GET_FILE}}</span></code></pre>
 <h1 id="sqlite3">SQLITE3</h1>
@@ -188,22 +196,25 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <input class="form-control" type="text" onclick="this.select();" ng-model="SQLITE_DB_NAME" ng-init="SQLITE_DB_NAME='./mnt'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-xs-6">TABLE NAME</label>
 <div class="col-xs-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="SQLITE_TAB_NAME" ng-init="SQLITE_TAB_NAME='TAB'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-xs-6">SQL FILE NAME</label>
 <div class="col-xs-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="SQLITE_SQL_FILE" ng-init="SQLITE_SQL_FILE='AAA.sql'">
 </div>
 </div>
+
 </form>
 <h2 id="database">DATABASE</h2>
 <h3 id="createconnect-database">create/connect DATABASE</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlite3</span> <span class="dt">{{SQLITE_DB_NAME}}</span>.sqlite3</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">sqlite3 <span class="dt">{{SQLITE_DB_NAME}}</span>.sqlite3</code></pre>
 <pre class="sourceCode sql"><code class="sourceCode sql">.databases</code></pre>
 <h2 id="table">TABLE</h2>
 <h3 id="csv-data-import">CSV DATA IMPORT</h3>
@@ -257,6 +268,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <input class="form-control" type="text" onclick="this.select();" ng-model="ESC_INPUT" ng-init="ESC_INPUT='http://hellowork/jobs'">
 </div>
 </div>
+
 </form>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{esc_ret()}}</span></code></pre>
 <h1 id="ruby">RUBY</h1>
@@ -264,22 +276,26 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h3 id="install">install</h3>
 <p>git clone</p>
 <h3 id="available-versions">available versions</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rbenv</span> install --list</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">rbenv <span class="kw">install</span> --list</code></pre>
 <h3 id="install-1">install</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rbenv</span> install 2.1.2</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">rbenv <span class="kw">install</span> 2.1.2</code></pre>
 <h3 id="init">init</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rbenv</span> global 2.1.2</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">rbenv global 2.1.2</code></pre>
 <h2 id="ruby-build">ruby-build</h2>
 <h3 id="install-2">install</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> clone https://github.com/sstephenson/ruby-build.git .ruby-build
-<span class="kw">.ruby-build/install.sh</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">git clone https://github.com/sstephenson/ruby-build.git .ruby-build
+.ruby-build/install.sh</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rm</span> -fr .ruby-build</code></pre>
 <h3 id="install-version">install version</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ruby-build</span> 2.1.2 /usr/local</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">ruby-build 2.1.2 /usr/local</code></pre>
 <h2 id="json">JSON</h2>
 <p>パースするとき no ASCII とかいわれたら。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">LANG=</span>en_US.UTF8
+<<<<<<< HEAD
 <span class="kw">locale</span></code></pre>
+=======
+locale</code></pre>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <p>ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず &quot;ja_JP.UTF-8&quot; になってしまう。</p>
 <h1 id="linux">LINUX</h1>
 <h2 id="use-disc-media">USE DISC MEDIA</h2>
@@ -298,7 +314,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </form>
 <h3 id="disc-to-iso-file">DISC to ISO FILE</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> /dev/dvd of=<span class="dt">{{ISO_FILEPATH}}</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> /dev/dvd <span class="ot">of=</span><span class="dt">{{ISO_FILEPATH}}</span></code></pre>
 <h3 id="mount-iso-file">MOUNT ISO FILE</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkdir</span> -p <span class="dt">{{ISO_MOUNTPOINT}}</span>
 <span class="kw">mount</span> -t iso9660 -o loop <span class="dt">{{ISO_FILEPATH}}</span> <span class="dt">{{ISO_MOUNTPOINT}}</span></code></pre>
@@ -322,17 +338,22 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </form>
 <p>example 255MB(4096x65536)</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> if=/dev/zero  of=<span class="dt">{{LINUX_SWAP_FILE}}</span> bs=4096 count=65536
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">if=</span>/dev/zero  of=<span class="dt">{{LINUX_SWAP_FILE}}</span> bs=4096 count=65536
 <span class="ot">mkswap=</span><span class="dt">{{LINUX_SWAP_FILE}}</span>
 <span class="kw">chmod</span> 600 <span class="dt">{{LINUX_SWAP_FILE}}</span>
-<span class="kw">swapon</span> <span class="dt">{{LINUX_SWAP_FILE}}</span></code></pre>
+swapon <span class="dt">{{LINUX_SWAP_FILE}}</span></code></pre>
 <h4 id="etcfstab-1">/etc/fstab</h4>
+<<<<<<< HEAD
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{LINUX_SWAP_FILE}}</span> <span class="kw">swap</span> swap defaults</code></pre>
+=======
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{LINUX_SWAP_FILE}}</span> swap swap defaults</code></pre>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h1 id="p2v">P2V</h1>
 <h2 id="physical-drive-to-image-file">physical drive to image file</h2>
 <h3 id="physical-drive-のセクタサイズを調べる">physical drive のセクタサイズを調べる</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> fdisk -l /dev/sda</code></pre>
 <h4 id="出力例">出力例</h4>
+<<<<<<< HEAD
 <pre class="sourceCode bash"><code class="sourceCode bash">ディスク <span class="kw">/dev</span>/sda: <span class="kw">500.1</span> GB, 500107862016 バイト
 ヘッド <span class="kw">255</span>, セクタ 63, シリンダ 60801
 <span class="kw">Units</span> = シリンダ数 of 16065 * 512 = 8225280 バイト
@@ -347,23 +368,53 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h3 id="dd-コマンドでイメージファイル化">dd コマンドでイメージファイル化</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> bs=セクタサイズ if=/dev/sda of=sda.dd conv=sync,noerror</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> bs=セクタサイズ if=/dev/sda conv=sync,noerror <span class="kw">|</span> <span class="kw">gzip</span> -c9 <span class="kw">&gt;</span> sda.dd.gz</code></pre>
+=======
+<pre class="sourceCode bash"><code class="sourceCode bash">ディスク /dev/sda: 500.1 GB, 500107862016 バイト
+ヘッド 255, セクタ 63, シリンダ 60801
+Units = シリンダ数 of 16065 * 512 = 8225280 バイト
+セクタサイズ <span class="kw">(</span>論理 / 物理<span class="kw">):</span> 512 バイト / 512 バイト
+I/O <span class="kw">size</span> <span class="kw">(</span>minimum/optimal<span class="kw">):</span> 512 bytes / 512 bytes
+ディスク識別子: 0x6f16023a
+
+デバイス ブート      始点        終点     ブロック   Id  システム
+/dev/sda1   *           1          64      512000   83  Linux
+パーティション 1 は、シリンダ境界で終わっていません。
+/dev/sda2              64      121602   976254976   8e  Linux LVM</code></pre>
+<h3 id="dd-コマンドでイメージファイル化">dd コマンドでイメージファイル化</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">bs=</span>セクタサイズ if=/dev/sda of=sda.dd conv=sync,noerror</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">bs=</span>セクタサイズ if=/dev/sda conv=sync,noerror <span class="kw">|</span> <span class="kw">gzip</span> -c9 <span class="kw">&gt;</span> sda.dd.gz</code></pre>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h4 id="dd-の進捗表示">dd の進捗表示</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> watch -n 60 <span class="st">&quot;pkill -USER1 dd&quot;</span></code></pre>
 <h4 id="イメージファイルの中身確認">イメージファイルの中身確認</h4>
 <h5 id="パーティションテーブル">パーティションテーブル</h5>
+<<<<<<< HEAD
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">fdisk</span> -l sda.dd</code></pre>
 <h5 id="マウントしてみる">マウントしてみる</h5>
 <h2 id="image-file-to-vdi">image file to VDI</h2>
 <p>自動的に圧縮（最小化ではない）される。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vboxmanage</span> convertfromraw sda.dd sda.vdi</code></pre>
+=======
+<pre class="sourceCode bash"><code class="sourceCode bash">fdisk -l sda.dd</code></pre>
+<h5 id="マウントしてみる">マウントしてみる</h5>
+<h2 id="image-file-to-vdi">image file to VDI</h2>
+<p>自動的に圧縮（最小化ではない）される。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">vboxmanage convertfromraw sda.dd sda.vdi</code></pre>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h2 id="参考情報">参考情報</h2>
 <h3 id="fsck-とかで起動しない場合">fsck とかで起動しない場合</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mount</span> -o remount,rw</code></pre>
 <h3 id="ゼロ埋め">ゼロ埋め</h3>
 <p>対象ドライブに cd して、</p>
+<<<<<<< HEAD
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> if=/dev/zero of=zero bs=4k<span class="kw">;</span> \<span class="kw">rm</span> zero</code></pre>
 <h3 id="圧縮">圧縮</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vboxmanage</span> modifyhd sda.vdi --compact</code></pre>
+=======
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">if=</span>/dev/zero of=zero bs=4k; \rm zero</code></pre>
+<h3 id="圧縮">圧縮</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">vboxmanage modifyhd sda.vdi --compact</code></pre>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h1 id="tmux">TMUX</h1>
 <h2 id="new">NEW</h2>
 <pre><code>tmux new -s &lt;session&gt;</code></pre>
@@ -404,21 +455,21 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </form>
 <h2 id="on-the-serverremote">on the SERVER(REMOTE)</h2>
 <h3 id="create-remote-rep.">CREATE REMOTE REP.</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> mkdir -p <span class="dt">{{GIT_ROOT}}/{{GIT_REPONAME}}</span>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> <span class="kw">mkdir</span> -p <span class="dt">{{GIT_ROOT}}/{{GIT_REPONAME}}</span>
 <span class="kw">cd</span> <span class="dt">{{GIT_ROOT}}/{{GIT_REPONAME}}</span>
 <span class="kw">sudo</span> git init --bare --shared
-<span class="kw">sudo</span> chown -R root:git .
+<span class="kw">sudo</span> <span class="kw">chown</span> -R root:git .
 <span class="kw">ls</span> -la</code></pre>
 <h2 id="on-the-clientlocal">on the CLIENT(LOCAL)</h2>
 <h3 id="create-local-rep.">CREATE LOCAL REP.</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> init
-<span class="kw">git</span> add .
-<span class="kw">git</span> commit -m <span class="st">&quot;1st&quot;</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">git init
+git add .
+git commit -m <span class="st">&quot;1st&quot;</span></code></pre>
 <h3 id="push-to-remote">PUSH to REMOTE</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> remote add origin ssh://<span class="dt">{{GIT_USER}}@{{GIT_REMOTE}}:{{GIT_SSH}}{{GIT_ROOT}}/{{GIT_REPONAME}}</span>
-<span class="kw">git</span> push origin master</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">git remote add origin ssh://<span class="dt">{{GIT_USER}}@{{GIT_REMOTE}}:{{GIT_SSH}}{{GIT_ROOT}}/{{GIT_REPONAME}}</span>
+git push origin master</code></pre>
 <h3 id="clone">CLONE</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> clone ssh://<span class="dt">{{GIT_USER}}@{{GIT_REMOTE}}:{{GIT_SSH}}{{GIT_ROOT}}/{{GIT_REPONAME}}</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">git clone ssh://<span class="dt">{{GIT_USER}}@{{GIT_REMOTE}}:{{GIT_SSH}}{{GIT_ROOT}}/{{GIT_REPONAME}}</span></code></pre>
 <h3 id="commit">COMMIT</h3>
 <form class="form-horizontal">
 <div class="form-group">
@@ -428,55 +479,62 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 </div>
 </form>
+<<<<<<< HEAD
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> add .
 <span class="kw">git</span> commit -a -m <span class="st">&quot;{{GIT_COMMENT}}&quot;</span></code></pre>
+=======
+
+
+<pre class="sourceCode bash"><code class="sourceCode bash">git add .
+git commit -a -m <span class="st">&quot;{{GIT_COMMENT}}&quot;</span></code></pre>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h3 id="commit-log">COMMIT LOG</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> log</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">git log</code></pre>
 <h3 id="push">PUSH</h3>
 <pre><code>git push origin master</code></pre>
 <h3 id="pull">PULL</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> pull origin master</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">git pull origin master</code></pre>
 <h1 id="docker">DOCKER</h1>
 <h2 id="misc">MISC</h2>
 <h3 id="install-3">install</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> install -y docker-io.x86_64</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">yum <span class="kw">install</span> -y docker-io.x86_64</code></pre>
 <h3 id="ps">PS</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">watch</span> -n 2 <span class="st">&#39;df -h; echo; free -m; echo; docker ps -a|head; echo; docker images -a&#39;</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">watch -n 2 <span class="st">&#39;df -h; echo; free -m; echo; docker ps -a|head; echo; docker images -a&#39;</span></code></pre>
 <h2 id="dockerfile">DOCKERFILE</h2>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">FROM</span> centos:latest
+<pre class="sourceCode bash"><code class="sourceCode bash">FROM centos:latest
 
 <span class="co"># EPEL</span>
-<span class="kw">RUN</span> rpm -i http://ftp.riken.jp/Linux/fedora/epel/6/i386/epel-release-6-8.noarch.rpm
-<span class="kw">RUN</span> rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
-<span class="kw">RUN</span> yum clean metadata
+RUN rpm -i http://ftp.riken.jp/Linux/fedora/epel/6/i386/epel-release-6-8.noarch.rpm
+RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+RUN yum clean metadata
 
 <span class="co"># yum</span>
-<span class="kw">RUN</span> yum --enablerepo=epel install -y \
-    <span class="kw">make</span> \
-    <span class="kw">gcc</span> \
-    <span class="kw">zlib-devel</span> \
-    <span class="kw">openssl-devel</span> \
-    <span class="kw">readline-devel</span> \
-    <span class="kw">ncurses-devel</span> \
-    <span class="kw">gdbm-devel</span> \
-    <span class="kw">db4-devel</span> \
-    <span class="kw">libffi-devel</span> \
-    <span class="kw">tk-devel</span> \
-    <span class="kw">libyaml-devel</span> \
-    <span class="kw">tar</span> \
-    <span class="kw">git</span>
+RUN yum --enablerepo=epel <span class="kw">install</span> -y <span class="kw">\</span>
+    <span class="kw">make</span> <span class="kw">\</span>
+    <span class="kw">gcc</span> <span class="kw">\</span>
+    zlib-devel <span class="kw">\</span>
+    openssl-devel <span class="kw">\</span>
+    readline-devel <span class="kw">\</span>
+    ncurses-devel <span class="kw">\</span>
+    gdbm-devel <span class="kw">\</span>
+    db4-devel <span class="kw">\</span>
+    libffi-devel <span class="kw">\</span>
+    tk-devel <span class="kw">\</span>
+    libyaml-devel <span class="kw">\</span>
+    <span class="kw">tar</span> <span class="kw">\</span>
+    git
 
 <span class="co"># Install ruby-build</span>
-<span class="kw">RUN</span> git clone https://github.com/sstephenson/ruby-build.git .ruby-build
-<span class="kw">RUN</span> .ruby-build/install.sh
-<span class="kw">RUN</span> rm -fr .ruby-build
+RUN git clone https://github.com/sstephenson/ruby-build.git .ruby-build
+RUN .ruby-build/install.sh
+RUN <span class="kw">rm</span> -fr .ruby-build
 
 <span class="co"># Install ruby</span>
-<span class="kw">RUN</span> ruby-build 2.1.2 /usr/local
+RUN ruby-build 2.1.2 /usr/local
 
 <span class="co"># Install bundler</span>
-<span class="kw">RUN</span> gem update --system
-<span class="kw">RUN</span> gem install bundler --no-rdoc --no-ri</code></pre>
+RUN gem update --system
+RUN gem <span class="kw">install</span> bundler --no-rdoc --no-ri</code></pre>
 <h3 id="port-forward">port forward</h3>
 <h4 id="vsftpd">vsftpd</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">pasv_enable=</span>YES
@@ -484,17 +542,19 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <span class="ot">pasv_max_port=</span>20
 <span class="ot">pasv_address=</span><span class="dt">{global_ip_address}</span>
 
-<span class="kw">iptables</span> -I FORWARD -p tcp --dport 20 -j ACCEPT</code></pre>
+iptables -I FORWARD -p tcp --dport 20 -j ACCEPT</code></pre>
 <h2 id="command-graph">COMMAND GRAPH</h2>
 <div id="docker_graph" style="width: 100%; height: 300px; border: 1px solid lightgray;">
-<div id="graph-navigation_wrapper" style="position: absolute; width: 100%; height: 300px;">
-<pre><code>&lt;div id=&quot;graph-navigation_zoomExtends&quot; class=&quot;graph-navigation zoomExtends&quot;&gt;
-&lt;/div&gt;</code></pre>
+  <div id="graph-navigation_wrapper" style="position: absolute; width: 100%; height: 300px;">
+    <div id="graph-navigation_zoomExtends" class="graph-navigation zoomExtends">
+    </div>
+  </div>
+  <div class="graph-frame" style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+    
+<canvas style="position: relative; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%"></canvas>
 </div>
-<div class="graph-frame" style="position: relative; overflow: hidden; width: 100%; height: 100%;">
-<pre><code>&lt;canvas style=&quot;position: relative; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%&quot;&gt;&lt;/canvas&gt;</code></pre>
 </div>
-</div>
+
 <script type="text/javascript">
 var container = document.getElementById('docker_graph');
 var data = {dot: 'digraph { \
@@ -557,59 +617,63 @@ var graph = new vis.Graph(container, data);
 <input class="form-control" type="text" onclick="this.select();" ng-model="DOCKER_TARG_REPO" ng-init="DOCKER_TARG_REPO='ubuntu'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">TARG TAG</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="DOCKER_TARG_TAG" ng-init="DOCKER_TARG_TAG='ruby2'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">IMAGE ID</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="DOCKER_IMAGE_ID" ng-init="DOCKER_IMAGE_ID='${IMAGE_ID}'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">CONTAINER ID</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="DOCKER_CONTAINER_ID" ng-init="DOCKER_CONTAINER_ID='${CONTAINER_ID}'">
 </div>
 </div>
+
 </form>
 <h3 id="build">BUILD</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> build -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> build --rm=true -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker build -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker build --rm=<span class="kw">true</span> -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre>
 <h3 id="run-stop">RUN / STOP</h3>
 <h4 id="run">RUN</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run -i -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> /bin/bash</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run -i -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> /usr/sbin/sshd -D</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker run -i -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> /bin/bash</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker run -i -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> /usr/sbin/sshd -D</code></pre>
 <h4 id="stop">STOP</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> stop <span class="dt">{{DOCKER_CONTAINER_ID}}</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker stop <span class="dt">{{DOCKER_CONTAINER_ID}}</span></code></pre>
 <h4 id="all-stop">ALL STOP</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> stop <span class="kw">`docker</span> ps -aq<span class="kw">`</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker stop <span class="kw">`</span>docker <span class="kw">ps</span> -aq<span class="kw">`</span></code></pre>
 <h3 id="commit-1">COMMIT</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> commit <span class="dt">{{DOCKER_CONTAINER_ID}}</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker commit <span class="dt">{{DOCKER_CONTAINER_ID}}</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span></code></pre>
 <h3 id="export-import">EXPORT / IMPORT</h3>
 <p>差分統合される。</p>
 <h4 id="export">EXPORT</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> export <span class="dt">{{DOCKER_CONTAINER_ID}}</span> <span class="kw">&gt;</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.export.tar</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker <span class="kw">export</span> <span class="dt">{{DOCKER_CONTAINER_ID}}</span> <span class="kw">&gt;</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.export.tar</code></pre>
 <h4 id="import">IMPORT</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cat</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.export.tar <span class="kw">|</span> <span class="kw">docker</span> import - <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cat</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.export.tar <span class="kw">|</span> docker import - <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span></code></pre>
 <h3 id="save-load">SAVE / LOAD</h3>
 <p>差分統合されない。</p>
 <h4 id="save">SAVE</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> save <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> <span class="kw">&gt;</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.save.tar</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker save <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> <span class="kw">&gt;</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.save.tar</code></pre>
 <h4 id="load">LOAD</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> load <span class="kw">&lt;</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.save.tar</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker load <span class="kw">&lt;</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.save.tar</code></pre>
 <h3 id="remove-all-container">REMOVE ALL CONTAINER</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rm <span class="kw">`docker</span> ps -aq<span class="kw">`</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker <span class="kw">rm</span> <span class="kw">`</span>docker <span class="kw">ps</span> -aq<span class="kw">`</span></code></pre>
 <h3 id="images-tree">images tree</h3>
 <p>-tree もうすぐなくなる...</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> images -tree</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker images -tree</code></pre>
 <h3 id="all-images-list">all images list</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> images -a</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker images -a</code></pre>
 <h3 id="remove-images">remove images</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="kw">&lt;</span>IMAGE ID<span class="kw">&gt;</span> </code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker rmi <span class="kw">&lt;</span>IMAGE ID<span class="kw">&gt;</span> </code></pre>
 <h3 id="remove-all-homeless-images">remove all homeless images</h3>
 <p>消えないもの</p>
 <ul>
@@ -617,30 +681,30 @@ var graph = new vis.Graph(container, data);
 <li>コンテナが残っとる？</li>
 <li>コンテナが動いとる？</li>
 </ul>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="ot">$(</span><span class="kw">docker</span> images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;/^&lt;none&gt;/ {print $3}&#39;</span><span class="ot">)</span> </code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker rmi <span class="ot">$(</span>docker images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;/^&lt;none&gt;/ {print $3}&#39;</span><span class="ot">)</span> </code></pre>
 <h3 id="all-clear">ALL CLEAR</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> stop <span class="kw">`docker</span> ps -aq<span class="kw">`</span>
-<span class="kw">docker</span> rm <span class="kw">`docker</span> ps -aq<span class="kw">`</span>
-<span class="kw">docker</span> rmi <span class="ot">$(</span><span class="kw">docker</span> images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;{print $3}&#39;</span><span class="ot">)</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker stop <span class="kw">`</span>docker <span class="kw">ps</span> -aq<span class="kw">`</span>
+docker <span class="kw">rm</span> <span class="kw">`</span>docker <span class="kw">ps</span> -aq<span class="kw">`</span>
+docker rmi <span class="ot">$(</span>docker images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;{print $3}&#39;</span><span class="ot">)</span></code></pre>
 <p>docker rmi $(docker images -a | awk '{print $3}')</p>
 <h2 id="boot2docker">boot2docker</h2>
 <h3 id="install-4">install</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> install docker boot2docker</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">brew <span class="kw">install</span> docker boot2docker</code></pre>
 <h3 id="up">up</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">boot2docker</span> init
-<span class="kw">boot2docker</span> up</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">boot2docker init
+boot2docker up</code></pre>
 <h3 id="ssh">ssh</h3>
 <p>password: tcuser</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">boot2docker</span> ssh</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">boot2docker <span class="kw">ssh</span></code></pre>
 <h3 id="docker_host">DOCKER_HOST</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">DOCKER_HOST=</span>tcp://localhost:4243</code></pre>
 <h1 id="ansible">ANSIBLE</h1>
 <h2 id="basics-1">BASICS</h2>
 <h3 id="ping">ping</h3>
 <p>実行前に接続できるか確認する。</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ansible</span> -i hosts all -m ping</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">ansible -i hosts all -m <span class="kw">ping</span></code></pre>
 <h3 id="run-playbook">run playbook</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ansible-playbook</span> -i hosts site.yml</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">ansible-playbook -i hosts site.yml</code></pre>
 <h2 id="roll">roll</h2>
 <h3 id="send-file">send file</h3>
 <pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="kw">-</span> <span class="fu">name:</span> copy CENTOS iso file 1
@@ -655,31 +719,31 @@ var graph = new vis.Graph(container, data);
 <pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="kw">-</span> <span class="fu">name:</span> yum install depend pkg
   <span class="fu">yum:</span> name={{ item }} state=installed disablerepo=* enablerepo=c6-media
   <span class="fu">with_items:</span>
-    <span class="kw">-</span> compat-libstdc++-33
-    <span class="kw">-</span> elfutils-libelf-devel
-    <span class="kw">-</span> elfutils-libelf-devel-static
-    <span class="kw">-</span> gcc
-    <span class="kw">-</span> gcc-c++
-    <span class="kw">-</span> glibc-devel
-    <span class="kw">-</span> glibc-headers
-    <span class="kw">-</span> kernel-headers
-    <span class="kw">-</span> libaio-devel
-    <span class="kw">-</span> libgomp
-    <span class="kw">-</span> libstdc++-devel
-    <span class="kw">-</span> sysstat</code></pre>
+<span class="er">    - compat-libstdc++-33</span>
+<span class="er">    - elfutils-libelf-devel</span>
+<span class="er">    - elfutils-libelf-devel-static</span>
+<span class="er">    - gcc</span>
+<span class="er">    - gcc-c++</span>
+<span class="er">    - glibc-devel</span>
+<span class="er">    - glibc-headers</span>
+<span class="er">    - kernel-headers</span>
+<span class="er">    - libaio-devel</span>
+<span class="er">    - libgomp</span>
+<span class="er">    - libstdc++-devel</span>
+<span class="er">    - sysstat</span></code></pre>
 <h3 id="add-group-user">add group &amp; user</h3>
 <pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="kw">-</span> <span class="fu">name:</span> create group
   <span class="fu">group:</span> name={{item.name}} gid={{item.gid}} state=present
   <span class="fu">with_items:</span>
-    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> <span class="st">&quot;oinstall&quot;</span> <span class="kw">, </span><span class="fu">gid:</span> 701<span class="kw">}</span>
-    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> <span class="st">&quot;dba&quot;</span>      <span class="kw">, </span><span class="fu">gid:</span> 702<span class="kw">}</span>
-    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> <span class="st">&quot;oracle&quot;</span>   <span class="kw">, </span><span class="fu">gid:</span> 703<span class="kw">}</span>
-    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> <span class="st">&quot;oper&quot;</span>     <span class="kw">, </span><span class="fu">gid:</span> 704<span class="kw">}</span>
+    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> &quot;oinstall&quot; <span class="kw">, </span><span class="fu">gid:</span> 701<span class="kw">}</span>
+    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> &quot;dba&quot;      <span class="kw">, </span><span class="fu">gid:</span> 702<span class="kw">}</span>
+    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> &quot;oracle&quot;   <span class="kw">, </span><span class="fu">gid:</span> 703<span class="kw">}</span>
+    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> &quot;oper&quot;     <span class="kw">, </span><span class="fu">gid:</span> 704<span class="kw">}</span>
 
 <span class="kw">-</span> <span class="fu">name:</span> create user
   <span class="fu">user:</span> name={{item.name}} uid={{item.uid}} password={{item.pass}} group=oinstall groups=dba,oper createhome=yes state=present
   <span class="fu">with_items:</span>
-    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> <span class="st">&quot;oracle&quot;</span> <span class="kw">, </span><span class="fu">uid:</span> 701<span class="kw">,</span> <span class="fu">pass:</span> <span class="st">&quot;$1$SomeSalt$c7SWNheGRHNaCLwuAG7Sa.&quot;</span> <span class="kw">}</span></code></pre>
+    <span class="kw">-</span> <span class="kw">{</span> <span class="fu">name:</span> &quot;oracle&quot; <span class="kw">, </span><span class="fu">uid:</span> 701<span class="kw">,</span> <span class="fu">pass:</span> &quot;$1$SomeSalt$c7SWNheGRHNaCLwuAG7Sa.&quot; <span class="kw">}</span></code></pre>
 <h4 id="make-password">make password</h4>
 <pre class="sourceCode python"><code class="sourceCode python">python -c <span class="st">&#39;import crypt; print crypt.crypt(&quot;REPLACE:username&quot;, &quot;$1$SomeSalt$&quot;)&#39;</span></code></pre>
 <h4 id="exec-shell-command">exec shell command</h4>
@@ -697,6 +761,7 @@ var graph = new vis.Graph(container, data);
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> <span class="st">&#39;AAA\|BBB&#39;</span></code></pre>
 <h2 id="not">NOT</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -v <span class="st">&#39;AAA&#39;</span></code></pre>
+<<<<<<< HEAD
 <h2 id="前後も表示">前後も表示</h2>
 <ul>
 <li>-B マッチ「前」の行数</li>
@@ -737,6 +802,19 @@ var graph = new vis.Graph(container, data);
 <h3 id="カレントディレクトリ以下">カレントディレクトリ以下</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> -type f <span class="kw">|</span> <span class="kw">xargs</span> file <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&quot;:.*text&quot;</span> <span class="kw">|</span> <span class="kw">cut</span> -d : -f1 <span class="kw">|</span> <span class="kw">xargs</span> -t -I<span class="dt">{}</span> iconv -f EUC-JP -t UTF-8 <span class="dt">{}</span> -o <span class="dt">{}</span>.utf8</code></pre>
 <h1 id="ファイルの内容置換">ファイルの内容置換</h1>
+=======
+<h2 id="misc-1">MISC</h2>
+<h3 id="bell">BELL</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> -n <span class="st">$&#39;</span><span class="dt">\a</span><span class="st">&#39;</span></code></pre>
+<h3 id="iconv">iconv</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">iconv -l</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f EUC-JP -t UTF-8 FILE -o FILE.utf8</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f SJIS -t UTF-8 FILE -o FILE.utf8</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> -type f <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">file</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&quot;:.*text&quot;</span> <span class="kw">|</span> <span class="kw">cut</span> -d <span class="kw">:</span> -f1 <span class="kw">|</span> <span class="kw">xargs</span> -t -I<span class="dt">{}</span> iconv -f EUC-JP -t UTF-8 <span class="dt">{}</span> -o <span class="dt">{}</span>.utf8</code></pre>
+<h3 id="file-name">FILE NAME</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> x <span class="kw">in</span> *.csv.utf8;<span class="kw">do</span> <span class="kw">mv</span> <span class="ot">$x</span> <span class="ot">${x%</span>.csv.utf8<span class="ot">}</span><span class="st">&quot;.csv&quot;</span>;<span class="kw">done</span></code></pre>
+<h3 id="一括置換">一括置換</h3>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <form class="form-horizontal">
 <div class="form-group">
 <label class="control-label col-sm-6">BEFOR</label>
@@ -744,22 +822,25 @@ var graph = new vis.Graph(container, data);
 <input class="form-control" type="text" onclick="this.select();" ng-model="CMD_REPLACE_BEFOR" ng-init="CMD_REPLACE_BEFOR='BEFOR'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">AFTER</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="CMD_REPLACE_AFTER" ng-init="CMD_REPLACE_AFTER='AFTER'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">FILENAME</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="CMD_REPLACE_FILENAME" ng-init="CMD_REPLACE_FILENAME='*.html'">
 </div>
 </div>
+
 </form>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -rl <span class="st">&quot;{{CMD_REPLACE_BEFOR}}&quot;</span> */<span class="dt">{{CMD_REPLACE_FILENAME}}</span>
 <span class="kw">perl</span> -p -i.befor -e <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{{CMD_REPLACE_FILENAME}}</span></code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> . -name <span class="st">&#39;{{CMD_REPLACE_FILENAME}}&#39;</span> -type f -exec sed -i <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{}</span> <span class="dt">\;</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> <span class="kw">.</span> -name <span class="st">&#39;{{CMD_REPLACE_FILENAME}}&#39;</span> -type f -exec <span class="kw">sed</span> -i <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{}</span> <span class="dt">\;</span></code></pre>
 <h3 id="通算秒-日時">通算秒 / 日時</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span> -d <span class="st">&quot;1970-01-01 UTC &lt;通算秒数&gt; seconds&quot;</span> <span class="st">&#39;+%Y-%m-%d %H:%M:%S&#39;</span></code></pre>
 <h3 id="所要時間測定">所要時間測定</h3>
@@ -783,17 +864,19 @@ var graph = new vis.Graph(container, data);
 <input class="form-control" type="text" onclick="this.select();" ng-model="CMD_FILE1" ng-init="CMD_FILE1='file1'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">FILE2</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="CMD_FILE2" ng-init="CMD_FILE2='file2'">
 </div>
 </div>
+
 </form>
 <h3 id="ナイスな-diff">ナイスな diff</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">diff</span> -y --suppress-common-lines <span class="dt">{{CMD_FILE1}}</span> <span class="dt">{{CMD_FILE2}}</span></code></pre>
 <h3 id="ファイルの単純横結合">ファイルの単純横結合</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">paste</span>  <span class="dt">{{CMD_FILE1}}</span> <span class="dt">{{CMD_FILE2}}</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">paste  <span class="dt">{{CMD_FILE1}}</span> <span class="dt">{{CMD_FILE2}}</span></code></pre>
 <h3 id="プロンプト反転">プロンプト反転</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">PS1=</span><span class="st">&quot;\[\033[07m\][\u@</span><span class="ot">${HOSTNAME}</span><span class="st"> \W]</span><span class="dt">\\</span><span class="st">$\[\033[00m\] &quot;</span></code></pre>
 <h3 id="日時書式">日時書式</h3>
@@ -801,13 +884,13 @@ var graph = new vis.Graph(container, data);
 <h3 id="offset">OFFSET</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span> +<span class="st">&quot;%Y_%m_%d__%H_%M_%S&quot;</span> -d <span class="st">&quot;12 hours ago&quot;</span></code></pre>
 <h3 id="pgrep">pgrep</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pgrep</span> procname*</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">pgrep procname*</code></pre>
 <h4 id="pkill-and-kill">pkill and kill</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pgrep</span> procname* <span class="kw">|</span> <span class="kw">xargs</span> kill -9</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">pgrep procname* <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">kill</span> -9</code></pre>
 <h3 id="watch">watch</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="kw">true;do</span> <span class="kw">date</span> +<span class="st">&quot;%Y-%m-%d %H:%M:%S.%N&quot;</span><span class="kw">;sleep</span> 1<span class="kw">;done</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="kw">true</span>;<span class="kw">do</span> <span class="kw">date</span> +<span class="st">&quot;%Y-%m-%d %H:%M:%S.%N&quot;</span>;<span class="kw">sleep</span> 1;<span class="kw">done</span></code></pre>
 <h3 id="exfat">exfat</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> mount -t exfat-fuse /dev/sde1 /media/exfat
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> <span class="kw">mount</span> -t exfat-fuse /dev/sde1 /media/exfat
 <span class="kw">umount</span> /media/exfat</code></pre>
 <h3 id="lang">LANG</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">LANG=</span>en_US.UTF-8</code></pre>
@@ -817,9 +900,15 @@ var graph = new vis.Graph(container, data);
 <h2 id="edit">EDIT</h2>
 <h3 id="置換え">置換え</h3>
 <h4 id="確認あり">確認あり</h4>
+<<<<<<< HEAD
 <pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後<span class="kw">/gc</span></code></pre>
 <h4 id="確認なし">確認なし</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後<span class="kw">/g</span></code></pre>
+=======
+<pre class="sourceCode bash"><code class="sourceCode bash">:%s/前/後/gc</code></pre>
+<h4 id="確認なし">確認なし</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash">:%s/前/後/g</code></pre>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h2 id="view">VIEW</h2>
 <h3 id="カーソル移動">カーソル移動</h3>
 <table>
@@ -902,24 +991,28 @@ save config</code></pre>
 <input class="form-control" type="text" onclick="this.select();" ng-model="nxr_e0ip" ng-init="nxr_e0ip='192.168.0.1'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">host IP</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="NXR_RIP" ng-init="NXR_RIP='192.168.0.10'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">ethernet1 IP</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="nxr_e1ip" ng-init="nxr_e1ip='11.22.33.44'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">host virtIP</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="nxr_vip" ng-init="nxr_vip='11.22.33.10'">
 </div>
 </div>
+
 </form>
 <pre><code>show config
 configure terminal
@@ -981,7 +1074,7 @@ restart</code></pre>
 <span class="kw">cat</span> ~/.ssh/id_rsa.pub</code></pre>
 <h3 id="on-server">on SERVER</h3>
 <h4 id="paste">paste</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/home/USERNAME/.ssh/authorized_keys</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">/home/USERNAME/.ssh/authorized_keys</code></pre>
 <h1 id="centos">CENTOS</h1>
 <h2 id="single-user-mode">single user mode</h2>
 <ul>
@@ -992,9 +1085,9 @@ restart</code></pre>
 </ul>
 <h2 id="selinux">SELINUX</h2>
 <h3 id="状況確認">状況確認</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">getenforce</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">getenforce</code></pre>
 <h3 id="一時的な-off">一時的な OFF</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">setenforce</span> 0</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">setenforce 0</code></pre>
 <h3 id="恒久的な-off">恒久的な OFF</h3>
 <h4 id="etcselinuxconfig">/etc/selinux/config</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">SELINUX=</span>disabled</code></pre>
@@ -1006,6 +1099,7 @@ restart</code></pre>
 <input class="form-control" type="text" onclick="this.select();" ng-model="CENT_NET_IFNAME" ng-init="CENT_NET_IFNAME='eth0'">
 </div>
 </div>
+
 </form>
 <h3 id="ip-アドレスリンクスピード固定化">IP アドレス・リンクスピード固定化</h3>
 <h4 id="etcsysconfignetwork-scriptsifcfg-eth0">/etc/sysconfig/network-scripts/ifcfg-eth0</h4>
@@ -1021,7 +1115,7 @@ restart</code></pre>
 <span class="ot">NETMASK=</span>255.255.255.0
 <span class="ot">ETHTOOL_OPTS=</span><span class="st">&quot;autoneg off speed 10 duplex full&quot;</span></code></pre>
 <h4 id="sudo">sudo</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">service</span> network restart</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">service network restart</code></pre>
 <h3 id="ip-エイリアス">IP エイリアス</h3>
 <h4 id="sudo-1">sudo</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span> /etc/sysconfig/network-scripts
@@ -1038,19 +1132,19 @@ restart</code></pre>
 <span class="ot">IPADDR=</span>192.168.1.10
 <span class="ot">NETMASK=</span>255.255.255.0
 <span class="ot">ETHTOOL_OPTS=</span><span class="st">&quot;autoneg off speed 10 duplex full&quot;</span></code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">service</span> network restart</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">service network restart</code></pre>
 <h3 id="スタティックルート">スタティックルート</h3>
 <h4 id="etcsysconfigstatic-routes">/etc/sysconfig/static-routes</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">any</span> net 123.1.2.0 netmask 255.255.255.0 gw 192.168.0.201</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">any net 123.1.2.0 netmask 255.255.255.0 gw 192.168.0.201</code></pre>
 <h4 id="sudo-2">sudo</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">service</span> network restart</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">service network restart</code></pre>
 <h3 id="デフォルトゲートウェイホスト名">デフォルトゲートウェイ・ホスト名</h3>
 <h4 id="etcsysconfignetwork">/etc/sysconfig/network</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">NETWORKING=</span>yes
 <span class="ot">NETWORKING_IPV6=</span>no
 <span class="ot">HOSTNAME=</span>SERVERNAME
 <span class="ot">GATEWAY=</span>192.168.0.123</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">service</span> network restart</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">service network restart</code></pre>
 <h2 id="yum">YUM</h2>
 <form class="form-horizontal">
 <div class="form-group">
@@ -1059,32 +1153,34 @@ restart</code></pre>
 <input class="form-control" type="text" onclick="this.select();" ng-model="YUM_PKG" ng-init="YUM_PKG='httpd'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">OPT</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="YUM_OPT" ng-init="YUM_OPT='--disablerepo=\\* --enablerepo=c6-media'">
 </div>
 </div>
+
 </form>
 <h3 id="onoff-repo">ON/OFF REPO</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> --disablerepo=<span class="dt">\*</span> --enablerepo=c6-media ...</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">yum --disablerepo=<span class="dt">\*</span> --enablerepo=c6-media ...</code></pre>
 <h3 id="packages-dependencies">package's dependencies</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> deplist <span class="dt">{{YUM_PKG}}</span> <span class="dt">{{YUM_OPT}}</span></code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> deplist <span class="dt">{{YUM_PKG}}</span> <span class="dt">{{YUM_OPT}}</span> <span class="kw">|</span> <span class="kw">grep</span> provider</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">yum deplist <span class="dt">{{YUM_PKG}}</span> <span class="dt">{{YUM_OPT}}</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">yum deplist <span class="dt">{{YUM_PKG}}</span> <span class="dt">{{YUM_OPT}}</span> <span class="kw">|</span> <span class="kw">grep</span> provider</code></pre>
 <h3 id="download">DOWNLOAD</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yumdownloader</span> --resolve <span class="dt">{{YUM_PKG}}</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">yumdownloader --resolve <span class="dt">{{YUM_PKG}}</span></code></pre>
 <h3 id="install-local-rpm">INSTALL LOCAL RPM</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> --disablerepo=<span class="dt">\*</span> -y localinstall ./*.rpm</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">yum --disablerepo=<span class="dt">\*</span> -y localinstall ./*.rpm</code></pre>
 <h3 id="list-2">LIST</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> <span class="dt">{{YUM_OPT}}</span> list</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">yum <span class="dt">{{YUM_OPT}}</span> list</code></pre>
 <h1 id="chef">CHEF</h1>
 <h2 id="misc-1">MISC</h2>
 <h3 id="create-cookbok">CREATE cookbok</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">knife</span> cookbook create app -o site-cookbooks</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">knife cookbook create app -o site-cookbooks</code></pre>
 <h1 id="virualbox">VirualBox</h1>
 <h2 id="image">image</h2>
 <h3 id="from-vmware">from vmware</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">VBoxManage</span> clonehd --format VDI cyua.vmdk cyua.vdi</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">VBoxManage clonehd --format VDI cyua.vmdk cyua.vdi</code></pre>
 <h1 id="vagrant">VAGRANT</h1>
 <form class="form-horizontal">
 <div class="form-group">
@@ -1093,37 +1189,43 @@ restart</code></pre>
 <input class="form-control" type="text" onclick="this.select();" ng-model="VAG_BOX_FILE" ng-init="VAG_BOX_FILE='./package.box'">
 </div>
 </div>
+
+
 <div class="form-group">
 <label class="control-label col-sm-6">BOX NAME</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="VAG_BOX_NAME" ng-init="VAG_BOX_NAME='centos65-x86_64-20131205'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">VM NAME</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="VAG_VM_NAME" ng-init="VAG_VM_NAME='vm1'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">VM STATIC IP</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="VAG_VM_IP" ng-init="VAG_VM_IP='192.168.0.111'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-sm-6">VM SSH PORT</label>
 <div class="col-sm-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="VAG_SSH_PORT" ng-init="VAG_SSH_PORT='2205'">
 </div>
 </div>
+
 </form>
 <h2 id="box">BOX</h2>
 <h3 id="add">ADD</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> box add <span class="dt">{{VAG_BOX_NAME}}</span> <span class="dt">{{VAG_BOX_FILE}}</span>
-<span class="kw">vagrant</span> box list</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">vagrant box add <span class="dt">{{VAG_BOX_NAME}}</span> <span class="dt">{{VAG_BOX_FILE}}</span>
+vagrant box list</code></pre>
 <h3 id="vms-status">VMs STATUS</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> global-status</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">vagrant global-status</code></pre>
 <h2 id="vagrantfile">Vagrantfile</h2>
 <pre class="sourceCode ruby"><code class="sourceCode ruby"><span class="co"># -*- mode: ruby -*-</span>
 <span class="co"># vi: set ft=ruby :</span>
@@ -1159,35 +1261,35 @@ restart</code></pre>
 <span class="kw">end</span></code></pre>
 <h2 id="ssh-3">ssh</h2>
 <h3 id="ssh-config">ssh config</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> up
-<span class="kw">vagrant</span> ssh-config vm1  <span class="kw">&gt;&gt;</span> ~/.ssh/config
-<span class="kw">vagrant</span> ssh-config vm2 <span class="kw">&gt;&gt;</span> ~/.ssh/config
+<pre class="sourceCode bash"><code class="sourceCode bash">vagrant up
+vagrant ssh-config vm1  <span class="kw">&gt;&gt;</span> ~/.ssh/config
+vagrant ssh-config vm2 <span class="kw">&gt;&gt;</span> ~/.ssh/config
 <span class="kw">cat</span> ~/.ssh/config</code></pre>
 <h2 id="provision">provision</h2>
 <h3 id="with-chef">with chef</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> halt
-<span class="kw">vagrant</span> sandbox on
-<span class="kw">vagrant</span> up
+<pre class="sourceCode bash"><code class="sourceCode bash">vagrant halt
+vagrant sandbox on
+vagrant up
 
 <span class="kw">echo</span> vm1 vm2 <span class="kw">|</span> <span class="kw">xargs</span> -n 1 knife solo prepare 
 
-<span class="kw">vagrant</span> halt
-<span class="kw">vagrant</span> sandbox commit
-<span class="kw">vagrant</span> up
+vagrant halt
+vagrant sandbox commit
+vagrant up
 
 <span class="kw">echo</span> vm1 vm2 <span class="kw">|</span> <span class="kw">xargs</span> -n 1 knife solo cook</code></pre>
 <h2 id="plug-in">PLUG-IN</h2>
 <h3 id="sandbox">sandbox</h3>
 <h4 id="sandboxモード開始">sandboxモード開始</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> sandbox on</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">vagrant sandbox on</code></pre>
 <h4 id="変更を決定する">変更を決定する</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> sandbox commit</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">vagrant sandbox commit</code></pre>
 <h4 id="変更を破棄しロールバックする">変更を破棄し、ロールバックする</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> sandbox rollback</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">vagrant sandbox rollback</code></pre>
 <h4 id="sandboxモード終了commitしていないものは破棄される">sandboxモード終了（commitしていないものは破棄される）</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> sandbox off</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">vagrant sandbox off</code></pre>
 <h4 id="現在sandboxモードかどうかの確認">現在sandboxモードかどうかの確認</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vagrant</span> sandbox status</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">vagrant sandbox status</code></pre>
 <h1 id="oracle">ORACLE</h1>
 <h2 id="setting">SETTING</h2>
 <h3 id="tnsnames.ora">TNSNAMES.ORA</h3>
@@ -1195,13 +1297,13 @@ restart</code></pre>
 <h3 id="tnsnames.ora-listener.ora">TNSNAMES.ora, LISTENER.ora</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span> <span class="ot">$ORACLE_HOME</span>/network/admin</code></pre>
 <h3 id="stop-start-restart">STOP, START, RESTART</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">service</span> dbora stop
-<span class="kw">service</span> dbora start
-<span class="kw">service</span> dbora restart</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">service dbora stop
+service dbora start
+service dbora restart</code></pre>
 <h2 id="sqlplus">SQLPLUS</h2>
 <h3 id="exec-.sql">exec *.sql</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlplus</span> <span class="kw">&lt;</span>USER<span class="kw">&gt;</span>/<span class="kw">&lt;</span>PASS<span class="kw">&gt;</span>@<span class="kw">&lt;</span>TNSNAME<span class="kw">&gt;</span> @<span class="kw">&lt;</span>FILE<span class="kw">&gt;</span></code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlplus</span> <span class="kw">&lt;</span>USER<span class="kw">&gt;</span>/<span class="kw">&lt;</span>PASS<span class="kw">&gt;</span>@<span class="kw">&lt;</span>SID<span class="kw">&gt;</span> @<span class="kw">&lt;</span>FILE<span class="kw">&gt;</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">sqlplus <span class="kw">&lt;</span>USER<span class="kw">&gt;</span>/<span class="kw">&lt;</span>PASS<span class="kw">&gt;</span>@<span class="kw">&lt;</span>TNSNAME<span class="kw">&gt;</span> @<span class="kw">&lt;</span>FILE<span class="kw">&gt;</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">sqlplus <span class="kw">&lt;</span>USER<span class="kw">&gt;</span>/<span class="kw">&lt;</span>PASS<span class="kw">&gt;</span>@<span class="kw">&lt;</span>SID<span class="kw">&gt;</span> @<span class="kw">&lt;</span>FILE<span class="kw">&gt;</span></code></pre>
 <h3 id="csv">CSV</h3>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">set</span> colsep <span class="st">&#39;,&#39;</span>
 <span class="kw">set</span> pagesize <span class="dv">0</span>
@@ -1212,9 +1314,15 @@ restart</code></pre>
 <span class="co">-- set numw X</span></code></pre>
 <h2 id="enterprise-manager">Enterprise Manager</h2>
 <h3 id="updown">UP/DOWN</h3>
+<<<<<<< HEAD
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">emctl</span> start dbconsole
 <span class="kw">emctl</span> stop dbconsole</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ORACLE_UNQNAME=</span>KX <span class="kw">emctl</span> start dbconsole</code></pre>
+=======
+<pre class="sourceCode bash"><code class="sourceCode bash">emctl start dbconsole
+emctl stop dbconsole</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ORACLE_UNQNAME=</span>KX emctl start dbconsole</code></pre>
+>>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h2 id="sql">SQL</h2>
 <form class="form-horizontal">
 <div class="form-group">
@@ -1223,6 +1331,7 @@ restart</code></pre>
 <input class="form-control" type="text" onclick="this.select();" ng-model="ORA_TAB_NAME" ng-init="ORA_TAB_NAME='TABNAME'">
 </div>
 </div>
+
 </form>
 <h3 id="insert">insert</h3>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">insert</span> <span class="kw">into</span> {{ORA_TAB_NAME}} (&lt;COL1&gt; ,&lt;COL2&gt;) <span class="kw">values</span> (&lt;COL1VAL&gt;,&lt;COL2VAL&gt;);</code></pre>
@@ -1238,7 +1347,7 @@ restart</code></pre>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="fu">sys_context</span>(<span class="st">&#39;USERENV&#39;</span>, <span class="st">&#39;instance_name&#39;</span>) <span class="kw">from</span> dual;</code></pre>
 <h3 id="db-link">DB Link</h3>
 <h4 id="connect">connect</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlplus</span> sys/manager@<span class="kw">&lt;</span>db<span class="kw">&gt;</span> as sysdba</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">sqlplus sys/manager@<span class="kw">&lt;</span>db<span class="kw">&gt;</span> <span class="kw">as</span> sysdba</code></pre>
 <h4 id="show-status">show status</h4>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">set</span> linesize <span class="dv">100</span>
 col OWNER    format a10
@@ -1270,27 +1379,31 @@ col <span class="kw">PASSWORD</span> format a20
 <input class="form-control" type="text" onclick="this.select();" ng-model="ORA_REPSITE_A" ng-init="ORA_REPSITE_A='AAA'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-xs-6">SITE B</label>
 <div class="col-xs-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="ORA_REPSITE_B" ng-init="ORA_REPSITE_B='BBB'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-xs-6">TNS</label>
 <div class="col-xs-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="ORA_REPTNSNAME" ng-init="ORA_REPTNSNAME='DB'">
 </div>
 </div>
+
 <div class="form-group">
 <label class="control-label col-xs-6">TABLE</label>
 <div class="col-xs-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="ORA_REP_TABNAME" ng-init="ORA_REP_TABNAME='TABLENAME'">
 </div>
 </div>
+
 </form>
 <h3 id="sqlplus-1">SQLPLUS</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlplus</span> /nolog</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">sqlplus /nolog</code></pre>
 <h3 id="create-repadmin">CREATE REPADMIN</h3>
 <h4 id="ora_repsite_a">{{ORA_REPSITE_A}}</h4>
 <pre class="sourceCode sql"><code class="sourceCode sql">conn sys/manager@{{ORA_REPSITE_A}}_{{ORA_REPTNSNAME}} <span class="kw">as</span> <span class="kw">sysdba</span>
