@@ -6,15 +6,15 @@
 
 ```{.bash}
 #!/bin/env sh
-Y4=${1}
-MO=${2}
 if [ $# -ne 2 ]; then
     echo usage: `basename ${0}` YYYY MO >&2
     exit 1
 fi
+ARG1=${1}
+ARG2=${2}
 ```
 
-## TIMES
+## TIME
 
 ### UPTIME for SCRIPT(bash)
 
@@ -27,18 +27,6 @@ sleep 3
 echo $SECONDS
 ```
 
-### WATCH
-
-```{.bash}
-watch -t -n 0.1 --no-title "date  +'%n +------------+%n | %Y-%m-%d |%n +------------+%n |  %H:%M:%S  |%n +------------+%n | %N0 |%n +------------+%n | %s |%n +------------+'"
-```
-
-### TIMER
-
-```{.bash}
-watch -n 0.1 --no-title 'expr `date +%s -d "2020-12-31 23:59:59"` - `date +%s`'
-```
-
 
 ## QUOTEATION
 
@@ -48,7 +36,7 @@ echo "${AAA}" # 展開される
 echo '${AAA}' # 展開されぬ
 ```
 
-## for
+## FOR
 
 ### for each
 
@@ -1651,28 +1639,52 @@ find . -name '{{CMD_REPLACE_FILENAME}}' -type f -exec sed -i 's/{{CMD_REPLACE_BE
 
 
 
-### 通算秒 / 日時
+# date
+
+## from 通算秒 to 日時
 
 ``` {.bash}
-date -d "1970-01-01 UTC <通算秒数> seconds" '+%Y-%m-%d %H:%M:%S'
+date -d "1970-01-01 UTC 4294967295 seconds" '+%Y-%m-%d %H:%M:%S'
+```
+
+## from 日時 to 通算秒
+
+``` {.bash}
+date -d "2000-01-01 00:00:00" +%s
 ```
 
 
-### 所要時間測定
+## WATCH
 
- * centos6 minimum だと bc コマンドはいってない。
- * uptime なので時刻調整されても問題ないはず。
- * cat /proc/uptime の2つ目はアイドル時間数とのこと。
-
-``` {.bash}
-IFS=" "
-read -a t1 <<< `cat /proc/uptime`;date
-sleep 5
-read -a t2 <<< `cat /proc/uptime`;date
-td=`echo "${t2[0]}-${t1[0]}" | bc`
-echo "${td} sec."
+```{.bash}
+watch -t -n 0.1 --no-title "date  +'%n +------------+%n | %Y-%m-%d |%n +------------+%n |  %H:%M:%S  |%n +------------+%n | %N0 |%n +------------+%n | %s |%n +------------+'"
 ```
 
+```{.bash}
+while true;do date +"%Y-%m-%d %H:%M:%S.%N";sleep 1;done
+```
+
+## TIMER
+
+```{.bash}
+watch -n 0.1 --no-title 'expr `date +%s -d "2020-12-31 23:59:59"` - `date +%s`'
+```
+
+
+## 日時書式
+
+``` {.bash}
+date
+date +"%Y-%m-%d %H:%M:%S"
+```
+
+## OFFSET
+
+``` {.bash}
+date
+date -d "12 hours ago"
+date -d "12 hours"
+```
 
 
 
@@ -1724,17 +1736,6 @@ paste  {{CMD_FILE1}} {{CMD_FILE2}}
 PS1="\[\033[07m\][\u@${HOSTNAME} \W]\\$\[\033[00m\] "
 ```
 
-### 日時書式
-
-``` {.bash}
-date +"%Y_%m_%d__%H_%M_%S"
-```
-
-### OFFSET
-
-``` {.bash}
-date +"%Y_%m_%d__%H_%M_%S" -d "12 hours ago"
-```
 
 
 ### pgrep
@@ -1750,11 +1751,6 @@ pgrep procname* | xargs kill -9
 ```
 
 
-### watch
-
-``` {.bash}
-while true;do date +"%Y-%m-%d %H:%M:%S.%N";sleep 1;done
-```
 
 
 ### exfat

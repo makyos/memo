@@ -45,28 +45,24 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2 id="arg">ARG</h2>
 <h3 id="arg-check">ARG CHECK</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/env sh</span>
-<span class="ot">Y4=${1}</span>
-<span class="ot">MO=${2}</span>
 <span class="kw">if </span>[ <span class="ot">$#</span> -ne 2 ]; <span class="kw">then</span>
     <span class="kw">echo</span> usage: <span class="kw">`basename</span> <span class="ot">${0}</span><span class="kw">`</span> YYYY MO <span class="kw">&gt;&amp;2</span>
     <span class="kw">exit</span> 1
-<span class="kw">fi</span></code></pre>
-<h2 id="times">TIMES</h2>
+<span class="kw">fi</span>
+<span class="ot">ARG1=${1}</span>
+<span class="ot">ARG2=${2}</span></code></pre>
+<h2 id="time">TIME</h2>
 <h3 id="uptime-for-scriptbash">UPTIME for SCRIPT(bash)</h3>
 <p>bash にはあらかじめ SECONDS ていう環境変数がある。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/env bash</span>
 <span class="ot">SECONDS=</span>0
 <span class="kw">sleep</span> 3
 <span class="kw">echo</span> <span class="ot">$SECONDS</span></code></pre>
-<h3 id="watch">WATCH</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash">watch -t -n 0.1 --no-title <span class="st">&quot;date  +&#39;%n +------------+%n | %Y-%m-%d |%n +------------+%n |  %H:%M:%S  |%n +------------+%n | %N0 |%n +------------+%n | %s |%n +------------+&#39;&quot;</span></code></pre>
-<h3 id="timer">TIMER</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash">watch -n 0.1 --no-title <span class="st">&#39;expr `date +%s -d &quot;2020-12-31 23:59:59&quot;` - `date +%s`&#39;</span></code></pre>
 <h2 id="quoteation">QUOTEATION</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">AAA=</span>abc
 <span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">${AAA}</span><span class="st">&quot;</span> <span class="co"># 展開される</span>
 <span class="kw">echo</span> <span class="st">&#39;${AAA}&#39;</span> <span class="co"># 展開されぬ</span></code></pre>
-<h2 id="for">for</h2>
+<h2 id="for">FOR</h2>
 <h3 id="for-each">for each</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> num <span class="kw">in</span> one two three; <span class="kw">do</span>
     <span class="kw">echo</span> <span class="ot">${num}</span>
@@ -1039,20 +1035,23 @@ boot2docker up</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -rl <span class="st">&quot;{{CMD_REPLACE_BEFOR}}&quot;</span> */<span class="dt">{{CMD_REPLACE_FILENAME}}</span>
 <span class="kw">perl</span> -p -i.befor -e <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{{CMD_REPLACE_FILENAME}}</span></code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> <span class="kw">.</span> -name <span class="st">&#39;{{CMD_REPLACE_FILENAME}}&#39;</span> -type f -exec <span class="kw">sed</span> -i <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{}</span> <span class="dt">\;</span></code></pre>
-<h3 id="通算秒-日時">通算秒 / 日時</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span> -d <span class="st">&quot;1970-01-01 UTC &lt;通算秒数&gt; seconds&quot;</span> <span class="st">&#39;+%Y-%m-%d %H:%M:%S&#39;</span></code></pre>
-<h3 id="所要時間測定">所要時間測定</h3>
-<ul>
-<li>centos6 minimum だと bc コマンドはいってない。</li>
-<li>uptime なので時刻調整されても問題ないはず。</li>
-<li>cat /proc/uptime の2つ目はアイドル時間数とのこと。</li>
-</ul>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">IFS=</span><span class="st">&quot; &quot;</span>
-<span class="kw">read</span> -a <span class="ot">t1</span> <span class="kw">&lt;&lt;&lt;</span> <span class="kw">`cat</span> /proc/uptime<span class="kw">`</span>;<span class="kw">date</span>
-<span class="kw">sleep</span> 5
-<span class="kw">read</span> -a <span class="ot">t2</span> <span class="kw">&lt;&lt;&lt;</span> <span class="kw">`cat</span> /proc/uptime<span class="kw">`</span>;<span class="kw">date</span>
-<span class="ot">td=</span><span class="kw">`echo</span> <span class="st">&quot;</span><span class="ot">${t2[0]}</span><span class="st">-</span><span class="ot">${t1[0]}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="kw">bc`</span>
-<span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">${td}</span><span class="st"> sec.&quot;</span></code></pre>
+<h1 id="date">date</h1>
+<h2 id="from-通算秒-to-日時">from 通算秒 to 日時</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span> -d <span class="st">&quot;1970-01-01 UTC 4294967295 seconds&quot;</span> <span class="st">&#39;+%Y-%m-%d %H:%M:%S&#39;</span></code></pre>
+<h2 id="from-日時-to-通算秒">from 日時 to 通算秒</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span> -d <span class="st">&quot;2000-01-01 00:00:00&quot;</span> +%s</code></pre>
+<h2 id="watch">WATCH</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">watch -t -n 0.1 --no-title <span class="st">&quot;date  +&#39;%n +------------+%n | %Y-%m-%d |%n +------------+%n |  %H:%M:%S  |%n +------------+%n | %N0 |%n +------------+%n | %s |%n +------------+&#39;&quot;</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="kw">true</span>;<span class="kw">do</span> <span class="kw">date</span> +<span class="st">&quot;%Y-%m-%d %H:%M:%S.%N&quot;</span>;<span class="kw">sleep</span> 1;<span class="kw">done</span></code></pre>
+<h2 id="timer">TIMER</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">watch -n 0.1 --no-title <span class="st">&#39;expr `date +%s -d &quot;2020-12-31 23:59:59&quot;` - `date +%s`&#39;</span></code></pre>
+<h2 id="日時書式">日時書式</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span>
+<span class="kw">date</span> +<span class="st">&quot;%Y-%m-%d %H:%M:%S&quot;</span></code></pre>
+<h2 id="offset">OFFSET</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span>
+<span class="kw">date</span> -d <span class="st">&quot;12 hours ago&quot;</span>
+<span class="kw">date</span> -d <span class="st">&quot;12 hours&quot;</span></code></pre>
 <h3 id="ファイル検索-コマンド実行">ファイル検索 &amp; コマンド実行</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="kw">&lt;</span>検索文字<span class="kw">&gt;</span> <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">&lt;</span>コマンド<span class="kw">&gt;</span></code></pre>
 <form class="form-horizontal">
@@ -1082,16 +1081,10 @@ boot2docker up</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">paste  <span class="dt">{{CMD_FILE1}}</span> <span class="dt">{{CMD_FILE2}}</span></code></pre>
 <h3 id="プロンプト反転">プロンプト反転</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">PS1=</span><span class="st">&quot;\[\033[07m\][\u@</span><span class="ot">${HOSTNAME}</span><span class="st"> \W]</span><span class="dt">\\</span><span class="st">$\[\033[00m\] &quot;</span></code></pre>
-<h3 id="日時書式">日時書式</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span> +<span class="st">&quot;%Y_%m_%d__%H_%M_%S&quot;</span></code></pre>
-<h3 id="offset">OFFSET</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span> +<span class="st">&quot;%Y_%m_%d__%H_%M_%S&quot;</span> -d <span class="st">&quot;12 hours ago&quot;</span></code></pre>
 <h3 id="pgrep">pgrep</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">pgrep procname*</code></pre>
 <h4 id="pkill-and-kill">pkill and kill</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash">pgrep procname* <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">kill</span> -9</code></pre>
-<h3 id="watch-1">watch</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="kw">true</span>;<span class="kw">do</span> <span class="kw">date</span> +<span class="st">&quot;%Y-%m-%d %H:%M:%S.%N&quot;</span>;<span class="kw">sleep</span> 1;<span class="kw">done</span></code></pre>
 <h3 id="exfat">exfat</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> <span class="kw">mount</span> -t exfat-fuse /dev/sde1 /media/exfat
 <span class="kw">umount</span> /media/exfat</code></pre>
