@@ -1482,7 +1482,7 @@ echo -e 'zzz\e[1m\e[31mRED+BOLD\e[mzzz'
 ### What Ever
 
 ``` {.bash}
-echoecho -e "
+echo -e "
 # Attribute codes:
 # 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
 # Text color codes:
@@ -1496,7 +1496,7 @@ echoecho -e "
 \033[04m 下線           04 \033[00m
 \033[05m 点滅           05 \033[00m
 \033[07m 色反転         07 \033[00m
-\033[08m 塗りつぶし     08 \033[00m(塗りつぶし     08)
+\033[08m 塗りつぶし     08 \033[00m(塗りつぶし 08)
 
 色番号
 \033[30m 黒               30 \033[00m \033[40m 40 \033[00m \033[31;40m 31;40 \033[00m \033[32;00;40m 32;00;40 \033[00m
@@ -2243,6 +2243,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   (1..NUM_INSTANCES).each do |i|
 
     config.vm.define "dummy-#{i}" do |dummy|
+      dummy.vm.box_check_update = false
       dummy.vm.hostname = "dummy-#{i}"
       dummy.vm.network :private_network, ip: "#{BASE_IP_ADDR}.#{i}"
     end

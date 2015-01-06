@@ -938,7 +938,7 @@ boot2docker up</code></pre>
             <span class="kw">&lt;</span>---<span class="kw">&gt;&lt;</span>----<span class="kw">&gt;</span>        <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
 <span class="kw">echo</span> -e <span class="st">&#39;zzz\e[1m\e[31mRED+BOLD\e[mzzz&#39;</span></code></pre>
 <h3 id="what-ever">What Ever</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash">echoecho -e <span class="st">&quot;</span>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> -e <span class="st">&quot;</span>
 <span class="st"># Attribute codes:</span>
 <span class="st"># 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed</span>
 <span class="st"># Text color codes:</span>
@@ -952,7 +952,7 @@ boot2docker up</code></pre>
 <span class="st">\033[04m 下線           04 \033[00m</span>
 <span class="st">\033[05m 点滅           05 \033[00m</span>
 <span class="st">\033[07m 色反転         07 \033[00m</span>
-<span class="st">\033[08m 塗りつぶし     08 \033[00m(塗りつぶし     08)</span>
+<span class="st">\033[08m 塗りつぶし     08 \033[00m(塗りつぶし 08)</span>
 
 <span class="st">色番号</span>
 <span class="st">\033[30m 黒               30 \033[00m \033[40m 40 \033[00m \033[31;40m 31;40 \033[00m \033[32;00;40m 32;00;40 \033[00m</span>
@@ -1424,6 +1424,7 @@ vagrant box list</code></pre>
   (<span class="dv">1</span>..<span class="dt">NUM_INSTANCES</span>).each <span class="kw">do</span> |i|
 
     config.vm.define <span class="st">&quot;dummy-</span><span class="ot">#{</span>i<span class="ot">}</span><span class="st">&quot;</span> <span class="kw">do</span> |dummy|
+      dummy.vm.box_check_update = <span class="dv">false</span>
       dummy.vm.hostname = <span class="st">&quot;dummy-</span><span class="ot">#{</span>i<span class="ot">}</span><span class="st">&quot;</span>
       dummy.vm.network <span class="st">:private_network</span>, ip: <span class="st">&quot;</span><span class="ot">#{</span><span class="dt">BASE_IP_ADDR</span><span class="ot">}</span><span class="st">.</span><span class="ot">#{</span>i<span class="ot">}</span><span class="st">&quot;</span>
     <span class="kw">end</span>
