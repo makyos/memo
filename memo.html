@@ -41,6 +41,40 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="shell-script">SHELL SCRIPT</h1>
+<h2 id="arg">ARG</h2>
+<h3 id="arg-check">ARG CHECK</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/env sh</span>
+<span class="ot">Y4=${1}</span>
+<span class="ot">MO=${2}</span>
+<span class="kw">if </span>[ <span class="ot">$#</span> -ne 2 ]; <span class="kw">then</span>
+    <span class="kw">echo</span> usage: <span class="kw">`basename</span> <span class="ot">${0}</span><span class="kw">`</span> YYYY MO <span class="kw">&gt;&amp;2</span>
+    <span class="kw">exit</span> 1
+<span class="kw">fi</span></code></pre>
+<h2 id="times">TIMES</h2>
+<h3 id="uptime-for-scriptbash">UPTIME for SCRIPT(bash)</h3>
+<p>bash にはあらかじめ SECONDS ていう環境変数がある。</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/env bash</span>
+<span class="ot">SECONDS=</span>0
+<span class="kw">sleep</span> 3
+<span class="kw">echo</span> <span class="ot">$SECONDS</span></code></pre>
+<h3 id="watch">WATCH</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">watch -t -n 0.1 --no-title <span class="st">&quot;date  +&#39;%n +------------+%n | %Y-%m-%d |%n +------------+%n |  %H:%M:%S  |%n +------------+%n | %N0 |%n +------------+%n | %s |%n +------------+&#39;&quot;</span></code></pre>
+<h3 id="timer">TIMER</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">watch -n 0.1 --no-title <span class="st">&#39;expr `date +%s -d &quot;2020-12-31 23:59:59&quot;` - `date +%s`&#39;</span></code></pre>
+<h2 id="quoteation">QUOTEATION</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">AAA=</span>abc
+<span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">${AAA}</span><span class="st">&quot;</span> <span class="co"># 展開される</span>
+<span class="kw">echo</span> <span class="st">&#39;${AAA}&#39;</span> <span class="co"># 展開されぬ</span></code></pre>
+<h2 id="for">for</h2>
+<h3 id="for-each">for each</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> num <span class="kw">in</span> one two three; <span class="kw">do</span>
+    <span class="kw">echo</span> <span class="ot">${num}</span>
+<span class="kw">done</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">nums=</span><span class="st">&quot;one two three&quot;</span>
+<span class="kw">for</span> num <span class="kw">in</span> <span class="ot">${nums}</span>; <span class="kw">do</span>
+    <span class="kw">echo</span> <span class="ot">${num}</span>
+<span class="kw">done</span></code></pre>
 <h1 id="elastic-search">ELASTIC SEARCH</h1>
 <form class="form-horizontal">
 
@@ -80,7 +114,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode bash"><code class="sourceCode bash">curl -XPUT <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_mapping&#39;</span>  -d @<span class="dt">{{ES_TYPE_NAME}}</span>.json</code></pre>
 <h4 id="es_type_name.json">{{ES_TYPE_NAME}}.json</h4>
 <pre class="sourceCode json"><code class="sourceCode json">{
-    <span class="dt">&quot;top_prc&quot;</span>:{
+    <span class="dt">&quot;{{ES_TYPE_NAME}}&quot;</span>:{
         <span class="dt">&quot;properties&quot;</span>:{
             <span class="dt">&quot;@timestamp&quot;</span>:{
                 <span class="dt">&quot;type&quot;</span>:<span class="st">&quot;date&quot;</span>
@@ -485,7 +519,7 @@ I/O <span class="kw">size</span> <span class="kw">(</span>minimum/optimal<span c
 <h3 id="dd-コマンドでイメージファイル化">dd コマンドでイメージファイル化</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">bs=</span>セクタサイズ if=/dev/sda of=sda.dd conv=sync,noerror</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">bs=</span>セクタサイズ if=/dev/sda conv=sync,noerror <span class="kw">|</span> <span class="kw">gzip</span> -c9 <span class="kw">&gt;</span> sda.dd.gz</code></pre>
-<h4 id="dd-の進捗表示">dd の進捗表示</h4>
+<h5 id="dd-の進捗表示">dd の進捗表示</h5>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> watch -n 60 <span class="st">&quot;pkill -USER1 dd&quot;</span></code></pre>
 <h4 id="イメージファイルの中身確認">イメージファイルの中身確認</h4>
 <h5 id="パーティションテーブル">パーティションテーブル</h5>
@@ -1056,7 +1090,7 @@ boot2docker up</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">pgrep procname*</code></pre>
 <h4 id="pkill-and-kill">pkill and kill</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash">pgrep procname* <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">kill</span> -9</code></pre>
-<h3 id="watch">watch</h3>
+<h3 id="watch-1">watch</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="kw">true</span>;<span class="kw">do</span> <span class="kw">date</span> +<span class="st">&quot;%Y-%m-%d %H:%M:%S.%N&quot;</span>;<span class="kw">sleep</span> 1;<span class="kw">done</span></code></pre>
 <h3 id="exfat">exfat</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> <span class="kw">mount</span> -t exfat-fuse /dev/sde1 /media/exfat

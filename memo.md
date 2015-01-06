@@ -1,3 +1,69 @@
+# SHELL SCRIPT
+
+## ARG
+
+### ARG CHECK
+
+```{.bash}
+#!/bin/env sh
+Y4=${1}
+MO=${2}
+if [ $# -ne 2 ]; then
+    echo usage: `basename ${0}` YYYY MO >&2
+    exit 1
+fi
+```
+
+## TIMES
+
+### UPTIME for SCRIPT(bash)
+
+bash にはあらかじめ SECONDS ていう環境変数がある。
+
+```{.bash}
+#!/bin/env bash
+SECONDS=0
+sleep 3
+echo $SECONDS
+```
+
+### WATCH
+
+```{.bash}
+watch -t -n 0.1 --no-title "date  +'%n +------------+%n | %Y-%m-%d |%n +------------+%n |  %H:%M:%S  |%n +------------+%n | %N0 |%n +------------+%n | %s |%n +------------+'"
+```
+
+### TIMER
+
+```{.bash}
+watch -n 0.1 --no-title 'expr `date +%s -d "2020-12-31 23:59:59"` - `date +%s`'
+```
+
+
+## QUOTEATION
+
+```{.bash}
+AAA=abc
+echo "${AAA}" # 展開される
+echo '${AAA}' # 展開されぬ
+```
+
+## for
+
+### for each
+
+```{.bash}
+for num in one two three; do
+    echo ${num}
+done
+```
+
+```{.bash}
+nums="one two three"
+for num in ${nums}; do
+    echo ${num}
+done
+```
 
 # ELASTIC SEARCH
 
@@ -60,7 +126,7 @@ curl -XPUT 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_map
 
 ``` {.json}
 {
-    "top_prc":{
+    "{{ES_TYPE_NAME}}":{
         "properties":{
             "@timestamp":{
                 "type":"date"
@@ -684,7 +750,7 @@ dd bs=セクタサイズ if=/dev/sda conv=sync,noerror | gzip -c9 > sda.dd.gz
 ```
 
 
-#### dd の進捗表示
+##### dd の進捗表示
 
 ``` {.bash}
 sudo watch -n 60 "pkill -USER1 dd"
