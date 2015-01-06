@@ -41,12 +41,121 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="elastic-search">ELASTIC SEARCH</h1>
+<form class="form-horizontal">
+
+<div class="form-group">
+<label class="control-label col-xs-6">SERVER ADDRESS &amp; PORT</label>
+<div class="col-xs-6">
+<input class="form-control" type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='192.168.0.246:9200'">
+</div>
+</div>
+
+<div class="form-group">
+<label class="control-label col-xs-6">INDEX NAME</label>
+<div class="col-xs-6">
+<input class="form-control" type="text" onclick="this.select();" ng-model="ES_INDEX_NAME" ng-init="ES_INDEX_NAME='db-name'">
+</div>
+</div>
+
+
+<div class="form-group">
+<label class="control-label col-xs-6">TYPE NAME</label>
+<div class="col-xs-6">
+<input class="form-control" type="text" onclick="this.select();" ng-model="ES_TYPE_NAME" ng-init="ES_TYPE_NAME='table-name'">
+</div>
+</div>
+
+</form>
+
+<h2 id="index">INDEX</h2>
+<h3 id="create">create</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl -XPUT <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}&#39;</span></code></pre>
+<h3 id="look">look</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl -XGET <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}?pretty=true&#39;</span></code></pre>
+<h3 id="delete">delete</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl -XDELETE <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}&#39;</span></code></pre>
+<h2 id="type">TYPE</h2>
+<h3 id="create-1">create</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl -XPUT <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_mapping&#39;</span>  -d @<span class="dt">{{ES_TYPE_NAME}}</span>.json</code></pre>
+<h4 id="es_type_name.json">{{ES_TYPE_NAME}}.json</h4>
+<pre class="sourceCode json"><code class="sourceCode json">{
+    <span class="dt">&quot;top_prc&quot;</span>:{
+        <span class="dt">&quot;properties&quot;</span>:{
+            <span class="dt">&quot;@timestamp&quot;</span>:{
+                <span class="dt">&quot;type&quot;</span>:<span class="st">&quot;date&quot;</span>
+                ,<span class="dt">&quot;format&quot;</span>:<span class="st">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>
+            }
+            ,<span class="dt">&quot;srv&quot;</span>     :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;string&quot;</span>, <span class="dt">&quot;index&quot;</span>: <span class="st">&quot;not_analyzed&quot;</span>}
+            ,<span class="dt">&quot;pid&quot;</span>     :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;integer&quot;</span>}
+            ,<span class="dt">&quot;user&quot;</span>    :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;string&quot;</span>, <span class="dt">&quot;index&quot;</span>: <span class="st">&quot;not_analyzed&quot;</span>}
+            ,<span class="dt">&quot;pr&quot;</span>      :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;string&quot;</span>, <span class="dt">&quot;index&quot;</span>: <span class="st">&quot;not_analyzed&quot;</span>}
+            ,<span class="dt">&quot;ni&quot;</span>      :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;integer&quot;</span>}
+            ,<span class="dt">&quot;virt&quot;</span>    :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;integer&quot;</span>}
+            ,<span class="dt">&quot;res&quot;</span>     :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;integer&quot;</span>}
+            ,<span class="dt">&quot;shr&quot;</span>     :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;integer&quot;</span>}
+            ,<span class="dt">&quot;s&quot;</span>       :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;string&quot;</span>, <span class="dt">&quot;index&quot;</span>: <span class="st">&quot;not_analyzed&quot;</span>}
+            ,<span class="dt">&quot;cpu&quot;</span>     :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;float&quot;</span>}
+            ,<span class="dt">&quot;mem&quot;</span>     :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;float&quot;</span>}
+            ,<span class="dt">&quot;times&quot;</span>   :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;string&quot;</span>}
+            ,<span class="dt">&quot;cmd0&quot;</span>    :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;string&quot;</span>, <span class="dt">&quot;index&quot;</span>: <span class="st">&quot;not_analyzed&quot;</span>}
+            ,<span class="dt">&quot;cmd&quot;</span>     :{<span class="dt">&quot;type&quot;</span>:<span class="st">&quot;string&quot;</span>, <span class="dt">&quot;index&quot;</span>: <span class="st">&quot;not_analyzed&quot;</span>}
+        }
+    }
+}</code></pre>
+<h3 id="look-1">look</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl -XGET <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_mapping?pretty=true&#39;</span></code></pre>
+<h3 id="delete-1">delete</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl -XGET <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}&#39;</span></code></pre>
+<h2 id="bulk-import">BULK IMPORT</h2>
+<h4 id="importdatafile.json">@IMPORTDATAFILE.json</h4>
+<pre class="sourceCode json"><code class="sourceCode json">{<span class="dt">&quot;index&quot;</span>:{}}
+{<span class="dt">&quot;@timestamp&quot;</span>:<span class="st">&quot;2014-11-01 00:01:01&quot;</span>,<span class="dt">&quot;srv&quot;</span>:<span class="st">&quot;srv_A&quot;</span>,<span class="dt">&quot;pid&quot;</span>:<span class="dv">2884</span>,<span class="dt">&quot;user&quot;</span>:<span class="st">&quot;oracle&quot;</span>,<span class="dt">&quot;pr&quot;</span>:<span class="st">&quot;15&quot;</span>,<span class="dt">&quot;ni&quot;</span>:<span class="st">&quot;0&quot;</span>,<span class="dt">&quot;virt&quot;</span>:<span class="dv">1589000</span>,<span class="dt">&quot;res&quot;</span>:<span class="dv">496000</span>,<span class="dt">&quot;shr&quot;</span>:<span class="dv">489000</span>,<span class="dt">&quot;s&quot;</span>:<span class="st">&quot;S&quot;</span>,<span class="dt">&quot;cpu&quot;</span>:<span class="fl">15.4</span>,<span class="dt">&quot;mem&quot;</span>:<span class="fl">10.0</span>,<span class="dt">&quot;times&quot;</span>:<span class="st">&quot;0:03.45&quot;</span>,<span class="dt">&quot;cmd0&quot;</span>:<span class="st">&quot;oracle&quot;</span>,<span class="dt">&quot;cmd&quot;</span>:<span class="st">&quot;oracle (LOCAL=NO)&quot;</span>}
+{<span class="dt">&quot;index&quot;</span>:{}}
+{<span class="dt">&quot;@timestamp&quot;</span>:<span class="st">&quot;2014-11-01 00:01:01&quot;</span>,<span class="dt">&quot;srv&quot;</span>:<span class="st">&quot;srv_A&quot;</span>,<span class="dt">&quot;pid&quot;</span>:<span class="dv">10680</span>,<span class="dt">&quot;user&quot;</span>:<span class="st">&quot;oracle&quot;</span>,<span class="dt">&quot;pr&quot;</span>:<span class="st">&quot;16&quot;</span>,<span class="dt">&quot;ni&quot;</span>:<span class="st">&quot;0&quot;</span>,<span class="dt">&quot;virt&quot;</span>:<span class="dv">1603000</span>,<span class="dt">&quot;res&quot;</span>:<span class="dv">1000000</span>,<span class="dt">&quot;shr&quot;</span>:<span class="dv">1000000</span>,<span class="dt">&quot;s&quot;</span>:<span class="st">&quot;S&quot;</span>,<span class="dt">&quot;cpu&quot;</span>:<span class="fl">3.9</span>,<span class="dt">&quot;mem&quot;</span>:<span class="fl">27.4</span>,<span class="dt">&quot;times&quot;</span>:<span class="st">&quot;400:19.45&quot;</span>,<span class="dt">&quot;cmd0&quot;</span>:<span class="st">&quot;ora_j000&quot;</span>,<span class="dt">&quot;cmd&quot;</span>:<span class="st">&quot;ora_j000&quot;</span>}
+{<span class="dt">&quot;index&quot;</span>:{}}
+{<span class="dt">&quot;@timestamp&quot;</span>:<span class="st">&quot;2014-11-01 00:01:01&quot;</span>,<span class="dt">&quot;srv&quot;</span>:<span class="st">&quot;srv_A&quot;</span>,<span class="dt">&quot;pid&quot;</span>:<span class="dv">4645</span>,<span class="dt">&quot;user&quot;</span>:<span class="st">&quot;root&quot;</span>,<span class="dt">&quot;pr&quot;</span>:<span class="st">&quot;15&quot;</span>,<span class="dt">&quot;ni&quot;</span>:<span class="st">&quot;0&quot;</span>,<span class="dt">&quot;virt&quot;</span>:<span class="dv">6276</span>,<span class="dt">&quot;res&quot;</span>:<span class="dv">948</span>,<span class="dt">&quot;shr&quot;</span>:<span class="dv">668</span>,<span class="dt">&quot;s&quot;</span>:<span class="st">&quot;R&quot;</span>,<span class="dt">&quot;cpu&quot;</span>:<span class="fl">1.9</span>,<span class="dt">&quot;mem&quot;</span>:<span class="fl">0.0</span>,<span class="dt">&quot;times&quot;</span>:<span class="st">&quot;0:00.01&quot;</span>,<span class="dt">&quot;cmd0&quot;</span>:<span class="st">&quot;top&quot;</span>,<span class="dt">&quot;cmd&quot;</span>:<span class="st">&quot;top -b -n 1 -c&quot;</span>}</code></pre>
+<h3 id="normal-size">NORMAL SIZE</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl -XPOST <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_bulk&#39;</span> --data-binary @IMPORTDATAFILE.json  <span class="kw">&gt;</span> /dev/null</code></pre>
+<h3 id="laerge-size">LAERGE SIZE</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">split</span> IMPORTDATAFILE.json -l 100000
+<span class="kw">time</span> <span class="kw">for</span> f <span class="kw">in</span> x??; <span class="kw">do</span> curl -XPOST <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_bulk&#39;</span> --data-binary @<span class="ot">$f</span> <span class="kw">&gt;</span> /dev/null; <span class="kw">done</span>
+<span class="kw">rm</span> -f x??</code></pre>
+<h2 id="search">SEARCH</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl -XGET <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_search&#39;</span></code></pre>
+<h1 id="bz2">BZ2</h1>
+<h3 id="extract">EXTRACT</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> jxvf FILE.tar.bz2</code></pre>
+<h1 id="node">NODE</h1>
+<h2 id="npm">npm</h2>
+<h3 id="order-package">order PACKAGE</h3>
+<h4 id="package.json">package.json</h4>
+<p>dependencies に追加していく</p>
+<pre class="sourceCode json"><code class="sourceCode json">{
+  <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;tw&quot;</span>,
+  <span class="dt">&quot;version&quot;</span>: <span class="st">&quot;1.0.0&quot;</span>,
+  <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;&quot;</span>,
+  <span class="dt">&quot;main&quot;</span>: <span class="st">&quot;index.js&quot;</span>,
+  <span class="dt">&quot;scripts&quot;</span>: {
+    <span class="dt">&quot;test&quot;</span>: <span class="st">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span>
+  },
+  <span class="dt">&quot;author&quot;</span>: <span class="st">&quot;&quot;</span>,
+  <span class="dt">&quot;license&quot;</span>: <span class="st">&quot;ISC&quot;</span>,
+  <span class="dt">&quot;dependencies&quot;</span>: {
+    <span class="dt">&quot;ntwitter&quot;</span>: <span class="st">&quot;~0.5.0&quot;</span>
+  }
+}</code></pre>
+<h3 id="package-install">PACKAGE INSTALL</h3>
+<p>bundler と違ってデフォルトでローカル ./node_modules/ にダウンロードされる</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">npm <span class="kw">install</span></code></pre>
+<h1 id="cassandra">CASSANDRA</h1>
+<h2 id="cqlsh">CQLSH</h2>
+<h3 id="exec-cql-file">exec CQL file</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">cqlsh HOSTNAME -f FILENAME</code></pre>
+<h3 id="cluster-status">CLUSTER STATUS</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">nodetool status KEYSPACE</code></pre>
 <h1 id="tcpdump">TCPDUMP</h1>
-<<<<<<< HEAD
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tcpdump</span> -Xs 256 -n -i eth1 dst port 50012</code></pre>
-=======
 <pre class="sourceCode bash"><code class="sourceCode bash">tcpdump -Xs 256 -n -i eth1 dst port 50012</code></pre>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h1 id="scheme">SCHEME</h1>
 <h2 id="list">LIST</h2>
 <table>
@@ -158,6 +267,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h2 id="ftp">FTP</h2>
 <h3 id="ftp-get">FTP GET</h3>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-xs-6">SERVER NAME</label>
 <div class="col-xs-6">
@@ -187,9 +297,11 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 
 </form>
+
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> --ftp-user=<span class="dt">{{WGET_FTP_USER}}</span> --ftp-password=<span class="dt">{{WGET_FTP_PASS}}</span> ftp://<span class="dt">{{WGET_FTP_SERVER}}/{{WGET_GET_FILE}}</span></code></pre>
 <h1 id="sqlite3">SQLITE3</h1>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-xs-6">DATABASE NAME</label>
 <div class="col-xs-6">
@@ -212,6 +324,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 
 </form>
+
 <h2 id="database">DATABASE</h2>
 <h3 id="createconnect-database">create/connect DATABASE</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">sqlite3 <span class="dt">{{SQLITE_DB_NAME}}</span>.sqlite3</code></pre>
@@ -227,7 +340,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h3 id="sql-from-file">SQL from FILE</h3>
 <pre class="sourceCode sql"><code class="sourceCode sql">.read {{SQLITE_SQL_FILE}}</code></pre>
 <pre class="sourceCode sql"><code class="sourceCode sql">sqlite3 {{SQLITE_DB_NAME}} &lt; {{SQLITE_SQL_FILE}}</code></pre>
-<h3 id="create">CREATE</h3>
+<h3 id="create-2">CREATE</h3>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">create</span> <span class="kw">table</span> {{SQLITE_TAB_NAME}} (
     <span class="kw">id</span> <span class="dt">integer</span> <span class="kw">not</span> <span class="kw">null</span> <span class="kw">primary</span> <span class="kw">key</span>
   , name text
@@ -262,6 +375,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <p>M-x packeage-list-packeage</p>
 <h1 id="escape-text">ESCAPE TEXT</h1>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-xs-6">TEXT</label>
 <div class="col-xs-6">
@@ -270,6 +384,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </div>
 
 </form>
+
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{esc_ret()}}</span></code></pre>
 <h1 id="ruby">RUBY</h1>
 <h2 id="rbenv">rbenv</h2>
@@ -288,14 +403,17 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rm</span> -fr .ruby-build</code></pre>
 <h3 id="install-version">install version</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">ruby-build 2.1.2 /usr/local</code></pre>
+<h3 id="bundler">BUNDLER</h3>
+<h4 id="init-1">init</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash">bundle init</code></pre>
+<h4 id="install-gems">install GEMS</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash">bundle <span class="kw">install</span> --path=vendor/bundle</code></pre>
+<h4 id="exec">exec</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash">bundle <span class="kw">exec</span> ruby app.rb</code></pre>
 <h2 id="json">JSON</h2>
 <p>パースするとき no ASCII とかいわれたら。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">LANG=</span>en_US.UTF8
-<<<<<<< HEAD
-<span class="kw">locale</span></code></pre>
-=======
 locale</code></pre>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <p>ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず &quot;ja_JP.UTF-8&quot; になってしまう。</p>
 <h1 id="linux">LINUX</h1>
 <h2 id="use-disc-media">USE DISC MEDIA</h2>
@@ -313,6 +431,9 @@ locale</code></pre>
 </div>
 </div>
 </form>
+
+
+
 <h3 id="disc-to-iso-file">DISC to ISO FILE</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> /dev/dvd <span class="ot">of=</span><span class="dt">{{ISO_FILEPATH}}</span></code></pre>
 <h3 id="mount-iso-file">MOUNT ISO FILE</h3>
@@ -337,38 +458,19 @@ locale</code></pre>
 </div>
 </div>
 </form>
+
 <p>example 255MB(4096x65536)</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">if=</span>/dev/zero  of=<span class="dt">{{LINUX_SWAP_FILE}}</span> bs=4096 count=65536
 <span class="ot">mkswap=</span><span class="dt">{{LINUX_SWAP_FILE}}</span>
 <span class="kw">chmod</span> 600 <span class="dt">{{LINUX_SWAP_FILE}}</span>
 swapon <span class="dt">{{LINUX_SWAP_FILE}}</span></code></pre>
 <h4 id="etcfstab-1">/etc/fstab</h4>
-<<<<<<< HEAD
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{LINUX_SWAP_FILE}}</span> <span class="kw">swap</span> swap defaults</code></pre>
-=======
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{LINUX_SWAP_FILE}}</span> swap swap defaults</code></pre>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h1 id="p2v">P2V</h1>
 <h2 id="physical-drive-to-image-file">physical drive to image file</h2>
 <h3 id="physical-drive-のセクタサイズを調べる">physical drive のセクタサイズを調べる</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> fdisk -l /dev/sda</code></pre>
 <h4 id="出力例">出力例</h4>
-<<<<<<< HEAD
-<pre class="sourceCode bash"><code class="sourceCode bash">ディスク <span class="kw">/dev</span>/sda: <span class="kw">500.1</span> GB, 500107862016 バイト
-ヘッド <span class="kw">255</span>, セクタ 63, シリンダ 60801
-<span class="kw">Units</span> = シリンダ数 of 16065 * 512 = 8225280 バイト
-セクタサイズ <span class="kw">(</span>論理 <span class="kw">/</span> 物理<span class="kw">):</span> 512 バイト / 512 バイト
-<span class="kw">I/O</span> size (minimum/optimal)<span class="kw">:</span> 512 bytes / 512 bytes
-ディスク識別子: <span class="kw">0x6f16023a</span>
-
-デバイス ブート      始点        終点     ブロック   <span class="kw">Id</span>  システム
-<span class="kw">/dev/sda1</span>   *           1          64      512000   83  Linux
-パーティション <span class="kw">1</span> は、シリンダ境界で終わっていません。
-<span class="kw">/dev/sda2</span>              64      121602   976254976   8e  Linux LVM</code></pre>
-<h3 id="dd-コマンドでイメージファイル化">dd コマンドでイメージファイル化</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> bs=セクタサイズ if=/dev/sda of=sda.dd conv=sync,noerror</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> bs=セクタサイズ if=/dev/sda conv=sync,noerror <span class="kw">|</span> <span class="kw">gzip</span> -c9 <span class="kw">&gt;</span> sda.dd.gz</code></pre>
-=======
 <pre class="sourceCode bash"><code class="sourceCode bash">ディスク /dev/sda: 500.1 GB, 500107862016 バイト
 ヘッド 255, セクタ 63, シリンダ 60801
 Units = シリンダ数 of 16065 * 512 = 8225280 バイト
@@ -383,38 +485,23 @@ I/O <span class="kw">size</span> <span class="kw">(</span>minimum/optimal<span c
 <h3 id="dd-コマンドでイメージファイル化">dd コマンドでイメージファイル化</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">bs=</span>セクタサイズ if=/dev/sda of=sda.dd conv=sync,noerror</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">bs=</span>セクタサイズ if=/dev/sda conv=sync,noerror <span class="kw">|</span> <span class="kw">gzip</span> -c9 <span class="kw">&gt;</span> sda.dd.gz</code></pre>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h4 id="dd-の進捗表示">dd の進捗表示</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> watch -n 60 <span class="st">&quot;pkill -USER1 dd&quot;</span></code></pre>
 <h4 id="イメージファイルの中身確認">イメージファイルの中身確認</h4>
 <h5 id="パーティションテーブル">パーティションテーブル</h5>
-<<<<<<< HEAD
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">fdisk</span> -l sda.dd</code></pre>
-<h5 id="マウントしてみる">マウントしてみる</h5>
-<h2 id="image-file-to-vdi">image file to VDI</h2>
-<p>自動的に圧縮（最小化ではない）される。</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vboxmanage</span> convertfromraw sda.dd sda.vdi</code></pre>
-=======
 <pre class="sourceCode bash"><code class="sourceCode bash">fdisk -l sda.dd</code></pre>
 <h5 id="マウントしてみる">マウントしてみる</h5>
 <h2 id="image-file-to-vdi">image file to VDI</h2>
 <p>自動的に圧縮（最小化ではない）される。</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">vboxmanage convertfromraw sda.dd sda.vdi</code></pre>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h2 id="参考情報">参考情報</h2>
 <h3 id="fsck-とかで起動しない場合">fsck とかで起動しない場合</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mount</span> -o remount,rw</code></pre>
 <h3 id="ゼロ埋め">ゼロ埋め</h3>
 <p>対象ドライブに cd して、</p>
-<<<<<<< HEAD
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> if=/dev/zero of=zero bs=4k<span class="kw">;</span> \<span class="kw">rm</span> zero</code></pre>
-<h3 id="圧縮">圧縮</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vboxmanage</span> modifyhd sda.vdi --compact</code></pre>
-=======
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">if=</span>/dev/zero of=zero bs=4k; \rm zero</code></pre>
 <h3 id="圧縮">圧縮</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">vboxmanage modifyhd sda.vdi --compact</code></pre>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h1 id="tmux">TMUX</h1>
 <h2 id="new">NEW</h2>
 <pre><code>tmux new -s &lt;session&gt;</code></pre>
@@ -453,6 +540,9 @@ I/O <span class="kw">size</span> <span class="kw">(</span>minimum/optimal<span c
 </div>
 </div>
 </form>
+
+
+
 <h2 id="on-the-serverremote">on the SERVER(REMOTE)</h2>
 <h3 id="create-remote-rep.">CREATE REMOTE REP.</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> <span class="kw">mkdir</span> -p <span class="dt">{{GIT_ROOT}}/{{GIT_REPONAME}}</span>
@@ -479,15 +569,10 @@ git push origin master</code></pre>
 </div>
 </div>
 </form>
-<<<<<<< HEAD
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> add .
-<span class="kw">git</span> commit -a -m <span class="st">&quot;{{GIT_COMMENT}}&quot;</span></code></pre>
-=======
 
 
 <pre class="sourceCode bash"><code class="sourceCode bash">git add .
 git commit -a -m <span class="st">&quot;{{GIT_COMMENT}}&quot;</span></code></pre>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h3 id="commit-log">COMMIT LOG</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">git log</code></pre>
 <h3 id="push">PUSH</h3>
@@ -535,6 +620,60 @@ RUN ruby-build 2.1.2 /usr/local
 <span class="co"># Install bundler</span>
 RUN gem update --system
 RUN gem <span class="kw">install</span> bundler --no-rdoc --no-ri</code></pre>
+<h1 id="iptables">IPTABLES</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash">● 現在の設定の確認
+iptables -L
+
+● FORWARDは使わない
+iptables -P FORWARD DROP
+
+● まずは全許可に
+iptables -P INPUT ACCEPT
+
+● デフォルトのルールを全て削除
+iptables -F
+
+● 自分自身からのパケットは全許可
+iptables -A INPUT -i lo -j ACCEPT
+
+● SSH許可 or SSH自分<span class="kw">(</span>255.255.255.255<span class="kw">)</span>だけ許可
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+ or
+ iptables -A INPUT -s 255.255.255.255 -p tcp --dport 22 -j ACCEPT
+
+● FTP<span class="kw">(</span>20,21,4000-4029<span class="kw">)</span> の接続を許可
+iptables -A INPUT -p tcp --dport 20 -j ACCEPT
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+iptables -A INPUT -p tcp --dport 4000:4029 -j ACCEPT
+
+● http, https の接続を許可
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+● POP<span class="kw">(</span>受信メール<span class="kw">)</span>の許可
+iptables -A INPUT -p tcp --dport 110 -j ACCEPT
+
+● SMTP<span class="kw">(</span>送信メール<span class="kw">)</span>の許可【これをしないと世間からメールが来なくなる！】
+iptables -A INPUT -p tcp --dport 25 -j ACCEPT
+
+● SUBMISSION ポートを開<span class="kw">放</span>
+iptables -A INPUT -p tcp --dport 587 -j ACCEPT
+
+● PostgreSQLも外から使います
+iptables -A INPUT -p tcp --dport 5432 -j ACCEPT
+
+● DNS関係
+iptables -A INPUT -p tcp --dport 53 -j ACCEPT
+iptables -A INPUT -p udp --dport 53 -j ACCEPT
+
+● PINGを許可
+iptables -A INPUT -p icmp -j ACCEPT
+
+● TCPの接続開始と応答、FTPデータなどを許可【これをしないと外にメールが飛ばなくなる】
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+● 設定したルール以外のパケットを拒<span class="kw">否</span>
+iptables -P INPUT DROP</code></pre>
 <h3 id="port-forward">port forward</h3>
 <h4 id="vsftpd">vsftpd</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">pasv_enable=</span>YES
@@ -609,8 +748,13 @@ Stoped -- rm ;    \
 }'};
 var graph = new vis.Graph(container, data);
 </script>
+
+
+
+
 <h2 id="use">USE</h2>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-sm-6">TARG REPOSITORY</label>
 <div class="col-sm-6">
@@ -640,6 +784,9 @@ var graph = new vis.Graph(container, data);
 </div>
 
 </form>
+
+
+
 <h3 id="build">BUILD</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">docker build -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">docker build --rm=<span class="kw">true</span> -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre>
@@ -752,7 +899,7 @@ boot2docker up</code></pre>
 <p>command もあるが、なんか違う。</p>
 <h1 id="test">test</h1>
 <h2 id="ファイルの有無">ファイルの有無</h2>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">test</span> ! -e /vagrant/rpm/gitlab-7.3.2_omnibus-1.el6.x86_64.rpm<span class="kw">;</span> <span class="kw">echo</span> <span class="ot">$?</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">test</span> ! -e /vagrant/rpm/gitlab-7.3.2_omnibus-1.el6.x86_64.rpm; <span class="kw">echo</span> <span class="ot">$?</span></code></pre>
 <h1 id="grep">grep</h1>
 <h2 id="and">AND</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> <span class="st">&#39;AAA&#39;</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&#39;BBB&#39;</span></code></pre>
@@ -761,7 +908,6 @@ boot2docker up</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> <span class="st">&#39;AAA\|BBB&#39;</span></code></pre>
 <h2 id="not">NOT</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -v <span class="st">&#39;AAA&#39;</span></code></pre>
-<<<<<<< HEAD
 <h2 id="前後も表示">前後も表示</h2>
 <ul>
 <li>-B マッチ「前」の行数</li>
@@ -769,53 +915,69 @@ boot2docker up</code></pre>
 </ul>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -B 3 -A 3 <span class="st">&#39;xyz&#39;</span> *.txt</code></pre>
 <h1 id="sed">sed</h1>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -v <span class="st">&#39;AAA&#39;</span></code></pre>
+<h2 id="ファイルを直接置換え">ファイルを直接置換え</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sed</span> -i -e <span class="st">&#39;s/AAA/ZZZ/g&#39;</span> FILENAME.txt</code></pre>
 <h1 id="echo">echo</h1>
 <h2 id="改行しない">改行しない</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> -n <span class="st">&#39;ZZZ...&#39;</span></code></pre>
 <h2 id="colorstyle">COLOR/STYLE</h2>
 <h3 id="green">GREEN</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash">          \<span class="kw">e</span>[32m  \e[m
-          <span class="kw">&lt;----&gt;</span>  <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
+<pre class="sourceCode bash"><code class="sourceCode bash">          \e[32m  \e[m
+          <span class="kw">&lt;</span>----<span class="kw">&gt;</span>  <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
 <span class="kw">echo</span> -e <span class="st">&#39;[\e[32mOK\e[m]&#39;</span></code></pre>
 <h3 id="red">RED</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash">          \<span class="kw">e</span>[31m  \e[m
-          <span class="kw">&lt;----&gt;</span>  <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
+<pre class="sourceCode bash"><code class="sourceCode bash">          \e[31m  \e[m
+          <span class="kw">&lt;</span>----<span class="kw">&gt;</span>  <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
 <span class="kw">echo</span> -e <span class="st">&#39;[\e[31mNG\e[m]&#39;</span></code></pre>
 <h3 id="bold">BOLD</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash">         \<span class="kw">e</span>[1m         \e[m
-         <span class="kw">&lt;---&gt;</span>         <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
+<pre class="sourceCode bash"><code class="sourceCode bash">         \e[1m         \e[m
+         <span class="kw">&lt;</span>---<span class="kw">&gt;</span>         <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
 <span class="kw">echo</span> -e <span class="st">&#39;\e[1mI AM BOLD\e[m&#39;</span></code></pre>
 <h3 id="red-bold">RED + BOLD</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash">            \<span class="kw">e</span>[1m\e[31m        \e[m
-            <span class="kw">&lt;---&gt;&lt;</span>----<span class="kw">&gt;</span>        <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
+<pre class="sourceCode bash"><code class="sourceCode bash">            \e[1m\e[31m        \e[m
+            <span class="kw">&lt;</span>---<span class="kw">&gt;&lt;</span>----<span class="kw">&gt;</span>        <span class="kw">&lt;</span>--<span class="kw">&gt;</span>
 <span class="kw">echo</span> -e <span class="st">&#39;zzz\e[1m\e[31mRED+BOLD\e[mzzz&#39;</span></code></pre>
+<h3 id="what-ever">What Ever</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">echoecho -e <span class="st">&quot;</span>
+<span class="st"># Attribute codes:</span>
+<span class="st"># 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed</span>
+<span class="st"># Text color codes:</span>
+<span class="st"># 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white</span>
+<span class="st"># Background color codes:</span>
+<span class="st"># 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white</span>
+
+<span class="st">状態番号</span>
+<span class="st">\033[00m デフォルト状態 00 \033[00m</span>
+<span class="st">\033[01m 強調           01 \033[00m</span>
+<span class="st">\033[04m 下線           04 \033[00m</span>
+<span class="st">\033[05m 点滅           05 \033[00m</span>
+<span class="st">\033[07m 色反転         07 \033[00m</span>
+<span class="st">\033[08m 塗りつぶし     08 \033[00m(塗りつぶし     08)</span>
+
+<span class="st">色番号</span>
+<span class="st">\033[30m 黒               30 \033[00m \033[40m 40 \033[00m \033[31;40m 31;40 \033[00m \033[32;00;40m 32;00;40 \033[00m</span>
+<span class="st">\033[31m 赤               31 \033[00m \033[41m 41 \033[00m \033[32;41m 32;41 \033[00m \033[33;01;41m 33;01;41 \033[00m</span>
+<span class="st">\033[32m 緑               32 \033[00m \033[42m 42 \033[00m \033[33;42m 33;42 \033[00m \033[34;04;42m 34;04;42 \033[00m</span>
+<span class="st">\033[33m 黄(または茶)     33 \033[00m \033[43m 43 \033[00m \033[34;43m 34;43 \033[00m \033[35;05;43m 35;05;43 \033[00m</span>
+<span class="st">\033[34m 青               34 \033[00m \033[44m 44 \033[00m \033[35;44m 35;44 \033[00m \033[36;07;44m 36;07;44 \033[00m</span>
+<span class="st">\033[35m 紫               35 \033[00m \033[45m 45 \033[00m \033[36;45m 36;45 \033[00m \033[37;00;45m 37;00;45 \033[00m</span>
+<span class="st">\033[36m シアン           36 \033[00m \033[46m 46 \033[00m \033[37;46m 37;46 \033[00m \033[30;01;46m 30;01;46 \033[00m</span>
+<span class="st">\033[37m 白(またはグレー) 37 \033[00m \033[47m 47 \033[00m \033[30;47m 30;47 \033[00m \033[31;04;47m 31;04;47 \033[00m</span>
+<span class="st">&quot;</span></code></pre>
 <h1 id="iconv">iconv</h1>
 <p>Windows SJIS は、 SHIFT_JISX0213 とすべし。</p>
 <h2 id="文字コード一覧表示">文字コード一覧表示</h2>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">iconv</span> -l</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">iconv -l</code></pre>
 <h2 id="euc---utf-8">EUC -&gt; UTF-8</h2>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">iconv</span> -f EUC-JP -t UTF-8 FILE -o FILE.utf8</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f EUC-JP -t UTF-8 FILE -o FILE.utf8</code></pre>
 <h2 id="sjis---utf-8">SJIS -&gt; UTF-8</h2>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">iconv</span> -f SHIFT_JISX0213 -t UTF-8 FILE -o FILE.utf8</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f SHIFT_JISX0213 -t UTF-8 FILE -o FILE.utf8</code></pre>
 <h2 id="一括処理">一括処理</h2>
 <h3 id="カレントディレクトリ以下">カレントディレクトリ以下</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> -type f <span class="kw">|</span> <span class="kw">xargs</span> file <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&quot;:.*text&quot;</span> <span class="kw">|</span> <span class="kw">cut</span> -d : -f1 <span class="kw">|</span> <span class="kw">xargs</span> -t -I<span class="dt">{}</span> iconv -f EUC-JP -t UTF-8 <span class="dt">{}</span> -o <span class="dt">{}</span>.utf8</code></pre>
-<h1 id="ファイルの内容置換">ファイルの内容置換</h1>
-=======
-<h2 id="misc-1">MISC</h2>
-<h3 id="bell">BELL</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> -n <span class="st">$&#39;</span><span class="dt">\a</span><span class="st">&#39;</span></code></pre>
-<h3 id="iconv">iconv</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash">iconv -l</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f EUC-JP -t UTF-8 FILE -o FILE.utf8</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f SJIS -t UTF-8 FILE -o FILE.utf8</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> -type f <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">file</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&quot;:.*text&quot;</span> <span class="kw">|</span> <span class="kw">cut</span> -d <span class="kw">:</span> -f1 <span class="kw">|</span> <span class="kw">xargs</span> -t -I<span class="dt">{}</span> iconv -f EUC-JP -t UTF-8 <span class="dt">{}</span> -o <span class="dt">{}</span>.utf8</code></pre>
-<h3 id="file-name">FILE NAME</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> x <span class="kw">in</span> *.csv.utf8;<span class="kw">do</span> <span class="kw">mv</span> <span class="ot">$x</span> <span class="ot">${x%</span>.csv.utf8<span class="ot">}</span><span class="st">&quot;.csv&quot;</span>;<span class="kw">done</span></code></pre>
-<h3 id="一括置換">一括置換</h3>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
+<h1 id="ファイルの内容置換">ファイルの内容置換</h1>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-sm-6">BEFOR</label>
 <div class="col-sm-6">
@@ -838,6 +1000,8 @@ boot2docker up</code></pre>
 </div>
 
 </form>
+
+
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -rl <span class="st">&quot;{{CMD_REPLACE_BEFOR}}&quot;</span> */<span class="dt">{{CMD_REPLACE_FILENAME}}</span>
 <span class="kw">perl</span> -p -i.befor -e <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{{CMD_REPLACE_FILENAME}}</span></code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> <span class="kw">.</span> -name <span class="st">&#39;{{CMD_REPLACE_FILENAME}}&#39;</span> -type f -exec <span class="kw">sed</span> -i <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{}</span> <span class="dt">\;</span></code></pre>
@@ -858,6 +1022,7 @@ boot2docker up</code></pre>
 <h3 id="ファイル検索-コマンド実行">ファイル検索 &amp; コマンド実行</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="kw">&lt;</span>検索文字<span class="kw">&gt;</span> <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">&lt;</span>コマンド<span class="kw">&gt;</span></code></pre>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-sm-6">FILE1</label>
 <div class="col-sm-6">
@@ -873,6 +1038,10 @@ boot2docker up</code></pre>
 </div>
 
 </form>
+
+
+
+
 <h3 id="ナイスな-diff">ナイスな diff</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">diff</span> -y --suppress-common-lines <span class="dt">{{CMD_FILE1}}</span> <span class="dt">{{CMD_FILE2}}</span></code></pre>
 <h3 id="ファイルの単純横結合">ファイルの単純横結合</h3>
@@ -900,15 +1069,9 @@ boot2docker up</code></pre>
 <h2 id="edit">EDIT</h2>
 <h3 id="置換え">置換え</h3>
 <h4 id="確認あり">確認あり</h4>
-<<<<<<< HEAD
-<pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後<span class="kw">/gc</span></code></pre>
-<h4 id="確認なし">確認なし</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後<span class="kw">/g</span></code></pre>
-=======
 <pre class="sourceCode bash"><code class="sourceCode bash">:%s/前/後/gc</code></pre>
 <h4 id="確認なし">確認なし</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash">:%s/前/後/g</code></pre>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h2 id="view">VIEW</h2>
 <h3 id="カーソル移動">カーソル移動</h3>
 <table>
@@ -985,6 +1148,7 @@ exit
 save config</code></pre>
 <h3 id="nat">1:1 NAT</h3>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-sm-6">ethernet0 IP</label>
 <div class="col-sm-6">
@@ -1014,6 +1178,10 @@ save config</code></pre>
 </div>
 
 </form>
+
+
+
+
 <pre><code>show config
 configure terminal
 
@@ -1093,6 +1261,7 @@ restart</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">SELINUX=</span>disabled</code></pre>
 <h2 id="network-1">NETWORK</h2>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-sm-6">I/F NAME</label>
 <div class="col-sm-6">
@@ -1101,6 +1270,9 @@ restart</code></pre>
 </div>
 
 </form>
+
+
+
 <h3 id="ip-アドレスリンクスピード固定化">IP アドレス・リンクスピード固定化</h3>
 <h4 id="etcsysconfignetwork-scriptsifcfg-eth0">/etc/sysconfig/network-scripts/ifcfg-eth0</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">HWADDR=</span>XX:XX:XX:XX:XX:XX
@@ -1147,6 +1319,7 @@ restart</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">service network restart</code></pre>
 <h2 id="yum">YUM</h2>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-sm-6">PKG NAME</label>
 <div class="col-sm-6">
@@ -1162,6 +1335,11 @@ restart</code></pre>
 </div>
 
 </form>
+
+
+
+
+
 <h3 id="onoff-repo">ON/OFF REPO</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">yum --disablerepo=<span class="dt">\*</span> --enablerepo=c6-media ...</code></pre>
 <h3 id="packages-dependencies">package's dependencies</h3>
@@ -1183,6 +1361,7 @@ restart</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">VBoxManage clonehd --format VDI cyua.vmdk cyua.vdi</code></pre>
 <h1 id="vagrant">VAGRANT</h1>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-sm-6">BOX FILE</label>
 <div class="col-sm-6">
@@ -1220,6 +1399,7 @@ restart</code></pre>
 </div>
 
 </form>
+
 <h2 id="box">BOX</h2>
 <h3 id="add">ADD</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">vagrant box add <span class="dt">{{VAG_BOX_NAME}}</span> <span class="dt">{{VAG_BOX_FILE}}</span>
@@ -1314,17 +1494,12 @@ service dbora restart</code></pre>
 <span class="co">-- set numw X</span></code></pre>
 <h2 id="enterprise-manager">Enterprise Manager</h2>
 <h3 id="updown">UP/DOWN</h3>
-<<<<<<< HEAD
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">emctl</span> start dbconsole
-<span class="kw">emctl</span> stop dbconsole</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ORACLE_UNQNAME=</span>KX <span class="kw">emctl</span> start dbconsole</code></pre>
-=======
 <pre class="sourceCode bash"><code class="sourceCode bash">emctl start dbconsole
 emctl stop dbconsole</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ORACLE_UNQNAME=</span>KX emctl start dbconsole</code></pre>
->>>>>>> 9ba8cc9b06b69a7429f2d6c1e92235f4ec636c6a
 <h2 id="sql">SQL</h2>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-xs-6">TAB NAME</label>
 <div class="col-xs-6">
@@ -1333,6 +1508,7 @@ emctl stop dbconsole</code></pre>
 </div>
 
 </form>
+
 <h3 id="insert">insert</h3>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">insert</span> <span class="kw">into</span> {{ORA_TAB_NAME}} (&lt;COL1&gt; ,&lt;COL2&gt;) <span class="kw">values</span> (&lt;COL1VAL&gt;,&lt;COL2VAL&gt;);</code></pre>
 <h3 id="update">update</h3>
@@ -1357,7 +1533,7 @@ col HOST     format a15
 col CREATED  format a20
 col <span class="kw">PASSWORD</span> format a20
 <span class="kw">select</span> * <span class="kw">from</span> dba_db_links;</code></pre>
-<h4 id="create-1">create</h4>
+<h4 id="create-3">create</h4>
 <pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">PUBLIC</span> <span class="kw">DATABASE</span> <span class="kw">LINK</span> &lt;LINKNAME&gt;
 <span class="kw">connect</span> <span class="kw">to</span> &lt;USER&gt; <span class="kw">identified</span> <span class="kw">by</span> &lt;PASS&gt;
 <span class="kw">using</span> <span class="st">&#39;&lt;DB&gt;&#39;</span>;</code></pre>
@@ -1373,6 +1549,7 @@ col <span class="kw">PASSWORD</span> format a20
 ;</code></pre>
 <h2 id="multi-master-replication">MULTI MASTER REPLICATION</h2>
 <form class="form-horizontal">
+
 <div class="form-group">
 <label class="control-label col-xs-6">SITE A</label>
 <div class="col-xs-6">
@@ -1402,6 +1579,9 @@ col <span class="kw">PASSWORD</span> format a20
 </div>
 
 </form>
+
+
+
 <h3 id="sqlplus-1">SQLPLUS</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">sqlplus /nolog</code></pre>
 <h3 id="create-repadmin">CREATE REPADMIN</h3>
