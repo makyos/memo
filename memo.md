@@ -38,7 +38,7 @@ echo '${AAA}' # 展開されぬ
 
 ## FOR
 
-### for each
+### foreach
 
 ```{.bash}
 for num in one two three; do
@@ -52,6 +52,27 @@ for num in ${nums}; do
     echo ${num}
 done
 ```
+
+
+### range(1..10)
+
+```{.bash}
+for x in `seq 1 10`; do
+    echo ${x}
+done
+```
+
+
+## IF
+
+### FILE NOT EXISTS
+
+```{.bash}
+if [ ! -e FILE ]; then
+   echo 'file not found'
+fi
+```
+
 
 # ELASTIC SEARCH
 
@@ -2144,7 +2165,7 @@ service network restart
 ```
 
 
-## YUM
+# YUM
 
 <form class="form-horizontal">
 
@@ -2166,7 +2187,31 @@ service network restart
 
 
 
+## REPO
 
+### FILES
+
+``` {.bash}
+/etc/yum.repos.d
+```
+
+### ADD
+
+#### EPEL
+
+``` {.bash}
+yum install epel-release
+```
+
+``` {.bash}
+curl http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6 \
+  -o $RPMDIR/RPM-GPG-KEY-EPEL-6
+curl http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm \
+  -o $RPMDIR/epel-release-6-8.noarch.rpm
+
+sudo rpm --import file://$RPMDIR/RPM-GPG-KEY-EPEL-6
+sudo rpm -ihv file://$RPMDIR/epel-release-6-8.noarch.rpm
+```
 
 ### ON/OFF REPO
 
@@ -2174,8 +2219,9 @@ service network restart
 yum --disablerepo=\* --enablerepo=c6-media ...
 ```
 
+## PACKAGE
 
-### package's dependencies
+### dependencies
 
 ``` {.bash}
 yum deplist {{YUM_PKG}} {{YUM_OPT}}
@@ -2191,7 +2237,7 @@ yum deplist {{YUM_PKG}} {{YUM_OPT}} | grep provider
 yumdownloader --resolve {{YUM_PKG}}
 ```
 
-### INSTALL LOCAL RPM
+### INSTALL from LOCAL RPM
 
 ``` {.bash}
 yum --disablerepo=\* -y localinstall ./*.rpm

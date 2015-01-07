@@ -63,7 +63,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">${AAA}</span><span class="st">&quot;</span> <span class="co"># 展開される</span>
 <span class="kw">echo</span> <span class="st">&#39;${AAA}&#39;</span> <span class="co"># 展開されぬ</span></code></pre>
 <h2 id="for">FOR</h2>
-<h3 id="for-each">for each</h3>
+<h3 id="foreach">foreach</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> num <span class="kw">in</span> one two three; <span class="kw">do</span>
     <span class="kw">echo</span> <span class="ot">${num}</span>
 <span class="kw">done</span></code></pre>
@@ -71,6 +71,15 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">for</span> num <span class="kw">in</span> <span class="ot">${nums}</span>; <span class="kw">do</span>
     <span class="kw">echo</span> <span class="ot">${num}</span>
 <span class="kw">done</span></code></pre>
+<h3 id="range1..10">range(1..10)</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> x <span class="kw">in</span> <span class="kw">`seq</span> 1 10<span class="kw">`</span>; <span class="kw">do</span>
+    <span class="kw">echo</span> <span class="ot">${x}</span>
+<span class="kw">done</span></code></pre>
+<h2 id="if">IF</h2>
+<h3 id="file-not-exists">FILE NOT EXISTS</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">if </span>[ ! -e FILE ]; <span class="kw">then</span>
+   <span class="kw">echo</span> <span class="st">&#39;file not found&#39;</span>
+<span class="kw">fi</span></code></pre>
 <h1 id="elastic-search">ELASTIC SEARCH</h1>
 <form class="form-horizontal">
 
@@ -1344,7 +1353,7 @@ restart</code></pre>
 <span class="ot">HOSTNAME=</span>SERVERNAME
 <span class="ot">GATEWAY=</span>192.168.0.123</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">service network restart</code></pre>
-<h2 id="yum">YUM</h2>
+<h1 id="yum">YUM</h1>
 <form class="form-horizontal">
 
 <div class="form-group">
@@ -1365,16 +1374,28 @@ restart</code></pre>
 
 
 
+<h2 id="repo">REPO</h2>
+<h3 id="files">FILES</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">/etc/yum.repos.d</code></pre>
+<h3 id="add">ADD</h3>
+<h4 id="epel">EPEL</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash">yum <span class="kw">install</span> epel-release</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6 <span class="kw">\</span>
+  -o <span class="ot">$RPMDIR</span>/RPM-GPG-KEY-EPEL-6
+curl http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm <span class="kw">\</span>
+  -o <span class="ot">$RPMDIR</span>/epel-release-6-8.noarch.rpm
 
-
+<span class="kw">sudo</span> rpm --import file://<span class="ot">$RPMDIR</span>/RPM-GPG-KEY-EPEL-6
+<span class="kw">sudo</span> rpm -ihv file://<span class="ot">$RPMDIR</span>/epel-release-6-8.noarch.rpm</code></pre>
 <h3 id="onoff-repo">ON/OFF REPO</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">yum --disablerepo=<span class="dt">\*</span> --enablerepo=c6-media ...</code></pre>
-<h3 id="packages-dependencies">package's dependencies</h3>
+<h2 id="package">PACKAGE</h2>
+<h3 id="dependencies">dependencies</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">yum deplist <span class="dt">{{YUM_PKG}}</span> <span class="dt">{{YUM_OPT}}</span></code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">yum deplist <span class="dt">{{YUM_PKG}}</span> <span class="dt">{{YUM_OPT}}</span> <span class="kw">|</span> <span class="kw">grep</span> provider</code></pre>
 <h3 id="download">DOWNLOAD</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">yumdownloader --resolve <span class="dt">{{YUM_PKG}}</span></code></pre>
-<h3 id="install-local-rpm">INSTALL LOCAL RPM</h3>
+<h3 id="install-from-local-rpm">INSTALL from LOCAL RPM</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">yum --disablerepo=<span class="dt">\*</span> -y localinstall ./*.rpm</code></pre>
 <h3 id="list-2">LIST</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">yum <span class="dt">{{YUM_OPT}}</span> list</code></pre>
@@ -1428,7 +1449,7 @@ restart</code></pre>
 </form>
 
 <h2 id="box">BOX</h2>
-<h3 id="add">ADD</h3>
+<h3 id="add-1">ADD</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">vagrant box add <span class="dt">{{VAG_BOX_NAME}}</span> <span class="dt">{{VAG_BOX_FILE}}</span>
 vagrant box list</code></pre>
 <h3 id="vms-status">VMs STATUS</h3>
