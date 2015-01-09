@@ -81,7 +81,7 @@ fi
 <div class="form-group">
 <label class="control-label col-xs-6">SERVER ADDRESS & PORT</label>
 <div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='192.168.0.246:9200'">
+<input class="form-control" type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='192.168.0.247:9200'">
 </div>
 </div>
 
