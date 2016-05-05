@@ -70,5 +70,10 @@ $body$
 $for(include-after)$
 $include-after$
 $endfor$
+
+<!-- <script src="./vue.min.js"></script> -->
+<!-- <script>var body = new Vue({el:'body'})</script> -->
+<!-- <script src="./memo.vue.js"></script> -->
+
 </body>
 </html>

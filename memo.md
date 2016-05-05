@@ -1,3 +1,557 @@
+
+# Handsontable
+
+## CSS
+
+### SHADOW
+
+#### handsontable-master/src/css/handsontable.css
+
+```{.css}
+.handsontable .handsontable table {
+  -webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.4);
+}
+```
+
+
+
+
+# NETWORK MANAGER
+
+## CONNECTION
+
+### ADD
+
+```{.bash}
+nmcli connection add \
+      type ethernet \
+      ifname eno1 \
+      con-name eno1-1 \
+      autoconnect yes \
+      save yes \
+      ip4 "10.0.0.10/24" \
+      gw4 "0.0.0.0"
+ 
+nmcli connection mod ipv4.method manual ipv4.addresses "192.168.0.100/24"
+```
+ 
+### DEL
+
+```{.bash}
+nmcli connection delete eno1-1
+```
+
+
+
+# selinux
+
+## OFF
+
+```{.bash}
+echo 'SELINUX=disabled' > /etc/selinux/config
+```
+
+```{.bash}
+reboot
+```
+
+
+
+# LL BASICS
+
+## REPL
+
+PYTHON  RUBY  JAVASCRIPT
+------- ----  ----------
+python  irb   node
+
+
+## LIB
+
+### INCLUDE
+
+#### python
+
+
+```{.python}
+sys.path.append(os.path.join(os.path.dirname(__file__),'{{LIBDIR}}'))
+```
+
+
+
+## LIST(ARRAY)
+
+### JOIN
+
+#### PYTHON
+
+```{.python}
+''.join(['a','b'])  # ab
+','.join(['a','b']) # a,b
+```
+
+#### RUBY
+
+```{.ruby}
+['a','b'].join('')  # ab
+['a','b'].join(',') # a,b
+```
+
+#### JAVASCRIPT
+
+```{.javascript}
+['a','b'].join('')  // ab
+['a','b'].join(',') // a,b
+```
+
+
+### REVERSE
+
+#### PYTHON
+
+```{.python}
+['a','b'][::-1] # ['b', 'a']
+```
+
+
+
+## DATE
+
+### SERIAL(INT) to STR
+
+#### PYTHON
+
+``` {.python}
+import time
+time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(963920001)) # '2000-07-18 12:33:21'
+time.strftime("%Y-%m-%d %H:%M:%S",time.gmtime(963920001))    # '2000-07-18 11:33:21'
+```
+
+
+# BASH
+
+## STR CUT
+
+```{.bash}
+a=ABC
+echo ${a:1:1} # B
+```
+
+
+## history
+
+### add time
+
+```{.bash}
+HISTTIMEFORMAT='%Y-%m-%d %T '
+```
+
+## brace expansion
+
+### add seq
+
+```{.bash}
+echo A-{{1..3},5}  # A-1 A-2 A-3 A-5
+echo A-{a..c}      # A-a A-b A-c
+```
+
+### cp + date
+
+```{.bash}
+cp filename{,`date +'__%Y-%m-%d_%H-%M-%S'`}.tgz
+# cp filename.tgz filename__2015-01-23_23-05-58.tgz
+```
+
+
+
+# VIRTUAL BOX
+
+## DISK
+
+### create shareable
+
+```{.bash}
+vboxmanage createhd --size 1000 --variant Fixed --filename disk1.vdi
+vboxmanage modifyhd --type shareable disk1.vdi
+```
+
+## Serial Port
+
+### Linux Host & Win Guest
+
+#### Linux(Host)
+
+```{.bash}
+su
+chmod 666 /dev/ttyS0
+ll /dev/ttyS0
+crw-rw-rw- 1 root dialout 4, 64  1月 21 20:12 2015 ttyS0
+```
+
+この設定は再起動時にリセットされる。
+恒久的に使う場合は、/etc/udev/... に、...
+
+#### Win(VBox Guest Setting:Serial Port)
+
+ * [ON] "Serial Port Enable"
+ * COM1
+ * Host Device
+ * [OFF] "Make PIPE"
+ * /dev/ttyS0
+
+
+
+# Allied Telesis CentreCOM
+
+## Conn to Serial Port
+
+### Serial Port Settings
+
+sets      val
+--------- -----
+bit/sec   9600
+data bit  8
+parity    none
+stop bit  1
+flow cont none
+
+### User/Password
+
+manager/friend
+
+### ADD IP
+
+```{.bash}
+add ip IPADDRESS=202.46.51.254 MASK=255.255.255.0 GATEWAY=0.0.0.0
+```
+
+```{.bash}
+show ip
+
+IP Address Information
+--------------------------------------------
+ Type ....................... Static
+ Interface .................. default
+ IP address ................. 202.46.51.254
+ Subnet mask ................ 255.255.255.0
+ Gateway address ............ 0.0.0.0
+ MTU ........................ 1500
+ DHCP Client ................ Disabled
+ Directed broadcast ......... No
+--------------------------------------------
+```
+
+### ENable Http server
+
+```{.bash}
+ENable Http server
+```
+
+```{.bash}
+SHow Http server
+```
+
+```{.bash}
+HTTP Server Module Configuration:
+--------------------------------------
+Status                     : Enabled
+HTTP Server Listen Port    : 80
+--------------------------------------
+```
+
+### ENable Telnet server
+
+```{.bash}
+ENable TELnet server
+```
+
+```{.bash}
+SHow TElnet
+```
+
+```{.bash}
+TELNET Module Configuration:
+--------------------------------------
+ TELNET Server             : Enabled
+ TELNET Server Listen Port : 23
+ TELNET Connection Limit   : 4
+--------------------------------------
+```
+
+
+
+
+
+
+# FDISK
+
+## LIST ALL
+
+```{.bash}
+fdisk -l
+```
+
+## PART
+
+```{.bash}
+fdisk /dev/sdb
+```
+
+
+ * p: 領域テーブルを表示する
+ * n: 新規
+ * p: 基本パーティション
+ * 1: パーティション番号
+ * RET,RET
+ * p: 領域テーブルを表示する
+ * w: テーブルをディスクに書き込み、終了する
+
+## FORMAT(make filesystem)
+
+```{.bash}
+mke2fs /dev/sdb1
+```
+
+
+# DD
+
+## MAKE DUMMYFILE
+
+```{.bash}
+dd if=/dev/zero of=./dummyfile bs=100M count=1
+ls -l ./dummyfile
+```
+
+# SYSTEMD
+
+## SERVICE
+
+### FILES
+
+#### /usr/lib/systemd/cp.path
+
+```{.bash}
+[Unit]
+Description=systemdtest
+
+[Path]
+PathChanged=/home/vagrant/target1.txt
+
+[Install]
+WantedBy=multi-user.target
+```
+
+#### /usr/lib/systemd/cp.service
+
+下の2行がないと、enableでなんかゆわれる
+
+```{.bash}
+[Unit]
+Description=Copy file
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cp -f /home/vagrant/target1.txt /home/vagrant/target2.txt
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
+
+### INSTALL
+
+```{.bash}
+sudo ln -s /etc/systemd/system/cp.path    /etc/systemd/system/multi-user.target.wants/
+sudo ln -s /etc/systemd/system/cp.service /etc/systemd/system/multi-user.target.wants/
+```
+
+### ENABLE
+
+```{.bash}
+sudo systemctl enable cp.path
+sudo systemctl enable cp.service
+```
+
+### START
+
+```{.bash}
+sudo systemctl start cp.path
+sudo systemctl start cp.service
+```
+
+### STATUS
+
+```{.bash}
+systemctl status cp.path
+systemctl status cp.service
+```
+
+## RELOAD
+
+```{.bash}
+sudo systemctl --system daemon-reload
+```
+
+# ICONV
+
+ * Windows SJIS は、 SHIFT_JISX0213 とすべし。
+ * Windows UTF-8 は BOM 付き。
+ * -c でエラーストップしなくなる。
+
+## 文字コード一覧表示
+
+``` {.bash}
+iconv -l
+```
+
+## EUC -> UTF-8
+
+``` {.bash}
+iconv -f EUC-JP -t UTF-8 FILE -o FILE.utf8
+```
+
+## SJIS -> UTF-8
+
+``` {.bash}
+iconv -f SHIFT_JISX0213 -t UTF-8 FILE -o FILE.utf8
+```
+
+## BOM delete
+
+``` {.bash}
+tail --bytes=+4 index.unix.txt
+```
+
+
+## 一括処理
+
+### カレントディレクトリ以下
+
+``` {.bash}
+find -type f | xargs file | grep ":.*text" | cut -d : -f1 | xargs -t -I{} iconv -f EUC-JP -t UTF-8 {} -o {}.utf8
+```
+
+# AWK
+
+## COL COMPLETE
+
+```{.bash}
+{
+  echo '100 abc'
+  echo 'bcd'
+  echo '200 def'
+} > file.txt
+cat file.txt
+cat file.txt | awk 'm=match($0,/^[0-9]+\ /){print $0;n=substr($0,RSTART,RLENGTH)};!m{print n $0}'
+rm file.txt
+```
+
+
+# TAR
+
+## LS
+
+```{.bash}
+tar zft AAA.tgz 
+```
+
+
+## MATOME
+
+```{.bash}
+for f in ./*.tgz ; do tar zxvf $f ; done
+```
+
+
+# NETSTAT
+
+## OPTION
+
+```{.bash}
+netstat  --inet -aenop
+```
+
+ * --inet: inet protocol
+ * a: all status
+ * e: extend(User&Inode)
+ * n: numeric
+ * o: timers
+ * p: pid,program
+
+
+## STATE
+
+### from man
+
+NAME        WHAT
+----------- --------------------------------------------------------------------------------------------------------------------------------------------------
+ESTABLISHED ソケットは確立した接続状態にある。
+SYN_SENT    ソケットは接続を確立しようと試みている。
+SYN_RECV    接続要求をネットワークから受信している。
+FIN_WAIT1   ソケットはクローズされており、接続は切断中である。
+FIN_WAIT2   接続はクローズされ、ソケットはリモート側からの切断を待っている。
+TIME_WAIT   ソケットは、クローズ後にリモートからの切断が再送されるのを待っている。
+CLOSED      ソケットは使用されていない。
+CLOSE_WAIT  リモート側は既に切断され、ソケットがクローズされるのを待っている。
+LAST_ACK    リモート側は既に切断され、ソケットもクローズされている。 確認 (acknowledgement) を待っている。
+LISTEN      ソケットは接続待ち (listen) である。このようなソケットは、--listening (-l) または --all (-a) オプションを指定しない限り、出力には含まれない。
+CLOSING     両方のソケットが切断されているが、まだ全てのデータが送られていない。
+UNKNOWN     ソケットの状態は不明である。
+
+
+
+# Mac OS X
+
+## NETWORK
+
+### LISTEN PORT
+
+```{.bash}
+lsof -nP -iTCP -sTCP:LISTEN
+```
+
+# YEOMAN
+
+homebrew で入れてる場合は sudo 無し
+
+can not load module は npm update -g
+
+パーミッションぽいのは chmod -R `whoami` ~/.npm
+
+
+## setup
+
+```{.bash}
+npm install -g yo grunt grunt-cli bower
+```
+
+## generator
+
+### search
+
+[http://yeoman.io/generators/](http://yeoman.io/generators/)
+
+### install
+
+```{.bash}
+npm install -g generator-webapp
+```
+
+## generate WEBAPP
+
+```{.bash}
+mkdir WEBAPPDIR && cd WEBAPPDIR
+yo webapp
+```
+
+## exec WEBAPP
+
+```{.bash}
+grunt server
+```
+
 # SHELL SCRIPT
 
 ## ARG
@@ -71,6 +625,14 @@ done
 if [ ! -e FILE ]; then
    echo 'file not found'
 fi
+```
+
+### STRING
+
+```{.bash}
+a=aaa
+[ $a == 'aaa' ] ; echo $?  # 0
+[ $a != 'aaa' ] ; echo $?  # 1
 ```
 
 
@@ -328,7 +890,7 @@ f1();
 ```
 
 ``` {.bash}
-$ node ./closure.js 
+$ node ./closure.js
 1
 2
 ---
@@ -342,6 +904,12 @@ $ node ./closure.js
 
 
 # PYTHON
+
+## HTTPD
+
+``` {.bash}
+python -m SimpleHTTPServer 12345
+```
 
 ## DATE & TIME
 
@@ -374,8 +942,19 @@ OPE   CRUD    SQL       REST      $http
 #### from Win
 
 ``` {.bash}
+perl -pe 's/\r//' Win.txt > UNIX.txt
+```
+
+``` {.bash}
 nkf -Lu AAA.txt
 ```
+
+#### from UNIX
+
+``` {.bash}
+perl -pe 's/\n/\r\n/' UNIX.txt > Win.txt
+```
+
 
 # WGET
 
@@ -521,10 +1100,15 @@ create table {{SQLITE_TAB_NAME}};
 ``` {.sql}
 .schema {{SQLITE_TAB_NAME}}
 ```
- 
+
 
 
 # EMACS
+
+### REPLACE & CR
+
+M-% するときに、C-q C-j で改行挿入
+
 
 ### RECT
 
@@ -645,7 +1229,7 @@ ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず "ja
 <div class="form-group">
 <label class="control-label col-xs-6">FILE NAME</label>
 <div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ISO_FILEPATH" ng-init="ISO_FILEPATH='/filename.iso'">
+<input class="form-control" type="text" onclick="this.select();" ng-model="ISO_FILEPATH" ng-init="ISO_FILEPATH='./filename.iso'">
 </div>
 </div>
 <div class="form-group">
@@ -656,12 +1240,17 @@ ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず "ja
 </div>
 </form>
 
+### ISO to DVD
+
+``` {.bash}
+growisofs -dvd-compat -Z /dev/dvdrw={{ISO_FILEPATH}}
+```
 
 
 ### DISC to ISO FILE
 
 ``` {.bash}
-dd /dev/dvd of={{ISO_FILEPATH}}
+dd if=/dev/sr0 of={{ISO_FILEPATH}}
 ```
 
 ### MOUNT ISO FILE
@@ -962,7 +1551,7 @@ watch -n 2 'df -h; echo; free -m; echo; docker ps -a|head; echo; docker images -
 
 
 
-## DOCKERFILE 
+## DOCKERFILE
 
 ``` {.bash}
 FROM centos:latest
@@ -1295,7 +1884,7 @@ docker images -a
 ### remove images
 
 ``` {.bash}
-docker rmi <IMAGE ID> 
+docker rmi <IMAGE ID>
 ```
 
 
@@ -1308,7 +1897,7 @@ docker rmi <IMAGE ID>
  * コンテナが動いとる？
 
 ``` {.bash}
-docker rmi $(docker images -a | awk '/^<none>/ {print $3}') 
+docker rmi $(docker images -a | awk '/^<none>/ {print $3}')
 ```
 
 ### ALL CLEAR
@@ -1422,7 +2011,7 @@ ansible-playbook -i hosts site.yml
 ```
 
 
-### add group & user 
+### add group & user
 
 ``` {.yaml}
 - name: create group
@@ -1508,6 +2097,11 @@ grep -B 3 -A 3 'xyz' *.txt
 sed -i -e 's/AAA/ZZZ/g' FILENAME.txt
 ```
 
+## 改行コード変換
+
+``` {.bash}
+sed "s/\r//g" FILENAME.txt
+```
 
 
 
@@ -1586,36 +2180,6 @@ echo -e "
 ```
 
 
-# iconv
-
-Windows SJIS は、 SHIFT_JISX0213 とすべし。
-
-## 文字コード一覧表示
-
-``` {.bash}
-iconv -l
-```
-
-## EUC -> UTF-8
-
-``` {.bash}
-iconv -f EUC-JP -t UTF-8 FILE -o FILE.utf8
-```
-
-## SJIS -> UTF-8
-
-``` {.bash}
-iconv -f SHIFT_JISX0213 -t UTF-8 FILE -o FILE.utf8
-```
-
-## 一括処理
-
-### カレントディレクトリ以下
-
-``` {.bash}
-find -type f | xargs file | grep ":.*text" | cut -d : -f1 | xargs -t -I{} iconv -f EUC-JP -t UTF-8 {} -o {}.utf8
-```
-
 
 
 # ファイルの内容置換
@@ -1655,7 +2219,7 @@ perl -p -i.befor -e 's/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g' {{CMD_REPL
 ``` {.bash}
 find . -name '{{CMD_REPLACE_FILENAME}}' -type f -exec sed -i 's/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g' {} \;
 ```
- 
+
 
 
 
@@ -1817,13 +2381,22 @@ scp -P 22 -rq tcp/ username@192.168.33.32:/home/aaa/
 ### カーソル移動
 
  key  move  
------ ----- 
+----- -----
  1G   1 行目のあたま  
  G    最終行のケツ
  ~    今の行のあたま
  $    今の行のケツ
 
 # WINDOWS
+
+## DISK WIPE
+
+
+
+```
+cipher /w:c:
+```
+
 
 ## NETWORK
 
@@ -1838,7 +2411,7 @@ netsh interface ipv4 set address name="ローカル エリア接続" addr=192.2.
 ### IP アドレス追加
 
 追加の場合は gateway 不要
- 
+
 ```
 netsh interface ipv4 add address name="ローカル エリア接続" addr=192.2.56.111 mask=255.255.255.0
 ```
@@ -1849,6 +2422,19 @@ netsh interface ipv4 add address name="ローカル エリア接続" addr=192.2.
 netsh interface ipv4 del address name="ローカル エリア接続" addr=192.2.56.111
 ```
 
+### DNS
+
+#### display
+
+```
+ipconfig /displaydns
+```
+
+#### flush
+
+```
+ipconfig /flushdns
+```
 
 ### 各種情報収集
 
@@ -1908,7 +2494,44 @@ exit
 save config
 ```
 
+### ip masquerade
 
+```
+configure terminal
+   interface ethernet 1
+      ip masquerade
+   exit
+exit
+save config
+```
+
+
+
+### Speed
+
+```
+configure terminal
+   interface ethernet 1
+      speed 10M-full
+   exit
+exit
+save config
+```
+
+### ブリッジの設定方法
+
+設定上は masquerade と共存が可能であるが、その場合 masquerade は機能しない（アドレス変換されない）。
+
+```
+configure terminal
+   interface bridge 0
+      ip address 192.168.10.1/24
+      bridge port 1 ethernet 0
+      bridge port 2 ethernet 1
+   exit
+exit
+save config
+```
 
 ### 1:1 NAT
 
@@ -1979,27 +2602,44 @@ restart
 ```
 configure terminal
 
-ip access-list 55555 permit any any tcp any 55555
-ip access-list eth0_in permit 196.1.58.0/24 192.1.58.220/32 tcp any 880
+ip access-list eth0_in permit 192.2.58.221/32 192.2.58.220/32 tcp any 22
+ip access-list eth0_in permit 192.2.58.221/32 192.2.58.220/32 tcp any 880
 ip access-list eth0_in permit any any icmp
 ip access-list eth0_in deny any any
-ip access-list eth1_forward_in permit 195.200.58.33 any tcp any range 1024 65535
-ip access-list eth1_forward_in permit any any icmp
-ip access-list eth1_forward_in permit any any tcp any range 80 81
-ip access-list eth1_forward_in permit any any tcp any 8081
-ip access-list eth1_forward_in permit any any tcp any 8084
-ip access-list eth1_forward_in permit any any tcp range 80 81 any
-ip access-list eth1_forward_in permit any any tcp 8081 any
-ip access-list eth1_forward_in permit any any tcp 8084 any
-ip access-list eth1_forward_in permit 196.1.58.0/24 195.200.58.33/32 tcp any range 1024 65535
-ip access-list eth1_forward_in deny any any
+
+ip access-list eth1_in permit any any tcp any any
 ip access-list eth1_in permit 195.200.58.33/32 any tcp any 80
 ip access-list eth1_in permit 195.200.58.33/32 any tcp any range 1024 65535
 ip access-list eth1_in permit any any icmp
 ip access-list eth1_in deny any any
 
+ip access-list eth1_forward_in permit 195.200.58.33/32 any tcp any range 1024 65535
+ip access-list eth1_forward_in permit any any tcp any range 80 81
+ip access-list eth1_forward_in permit any any tcp any 8081
+ip access-list eth1_forward_in permit any any tcp any 8084
+ip access-list eth1_forward_in permit 196.2.58.221/32 any tcp any range 1024 65535
+ip access-list eth1_forward_in permit any any tcp range 80 81 any
+ip access-list eth1_forward_in permit any any tcp 8081 any
+ip access-list eth1_forward_in permit any any tcp 8084 any
+ip access-list eth1_forward_in permit 193.2.14.31/32 192.2.58.221/32 tcp any any
+ip access-list eth1_forward_in permit 193.3.15.31/32 192.2.58.221/32 tcp any any
+ip access-list eth1_forward_in permit 192.2.58.221/32 193.2.14.31/32 tcp any any
+ip access-list eth1_forward_in permit 192.2.58.221/32 193.3.15.31/32 tcp any any
+ip access-list eth1_forward_in permit any any icmp
+ip access-list eth1_forward_in deny any any
+
+
+interface ethernet 0
+   ip access-group in eth0_in
 exit
+
+interface ethernet 1
+   ip access-group in eth1_in
+   ip access-group forward_in eth1_forward_in
+exit
+
 save config
+
 restart
 ```
 
@@ -2389,7 +3029,7 @@ vagrant halt
 vagrant sandbox on
 vagrant up
 
-echo vm1 vm2 | xargs -n 1 knife solo prepare 
+echo vm1 vm2 | xargs -n 1 knife solo prepare
 
 vagrant halt
 vagrant sandbox commit
@@ -2435,6 +3075,147 @@ vagrant sandbox status
 
 
 # ORACLE
+
+## DATA PUMP
+
+
+<form class="form-horizontal">
+  <div class="form-group">
+    <label class="control-label col-xs-6">TARGET SID</label><div class="col-xs-6">
+    <input v-model="DP_SID" value="sid" class="form-control" type="text" onclick="this.select();"></div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-xs-6">DUMP FILE</label><div class="col-xs-6">
+    <input v-model="DP_DMP" value="filename.dmp" class="form-control" type="text" onclick="this.select();"></div>
+  </div>
+</form>
+
+### EXPORT
+
+```{.bash}
+expdp \
+    system/manager@{{DP_SID}} \
+    dumpfile={{DP_DMP}} \
+    full=Y \
+    content=metadata_only \
+
+    SCHEMAS \
+    TABLES \
+    STATUS=30 \
+    dumpfile=dir_punp:{{DP_DMP}} \
+
+```
+
+
+DIR なければ、~oracle/admin/{{DP_SID}}/dpdump に落ちる
+
+
+### IMPORT
+
+```{.bash}
+impdp \
+    system/manager@{{DP_SID}} \
+    dumpfile={{DP_SID}} \
+    STATUS=30 \
+    table_exists_action='TRUNCATE' \
+    Parallel=2 \
+    INCLUDE=SCHEMA:"KY,KX,REPADMIN,EQP,MNG"
+
+    INCLUDE=SCHEMA:"='in('KY','KX','EQP','REPADMIN','MNG')'" 
+			 
+
+    FULL=N \
+
+    sqlfile=kx.sql \
+    directory=dir_punp \
+    EXCLUDE=SCHEMA:"='HR'" 
+
+```
+
+
+
+### MKDIR
+
+DIR なければ、${ORACLE_HOME}/rdbms/log を探す。
+
+```{.sql}
+create or replace directory dir_punp as '/usr1/oradba/pump';
+-- grant read,write on directory dir_punp to ORAUSERNAME;               
+-- commit;                                                              
+-- drop directory dir_punp
+```
+
+## SCHEMA
+
+```{.bash}
+sqlplus /nolog
+```
+
+### select all
+
+```{.sql}
+conn system/manager@DBNAME as sysdba
+--
+select username from dba_users;
+```
+
+### NOT DEFAULTS
+
+たぶん
+
+
+```{.sql}
+conn system/manager@DBNAME as sysdba
+--
+select username from DBA_USERS
+where
+    initial_rsrc_consumer_group != 'SYS_GROUP' 
+and default_tablespace not like 'SYS%' 
+and account_status = 'OPEN';
+```
+
+
+
+
+## NAMES
+
+### global db
+
+```{.sql}
+select * from global_name;
+```
+
+
+### DB
+
+```{.sql}
+select sys_context('USERENV','db_name') from dual;
+```
+
+### instance 
+
+```{.sql}
+select sys_context('USERENV','instance_name') from dual;
+```
+
+### current user
+
+```{.sql}
+select user from dual;
+```
+
+
+## PROC
+
+PROC        NAME              WHAT
+----------- ---------------  --------------------------
+ora_j       ?                 ジョブ関連
+ora_smon    システムモニタ   インスタンス回復、デフラグ
+ora_dbw     ?                バッファ・キャッシュからデータファイルへの書込み
+ora_lsm     ?                 ?
+ora_mmon    管理モニタ?       ?
+ora_cjq     ?                 ?
+
 
 ## SETTING
 
@@ -2585,6 +3366,22 @@ select
 from
   dual
 ;
+```
+
+``` {.sql}
+CONNECT sys/manager@DBNAME AS SYSDBA
+SET ECHO ON
+SET SERVEROUTPUT ON
+BEGIN
+for obj in (select replace(OBJECT_TYPE,' ', '_') as OBJECT_TYPE, OBJECT_NAME, OWNER from dba_objects where OWNER='OWNNAME' and OBJECT_TYPE != 'DATABASE LINK') loop
+    DBMS_OUTPUT.PUT_LINE('{TYPE:' || obj.OBJECT_TYPE || ' ,NAME:' || obj.OBJECT_NAME || ', OWNER:' || obj.OWNER || '}');
+    for rec in (select dbms_metadata.get_ddl(obj.OBJECT_TYPE, obj.OBJECT_NAME, obj.OWNER) as ddl from dual) loop
+        DBMS_OUTPUT.PUT_LINE(rec.ddl);
+    end loop;
+end loop;
+END;
+/
+exit
 ```
 
 
@@ -2767,7 +3564,7 @@ END;
 #### Check
 
 ``` {.sql}
--- conn repadmin/repadmin@???_{{ORA_REPTNSNAME}}
+-- conn repadmin/repadmin@{{ORA_REPSITE_A}}_{{ORA_REPTNSNAME}}
 
 set linesize 150
 col job    format '00000'
@@ -2865,4 +3662,3 @@ conn repadmin/repadmin@{{ORA_REPSITE_A}}_{{ORA_REPTNSNAME}}
 
 exec dbms_repcat.suspend_master_activity(gname=>'{{ORA_REPTNSNAME}}_REPG');
 ```
-

@@ -41,6 +41,357 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="handsontable">Handsontable</h1>
+<h2 id="css">CSS</h2>
+<h3 id="shadow">SHADOW</h3>
+<h4 id="handsontable-mastersrccsshandsontable.css">handsontable-master/src/css/handsontable.css</h4>
+<pre class="sourceCode css"><code class="sourceCode css"><span class="fl">.handsontable</span> <span class="fl">.handsontable</span> table <span class="kw">{</span>
+  <span class="kw">-webkit-box-shadow:</span> <span class="dt">1px</span> <span class="dt">2px</span> <span class="dt">5px</span> <span class="dt">rgba(0</span>, <span class="dt">0</span>, <span class="dt">0</span>, <span class="dt">0.4)</span><span class="kw">;</span>
+  <span class="kw">box-shadow:</span> <span class="dt">1px</span> <span class="dt">2px</span> <span class="dt">5px</span> <span class="dt">rgba(0</span>, <span class="dt">0</span>, <span class="dt">0</span>, <span class="dt">0.4)</span><span class="kw">;</span>
+<span class="kw">}</span></code></pre>
+<h1 id="network-manager">NETWORK MANAGER</h1>
+<h2 id="connection">CONNECTION</h2>
+<h3 id="add">ADD</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">nmcli connection add <span class="kw">\</span>
+      <span class="kw">type</span> ethernet <span class="kw">\</span>
+      ifname eno1 <span class="kw">\</span>
+      con-name eno1-1 <span class="kw">\</span>
+      autoconnect <span class="kw">yes</span> <span class="kw">\</span>
+      save <span class="kw">yes</span> <span class="kw">\</span>
+      ip4 <span class="st">&quot;10.0.0.10/24&quot;</span> <span class="kw">\</span>
+      gw4 <span class="st">&quot;0.0.0.0&quot;</span>
+ 
+nmcli connection mod ipv4.method manual ipv4.addresses <span class="st">&quot;192.168.0.100/24&quot;</span></code></pre>
+<h3 id="del">DEL</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">nmcli connection delete eno1-1</code></pre>
+<h1 id="selinux">selinux</h1>
+<h2 id="off">OFF</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> <span class="st">&#39;SELINUX=disabled&#39;</span> <span class="kw">&gt;</span> /etc/selinux/config</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">reboot</code></pre>
+<h1 id="ll-basics">LL BASICS</h1>
+<h2 id="repl">REPL</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">PYTHON</th>
+<th style="text-align: left;">RUBY</th>
+<th style="text-align: left;">JAVASCRIPT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">irb</td>
+<td style="text-align: left;">node</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lib">LIB</h2>
+<h3 id="include">INCLUDE</h3>
+<h4 id="python">python</h4>
+<pre class="sourceCode python"><code class="sourceCode python">sys.path.append(os.path.join(os.path.dirname(<span class="ot">__file__</span>),<span class="st">&#39;{{LIBDIR}}&#39;</span>))</code></pre>
+<h2 id="listarray">LIST(ARRAY)</h2>
+<h3 id="join">JOIN</h3>
+<h4 id="python-1">PYTHON</h4>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="st">&#39;&#39;</span>.join([<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>])  <span class="co"># ab</span>
+<span class="st">&#39;,&#39;</span>.join([<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>]) <span class="co"># a,b</span></code></pre>
+<h4 id="ruby">RUBY</h4>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">[<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>].join(<span class="st">&#39;&#39;</span>)  <span class="co"># ab</span>
+[<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>].join(<span class="st">&#39;,&#39;</span>) <span class="co"># a,b</span></code></pre>
+<h4 id="javascript">JAVASCRIPT</h4>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">[<span class="ch">&#39;a&#39;</span>,<span class="ch">&#39;b&#39;</span>].<span class="fu">join</span>(<span class="ch">&#39;&#39;</span>)  <span class="co">// ab</span>
+[<span class="ch">&#39;a&#39;</span>,<span class="ch">&#39;b&#39;</span>].<span class="fu">join</span>(<span class="ch">&#39;,&#39;</span>) <span class="co">// a,b</span></code></pre>
+<h3 id="reverse">REVERSE</h3>
+<h4 id="python-2">PYTHON</h4>
+<pre class="sourceCode python"><code class="sourceCode python">[<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>][::-<span class="dv">1</span>] <span class="co"># [&#39;b&#39;, &#39;a&#39;]</span></code></pre>
+<h2 id="date">DATE</h2>
+<h3 id="serialint-to-str">SERIAL(INT) to STR</h3>
+<h4 id="python-3">PYTHON</h4>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> time
+time.strftime(<span class="st">&quot;%Y-%m-</span><span class="ot">%d</span><span class="st"> %H:%M:%S&quot;</span>,time.localtime(<span class="dv">963920001</span>)) <span class="co"># &#39;2000-07-18 12:33:21&#39;</span>
+time.strftime(<span class="st">&quot;%Y-%m-</span><span class="ot">%d</span><span class="st"> %H:%M:%S&quot;</span>,time.gmtime(<span class="dv">963920001</span>))    <span class="co"># &#39;2000-07-18 11:33:21&#39;</span></code></pre>
+<h1 id="bash">BASH</h1>
+<h2 id="str-cut">STR CUT</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">a=</span>ABC
+<span class="kw">echo</span> <span class="ot">${a:1:1}</span> <span class="co"># B</span></code></pre>
+<h2 id="history">history</h2>
+<h3 id="add-time">add time</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">HISTTIMEFORMAT=</span><span class="st">&#39;%Y-%m-%d %T &#39;</span></code></pre>
+<h2 id="brace-expansion">brace expansion</h2>
+<h3 id="add-seq">add seq</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> A-<span class="dt">{{1..3},5}</span>  <span class="co"># A-1 A-2 A-3 A-5</span>
+<span class="kw">echo</span> A-<span class="dt">{a..c}</span>      <span class="co"># A-a A-b A-c</span></code></pre>
+<h3 id="cp-date">cp + date</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cp</span> filename{,<span class="kw">`date</span> +<span class="st">&#39;__%Y-%m-%d_%H-%M-%S&#39;</span><span class="kw">`</span>}.tgz
+<span class="co"># cp filename.tgz filename__2015-01-23_23-05-58.tgz</span></code></pre>
+<h1 id="virtual-box">VIRTUAL BOX</h1>
+<h2 id="disk">DISK</h2>
+<h3 id="create-shareable">create shareable</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">vboxmanage createhd --size 1000 --variant Fixed --filename disk1.vdi
+vboxmanage modifyhd --type shareable disk1.vdi</code></pre>
+<h2 id="serial-port">Serial Port</h2>
+<h3 id="linux-host-win-guest">Linux Host &amp; Win Guest</h3>
+<h4 id="linuxhost">Linux(Host)</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">su</span>
+<span class="kw">chmod</span> 666 /dev/ttyS0
+ll /dev/ttyS0
+crw-rw-rw- 1 root dialout 4, 64  1月 21 20:12 2015 ttyS0</code></pre>
+<p>この設定は再起動時にリセットされる。 恒久的に使う場合は、/etc/udev/... に、...</p>
+<h4 id="winvbox-guest-settingserial-port">Win(VBox Guest Setting:Serial Port)</h4>
+<ul>
+<li>[ON] &quot;Serial Port Enable&quot;</li>
+<li>COM1</li>
+<li>Host Device</li>
+<li>[OFF] &quot;Make PIPE&quot;</li>
+<li>/dev/ttyS0</li>
+</ul>
+<h1 id="allied-telesis-centrecom">Allied Telesis CentreCOM</h1>
+<h2 id="conn-to-serial-port">Conn to Serial Port</h2>
+<h3 id="serial-port-settings">Serial Port Settings</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">sets</th>
+<th style="text-align: left;">val</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">bit/sec</td>
+<td style="text-align: left;">9600</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">data bit</td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">parity</td>
+<td style="text-align: left;">none</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">stop bit</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">flow cont</td>
+<td style="text-align: left;">none</td>
+</tr>
+</tbody>
+</table>
+<h3 id="userpassword">User/Password</h3>
+<p>manager/friend</p>
+<h3 id="add-ip">ADD IP</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">add ip <span class="ot">IPADDRESS=</span>202.46.51.254 MASK=255.255.255.0 GATEWAY=0.0.0.0</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">show ip
+
+IP Address Information
+--------------------------------------------
+ Type ......................<span class="kw">.</span> Static
+ Interface .................<span class="kw">.</span> default
+ IP address ................<span class="kw">.</span> 202.46.51.254
+ Subnet mask ...............<span class="kw">.</span> 255.255.255.0
+ Gateway address ...........<span class="kw">.</span> 0.0.0.0
+ MTU .......................<span class="kw">.</span> 1500
+ DHCP Client ...............<span class="kw">.</span> Disabled
+ Directed broadcast ........<span class="kw">.</span> No
+--------------------------------------------</code></pre>
+<h3 id="enable-http-server">ENable Http server</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">ENable Http server</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">SHow Http server</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">HTTP Server Module Configuration:
+--------------------------------------
+Status                     <span class="kw">:</span> Enabled
+HTTP Server Listen Port    <span class="kw">:</span> 80
+--------------------------------------</code></pre>
+<h3 id="enable-telnet-server">ENable Telnet server</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">ENable TELnet server</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">SHow TElnet</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">TELNET Module Configuration:
+--------------------------------------
+ TELNET Server             <span class="kw">:</span> Enabled
+ TELNET Server Listen Port <span class="kw">:</span> 23
+ TELNET Connection Limit   <span class="kw">:</span> 4
+--------------------------------------</code></pre>
+<h1 id="fdisk">FDISK</h1>
+<h2 id="list-all">LIST ALL</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">fdisk -l</code></pre>
+<h2 id="part">PART</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">fdisk /dev/sdb</code></pre>
+<ul>
+<li>p: 領域テーブルを表示する</li>
+<li>n: 新規</li>
+<li>p: 基本パーティション</li>
+<li>1: パーティション番号</li>
+<li>RET,RET</li>
+<li>p: 領域テーブルを表示する</li>
+<li>w: テーブルをディスクに書き込み、終了する</li>
+</ul>
+<h2 id="formatmake-filesystem">FORMAT(make filesystem)</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">mke2fs /dev/sdb1</code></pre>
+<h1 id="dd">DD</h1>
+<h2 id="make-dummyfile">MAKE DUMMYFILE</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">if=</span>/dev/zero of=./dummyfile bs=100M count=1
+<span class="kw">ls</span> -l ./dummyfile</code></pre>
+<h1 id="systemd">SYSTEMD</h1>
+<h2 id="service">SERVICE</h2>
+<h3 id="files">FILES</h3>
+<h4 id="usrlibsystemdcp.path">/usr/lib/systemd/cp.path</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash">[Unit]
+<span class="ot">Description=</span>systemdtest
+
+[Path]
+<span class="ot">PathChanged=</span>/home/vagrant/target1.txt
+
+[Install]
+<span class="ot">WantedBy=</span>multi-user.target</code></pre>
+<h4 id="usrlibsystemdcp.service">/usr/lib/systemd/cp.service</h4>
+<p>下の2行がないと、enableでなんかゆわれる</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">[Unit]
+<span class="ot">Description=</span>Copy file
+
+[Service]
+<span class="ot">Type=</span>oneshot
+<span class="ot">ExecStart=</span>/usr/bin/cp -f /home/vagrant/target1.txt /home/vagrant/target2.txt
+
+[Install]
+<span class="ot">WantedBy=</span>multi-user.target</code></pre>
+<h3 id="install">INSTALL</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> <span class="kw">ln</span> -s /etc/systemd/system/cp.path    /etc/systemd/system/multi-user.target.wants/
+<span class="kw">sudo</span> <span class="kw">ln</span> -s /etc/systemd/system/cp.service /etc/systemd/system/multi-user.target.wants/</code></pre>
+<h3 id="enable">ENABLE</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> systemctl <span class="kw">enable</span> cp.path
+<span class="kw">sudo</span> systemctl <span class="kw">enable</span> cp.service</code></pre>
+<h3 id="start">START</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> systemctl start cp.path
+<span class="kw">sudo</span> systemctl start cp.service</code></pre>
+<h3 id="status">STATUS</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">systemctl status cp.path
+systemctl status cp.service</code></pre>
+<h2 id="reload">RELOAD</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> systemctl --system daemon-reload</code></pre>
+<h1 id="iconv">ICONV</h1>
+<ul>
+<li>Windows SJIS は、 SHIFT_JISX0213 とすべし。</li>
+<li>Windows UTF-8 は BOM 付き。</li>
+<li>-c でエラーストップしなくなる。</li>
+</ul>
+<h2 id="文字コード一覧表示">文字コード一覧表示</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">iconv -l</code></pre>
+<h2 id="euc---utf-8">EUC -&gt; UTF-8</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f EUC-JP -t UTF-8 FILE -o FILE.utf8</code></pre>
+<h2 id="sjis---utf-8">SJIS -&gt; UTF-8</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f SHIFT_JISX0213 -t UTF-8 FILE -o FILE.utf8</code></pre>
+<h2 id="bom-delete">BOM delete</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tail</span> --bytes=+4 index.unix.txt</code></pre>
+<h2 id="一括処理">一括処理</h2>
+<h3 id="カレントディレクトリ以下">カレントディレクトリ以下</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> -type f <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">file</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&quot;:.*text&quot;</span> <span class="kw">|</span> <span class="kw">cut</span> -d <span class="kw">:</span> -f1 <span class="kw">|</span> <span class="kw">xargs</span> -t -I<span class="dt">{}</span> iconv -f EUC-JP -t UTF-8 <span class="dt">{}</span> -o <span class="dt">{}</span>.utf8</code></pre>
+<h1 id="awk">AWK</h1>
+<h2 id="col-complete">COL COMPLETE</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">{</span>
+  <span class="kw">echo</span> <span class="st">&#39;100 abc&#39;</span>
+  <span class="kw">echo</span> <span class="st">&#39;bcd&#39;</span>
+  <span class="kw">echo</span> <span class="st">&#39;200 def&#39;</span>
+<span class="kw">}</span> <span class="kw">&gt;</span> file.txt
+<span class="kw">cat</span> file.txt
+<span class="kw">cat</span> file.txt <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;m=match($0,/^[0-9]+\ /){print $0;n=substr($0,RSTART,RLENGTH)};!m{print n $0}&#39;</span>
+<span class="kw">rm</span> file.txt</code></pre>
+<h1 id="tar">TAR</h1>
+<h2 id="ls">LS</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> zft AAA.tgz </code></pre>
+<h2 id="matome">MATOME</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> f <span class="kw">in</span> ./*.tgz ; <span class="kw">do</span> <span class="kw">tar</span> zxvf <span class="ot">$f</span> ; <span class="kw">done</span></code></pre>
+<h1 id="netstat">NETSTAT</h1>
+<h2 id="option">OPTION</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">netstat</span>  --inet -aenop</code></pre>
+<ul>
+<li>--inet: inet protocol</li>
+<li>a: all status</li>
+<li>e: extend(User&amp;Inode)</li>
+<li>n: numeric</li>
+<li>o: timers</li>
+<li>p: pid,program</li>
+</ul>
+<h2 id="state">STATE</h2>
+<h3 id="from-man">from man</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">NAME</th>
+<th style="text-align: left;">WHAT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ESTABLISHED</td>
+<td style="text-align: left;">ソケットは確立した接続状態にある。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SYN_SENT</td>
+<td style="text-align: left;">ソケットは接続を確立しようと試みている。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SYN_RECV</td>
+<td style="text-align: left;">接続要求をネットワークから受信している。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FIN_WAIT1</td>
+<td style="text-align: left;">ソケットはクローズされており、接続は切断中である。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FIN_WAIT2</td>
+<td style="text-align: left;">接続はクローズされ、ソケットはリモート側からの切断を待っている。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TIME_WAIT</td>
+<td style="text-align: left;">ソケットは、クローズ後にリモートからの切断が再送されるのを待っている。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CLOSED</td>
+<td style="text-align: left;">ソケットは使用されていない。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CLOSE_WAIT</td>
+<td style="text-align: left;">リモート側は既に切断され、ソケットがクローズされるのを待っている。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LAST_ACK</td>
+<td style="text-align: left;">リモート側は既に切断され、ソケットもクローズされている。 確認 (acknowledgement) を待っている。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LISTEN</td>
+<td style="text-align: left;">ソケットは接続待ち (listen) である。このようなソケットは、--listening (-l) または --all (-a) オプションを指定しない限り、出力には含まれない。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CLOSING</td>
+<td style="text-align: left;">両方のソケットが切断されているが、まだ全てのデータが送られていない。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UNKNOWN</td>
+<td style="text-align: left;">ソケットの状態は不明である。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="mac-os-x">Mac OS X</h1>
+<h2 id="network">NETWORK</h2>
+<h3 id="listen-port">LISTEN PORT</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">lsof -nP -iTCP -sTCP:LISTEN</code></pre>
+<h1 id="yeoman">YEOMAN</h1>
+<p>homebrew で入れてる場合は sudo 無し</p>
+<p>can not load module は npm update -g</p>
+<p>パーミッションぽいのは chmod -R <code>whoami</code> ~/.npm</p>
+<h2 id="setup">setup</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">npm <span class="kw">install</span> -g yo grunt grunt-cli bower</code></pre>
+<h2 id="generator">generator</h2>
+<h3 id="search">search</h3>
+<p><a href="http://yeoman.io/generators/">http://yeoman.io/generators/</a></p>
+<h3 id="install-1">install</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">npm <span class="kw">install</span> -g generator-webapp</code></pre>
+<h2 id="generate-webapp">generate WEBAPP</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkdir</span> WEBAPPDIR <span class="kw">&amp;&amp;</span> <span class="kw">cd</span> WEBAPPDIR
+yo webapp</code></pre>
+<h2 id="exec-webapp">exec WEBAPP</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">grunt server</code></pre>
 <h1 id="shell-script">SHELL SCRIPT</h1>
 <h2 id="arg">ARG</h2>
 <h3 id="arg-check">ARG CHECK</h3>
@@ -80,6 +431,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">if </span>[ ! -e FILE ]; <span class="kw">then</span>
    <span class="kw">echo</span> <span class="st">&#39;file not found&#39;</span>
 <span class="kw">fi</span></code></pre>
+<h3 id="string">STRING</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">a=</span>aaa
+<span class="kw">[</span> <span class="ot">$a</span> <span class="ot">==</span> <span class="st">&#39;aaa&#39;</span><span class="kw"> ]</span> ; <span class="kw">echo</span> <span class="ot">$?</span>  <span class="co"># 0</span>
+<span class="kw">[</span> <span class="ot">$a</span> <span class="ot">!=</span> <span class="st">&#39;aaa&#39;</span><span class="kw"> ]</span> ; <span class="kw">echo</span> <span class="ot">$?</span>  <span class="co"># 1</span></code></pre>
 <h1 id="elastic-search">ELASTIC SEARCH</h1>
 <form class="form-horizontal">
 
@@ -160,7 +515,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">split</span> IMPORTDATAFILE.json -l 100000
 <span class="kw">time</span> <span class="kw">for</span> f <span class="kw">in</span> x??; <span class="kw">do</span> curl -XPOST <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_bulk&#39;</span> --data-binary @<span class="ot">$f</span> <span class="kw">&gt;</span> /dev/null; <span class="kw">done</span>
 <span class="kw">rm</span> -f x??</code></pre>
-<h2 id="search">SEARCH</h2>
+<h2 id="search-1">SEARCH</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash">curl -XGET <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_search&#39;</span></code></pre>
 <h1 id="bz2">BZ2</h1>
 <h3 id="extract">EXTRACT</h3>
@@ -241,7 +596,7 @@ f2();
 <span class="kw">console</span>.<span class="fu">log</span>(<span class="st">&quot;---&quot;</span>)
 f1();
 f1();</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ node ./closure.js 
+<pre class="sourceCode bash"><code class="sourceCode bash">$ node ./closure.js
 1
 2
 ---
@@ -250,7 +605,9 @@ f1();</code></pre>
 ---
 3
 4</code></pre>
-<h1 id="python">PYTHON</h1>
+<h1 id="python-4">PYTHON</h1>
+<h2 id="httpd">HTTPD</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">python -m SimpleHTTPServer 12345</code></pre>
 <h2 id="date-time">DATE &amp; TIME</h2>
 <h3 id="what-time-now">what time now</h3>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> datetime
@@ -301,7 +658,10 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h1 id="nkf">NKF</h1>
 <h3 id="改行変換">改行変換</h3>
 <h4 id="from-win">from Win</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">perl</span> -pe <span class="st">&#39;s/\r//&#39;</span> Win.txt <span class="kw">&gt;</span> UNIX.txt</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">nkf -Lu AAA.txt</code></pre>
+<h4 id="from-unix">from UNIX</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">perl</span> -pe <span class="st">&#39;s/\n/\r\n/&#39;</span> UNIX.txt <span class="kw">&gt;</span> Win.txt</code></pre>
 <h1 id="wget">WGET</h1>
 <h2 id="ftp">FTP</h2>
 <h3 id="ftp-get">FTP GET</h3>
@@ -391,6 +751,8 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h3 id="source">SOURCE</h3>
 <pre class="sourceCode sql"><code class="sourceCode sql">.schema {{SQLITE_TAB_NAME}}</code></pre>
 <h1 id="emacs">EMACS</h1>
+<h3 id="replace-cr">REPLACE &amp; CR</h3>
+<p>M-% するときに、C-q C-j で改行挿入</p>
 <h3 id="rect">RECT</h3>
 <table>
 <thead>
@@ -425,18 +787,18 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </form>
 
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{esc_ret()}}</span></code></pre>
-<h1 id="ruby">RUBY</h1>
+<h1 id="ruby-1">RUBY</h1>
 <h2 id="rbenv">rbenv</h2>
-<h3 id="install">install</h3>
+<h3 id="install-2">install</h3>
 <p>git clone</p>
 <h3 id="available-versions">available versions</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">rbenv <span class="kw">install</span> --list</code></pre>
-<h3 id="install-1">install</h3>
+<h3 id="install-3">install</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">rbenv <span class="kw">install</span> 2.1.2</code></pre>
 <h3 id="init">init</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">rbenv global 2.1.2</code></pre>
 <h2 id="ruby-build">ruby-build</h2>
-<h3 id="install-2">install</h3>
+<h3 id="install-4">install</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">git clone https://github.com/sstephenson/ruby-build.git .ruby-build
 .ruby-build/install.sh</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rm</span> -fr .ruby-build</code></pre>
@@ -460,7 +822,7 @@ locale</code></pre>
 <div class="form-group">
 <label class="control-label col-xs-6">FILE NAME</label>
 <div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ISO_FILEPATH" ng-init="ISO_FILEPATH='/filename.iso'">
+<input class="form-control" type="text" onclick="this.select();" ng-model="ISO_FILEPATH" ng-init="ISO_FILEPATH='./filename.iso'">
 </div>
 </div>
 <div class="form-group">
@@ -471,10 +833,10 @@ locale</code></pre>
 </div>
 </form>
 
-
-
+<h3 id="iso-to-dvd">ISO to DVD</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">growisofs -dvd-compat -Z /dev/<span class="ot">dvdrw=</span><span class="dt">{{ISO_FILEPATH}}</span></code></pre>
 <h3 id="disc-to-iso-file">DISC to ISO FILE</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> /dev/dvd <span class="ot">of=</span><span class="dt">{{ISO_FILEPATH}}</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> <span class="ot">if=</span>/dev/sr0 of=<span class="dt">{{ISO_FILEPATH}}</span></code></pre>
 <h3 id="mount-iso-file">MOUNT ISO FILE</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkdir</span> -p <span class="dt">{{ISO_MOUNTPOINT}}</span>
 <span class="kw">mount</span> -t iso9660 -o loop <span class="dt">{{ISO_FILEPATH}}</span> <span class="dt">{{ISO_MOUNTPOINT}}</span></code></pre>
@@ -620,7 +982,7 @@ git commit -a -m <span class="st">&quot;{{GIT_COMMENT}}&quot;</span></code></pre
 <pre class="sourceCode bash"><code class="sourceCode bash">git pull origin master</code></pre>
 <h1 id="docker">DOCKER</h1>
 <h2 id="misc">MISC</h2>
-<h3 id="install-3">install</h3>
+<h3 id="install-5">install</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">yum <span class="kw">install</span> -y docker-io.x86_64</code></pre>
 <h3 id="ps">PS</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">watch -n 2 <span class="st">&#39;df -h; echo; free -m; echo; docker ps -a|head; echo; docker images -a&#39;</span></code></pre>
@@ -859,7 +1221,7 @@ var graph = new vis.Graph(container, data);
 <h3 id="all-images-list">all images list</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">docker images -a</code></pre>
 <h3 id="remove-images">remove images</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash">docker rmi <span class="kw">&lt;</span>IMAGE ID<span class="kw">&gt;</span> </code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker rmi <span class="kw">&lt;</span>IMAGE ID<span class="kw">&gt;</span></code></pre>
 <h3 id="remove-all-homeless-images">remove all homeless images</h3>
 <p>消えないもの</p>
 <ul>
@@ -867,14 +1229,14 @@ var graph = new vis.Graph(container, data);
 <li>コンテナが残っとる？</li>
 <li>コンテナが動いとる？</li>
 </ul>
-<pre class="sourceCode bash"><code class="sourceCode bash">docker rmi <span class="ot">$(</span>docker images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;/^&lt;none&gt;/ {print $3}&#39;</span><span class="ot">)</span> </code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">docker rmi <span class="ot">$(</span>docker images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;/^&lt;none&gt;/ {print $3}&#39;</span><span class="ot">)</span></code></pre>
 <h3 id="all-clear">ALL CLEAR</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">docker stop <span class="kw">`</span>docker <span class="kw">ps</span> -aq<span class="kw">`</span>
 docker <span class="kw">rm</span> <span class="kw">`</span>docker <span class="kw">ps</span> -aq<span class="kw">`</span>
 docker rmi <span class="ot">$(</span>docker images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;{print $3}&#39;</span><span class="ot">)</span></code></pre>
 <p>docker rmi $(docker images -a | awk '{print $3}')</p>
 <h2 id="boot2docker">boot2docker</h2>
-<h3 id="install-4">install</h3>
+<h3 id="install-6">install</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">brew <span class="kw">install</span> docker boot2docker</code></pre>
 <h3 id="up">up</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">boot2docker init
@@ -956,6 +1318,8 @@ boot2docker up</code></pre>
 <h1 id="sed">sed</h1>
 <h2 id="ファイルを直接置換え">ファイルを直接置換え</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sed</span> -i -e <span class="st">&#39;s/AAA/ZZZ/g&#39;</span> FILENAME.txt</code></pre>
+<h2 id="改行コード変換">改行コード変換</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sed</span> <span class="st">&quot;s/\r//g&quot;</span> FILENAME.txt</code></pre>
 <h1 id="echo">echo</h1>
 <h2 id="改行しない">改行しない</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> -n <span class="st">&#39;ZZZ...&#39;</span></code></pre>
@@ -1003,17 +1367,6 @@ boot2docker up</code></pre>
 <span class="st">\033[36m シアン           36 \033[00m \033[46m 46 \033[00m \033[37;46m 37;46 \033[00m \033[30;01;46m 30;01;46 \033[00m</span>
 <span class="st">\033[37m 白(またはグレー) 37 \033[00m \033[47m 47 \033[00m \033[30;47m 30;47 \033[00m \033[31;04;47m 31;04;47 \033[00m</span>
 <span class="st">&quot;</span></code></pre>
-<h1 id="iconv">iconv</h1>
-<p>Windows SJIS は、 SHIFT_JISX0213 とすべし。</p>
-<h2 id="文字コード一覧表示">文字コード一覧表示</h2>
-<pre class="sourceCode bash"><code class="sourceCode bash">iconv -l</code></pre>
-<h2 id="euc---utf-8">EUC -&gt; UTF-8</h2>
-<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f EUC-JP -t UTF-8 FILE -o FILE.utf8</code></pre>
-<h2 id="sjis---utf-8">SJIS -&gt; UTF-8</h2>
-<pre class="sourceCode bash"><code class="sourceCode bash">iconv -f SHIFT_JISX0213 -t UTF-8 FILE -o FILE.utf8</code></pre>
-<h2 id="一括処理">一括処理</h2>
-<h3 id="カレントディレクトリ以下">カレントディレクトリ以下</h3>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> -type f <span class="kw">|</span> <span class="kw">xargs</span> <span class="kw">file</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&quot;:.*text&quot;</span> <span class="kw">|</span> <span class="kw">cut</span> -d <span class="kw">:</span> -f1 <span class="kw">|</span> <span class="kw">xargs</span> -t -I<span class="dt">{}</span> iconv -f EUC-JP -t UTF-8 <span class="dt">{}</span> -o <span class="dt">{}</span>.utf8</code></pre>
 <h1 id="ファイルの内容置換">ファイルの内容置換</h1>
 <form class="form-horizontal">
 
@@ -1044,7 +1397,7 @@ boot2docker up</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -rl <span class="st">&quot;{{CMD_REPLACE_BEFOR}}&quot;</span> */<span class="dt">{{CMD_REPLACE_FILENAME}}</span>
 <span class="kw">perl</span> -p -i.befor -e <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{{CMD_REPLACE_FILENAME}}</span></code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> <span class="kw">.</span> -name <span class="st">&#39;{{CMD_REPLACE_FILENAME}}&#39;</span> -type f -exec <span class="kw">sed</span> -i <span class="st">&#39;s/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g&#39;</span> <span class="dt">{}</span> <span class="dt">\;</span></code></pre>
-<h1 id="date">date</h1>
+<h1 id="date-1">date</h1>
 <h2 id="from-通算秒-to-日時">from 通算秒 to 日時</h2>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">date</span> -d <span class="st">&quot;1970-01-01 UTC 4294967295 seconds&quot;</span> <span class="st">&#39;+%Y-%m-%d %H:%M:%S&#39;</span></code></pre>
 <h2 id="from-日時-to-通算秒">from 日時 to 通算秒</h2>
@@ -1137,7 +1490,9 @@ boot2docker up</code></pre>
 </tbody>
 </table>
 <h1 id="windows">WINDOWS</h1>
-<h2 id="network">NETWORK</h2>
+<h2 id="disk-wipe">DISK WIPE</h2>
+<pre><code>cipher /w:c:</code></pre>
+<h2 id="network-1">NETWORK</h2>
 <p>ドス窓は管理者権限で実行</p>
 <h3 id="ip-アドレス設定">IP アドレス設定</h3>
 <pre><code>netsh interface ipv4 set address name=&quot;ローカル エリア接続&quot; addr=192.2.56.111 mask=255.255.255.0 gateway=192.2.56.1</code></pre>
@@ -1146,6 +1501,11 @@ boot2docker up</code></pre>
 <pre><code>netsh interface ipv4 add address name=&quot;ローカル エリア接続&quot; addr=192.2.56.111 mask=255.255.255.0</code></pre>
 <h3 id="ip-アドレス削除">IP アドレス削除</h3>
 <pre><code>netsh interface ipv4 del address name=&quot;ローカル エリア接続&quot; addr=192.2.56.111</code></pre>
+<h3 id="dns">DNS</h3>
+<h4 id="display">display</h4>
+<pre><code>ipconfig /displaydns</code></pre>
+<h4 id="flush">flush</h4>
+<pre><code>ipconfig /flushdns</code></pre>
 <h3 id="各種情報収集">各種情報収集</h3>
 <pre><code>mkdir .\%COMPUTERNAME%
 cd .\%COMPUTERNAME%
@@ -1180,6 +1540,30 @@ wevutil qe Application /f:TEXT &gt; 42_LOG__wevutil_qe_application.txt</code></p
 <h3 id="default-gateway">default gateway</h3>
 <pre><code>configure terminal
 ip route 0.0.0.0/0 196.1.58.1
+exit
+save config</code></pre>
+<h3 id="ip-masquerade">ip masquerade</h3>
+<pre><code>configure terminal
+   interface ethernet 1
+      ip masquerade
+   exit
+exit
+save config</code></pre>
+<h3 id="speed">Speed</h3>
+<pre><code>configure terminal
+   interface ethernet 1
+      speed 10M-full
+   exit
+exit
+save config</code></pre>
+<h3 id="ブリッジの設定方法">ブリッジの設定方法</h3>
+<p>設定上は masquerade と共存が可能であるが、その場合 masquerade は機能しない（アドレス変換されない）。</p>
+<pre><code>configure terminal
+   interface bridge 0
+      ip address 192.168.10.1/24
+      bridge port 1 ethernet 0
+      bridge port 2 ethernet 1
+   exit
 exit
 save config</code></pre>
 <h3 id="nat">1:1 NAT</h3>
@@ -1245,27 +1629,44 @@ restart</code></pre>
 <h3 id="ip-filter">ip filter</h3>
 <pre><code>configure terminal
 
-ip access-list 55555 permit any any tcp any 55555
-ip access-list eth0_in permit 196.1.58.0/24 192.1.58.220/32 tcp any 880
+ip access-list eth0_in permit 192.2.58.221/32 192.2.58.220/32 tcp any 22
+ip access-list eth0_in permit 192.2.58.221/32 192.2.58.220/32 tcp any 880
 ip access-list eth0_in permit any any icmp
 ip access-list eth0_in deny any any
-ip access-list eth1_forward_in permit 195.200.58.33 any tcp any range 1024 65535
-ip access-list eth1_forward_in permit any any icmp
-ip access-list eth1_forward_in permit any any tcp any range 80 81
-ip access-list eth1_forward_in permit any any tcp any 8081
-ip access-list eth1_forward_in permit any any tcp any 8084
-ip access-list eth1_forward_in permit any any tcp range 80 81 any
-ip access-list eth1_forward_in permit any any tcp 8081 any
-ip access-list eth1_forward_in permit any any tcp 8084 any
-ip access-list eth1_forward_in permit 196.1.58.0/24 195.200.58.33/32 tcp any range 1024 65535
-ip access-list eth1_forward_in deny any any
+
+ip access-list eth1_in permit any any tcp any any
 ip access-list eth1_in permit 195.200.58.33/32 any tcp any 80
 ip access-list eth1_in permit 195.200.58.33/32 any tcp any range 1024 65535
 ip access-list eth1_in permit any any icmp
 ip access-list eth1_in deny any any
 
+ip access-list eth1_forward_in permit 195.200.58.33/32 any tcp any range 1024 65535
+ip access-list eth1_forward_in permit any any tcp any range 80 81
+ip access-list eth1_forward_in permit any any tcp any 8081
+ip access-list eth1_forward_in permit any any tcp any 8084
+ip access-list eth1_forward_in permit 196.2.58.221/32 any tcp any range 1024 65535
+ip access-list eth1_forward_in permit any any tcp range 80 81 any
+ip access-list eth1_forward_in permit any any tcp 8081 any
+ip access-list eth1_forward_in permit any any tcp 8084 any
+ip access-list eth1_forward_in permit 193.2.14.31/32 192.2.58.221/32 tcp any any
+ip access-list eth1_forward_in permit 193.3.15.31/32 192.2.58.221/32 tcp any any
+ip access-list eth1_forward_in permit 192.2.58.221/32 193.2.14.31/32 tcp any any
+ip access-list eth1_forward_in permit 192.2.58.221/32 193.3.15.31/32 tcp any any
+ip access-list eth1_forward_in permit any any icmp
+ip access-list eth1_forward_in deny any any
+
+
+interface ethernet 0
+   ip access-group in eth0_in
 exit
+
+interface ethernet 1
+   ip access-group in eth1_in
+   ip access-group forward_in eth1_forward_in
+exit
+
 save config
+
 restart</code></pre>
 <h3 id="設定の無効化">設定の無効化</h3>
 <pre><code>頭に no をつける</code></pre>
@@ -1287,7 +1688,7 @@ restart</code></pre>
 <li>起動オプションの末尾に [スペース]+single を追記して [ENTER] を押す。</li>
 <li>karnel... の行を選んで [b] を押す。</li>
 </ul>
-<h2 id="selinux">SELINUX</h2>
+<h2 id="selinux-1">SELINUX</h2>
 <h3 id="状況確認">状況確認</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">getenforce</code></pre>
 <h3 id="一時的な-off">一時的な OFF</h3>
@@ -1295,7 +1696,7 @@ restart</code></pre>
 <h3 id="恒久的な-off">恒久的な OFF</h3>
 <h4 id="etcselinuxconfig">/etc/selinux/config</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">SELINUX=</span>disabled</code></pre>
-<h2 id="network-1">NETWORK</h2>
+<h2 id="network-2">NETWORK</h2>
 <form class="form-horizontal">
 
 <div class="form-group">
@@ -1375,9 +1776,9 @@ restart</code></pre>
 
 
 <h2 id="repo">REPO</h2>
-<h3 id="files">FILES</h3>
+<h3 id="files-1">FILES</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">/etc/yum.repos.d</code></pre>
-<h3 id="add">ADD</h3>
+<h3 id="add-1">ADD</h3>
 <h4 id="epel">EPEL</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash">yum <span class="kw">install</span> epel-release</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">curl http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6 <span class="kw">\</span>
@@ -1449,7 +1850,7 @@ curl http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm <
 </form>
 
 <h2 id="box">BOX</h2>
-<h3 id="add-1">ADD</h3>
+<h3 id="add-2">ADD</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash">vagrant box add <span class="dt">{{VAG_BOX_NAME}}</span> <span class="dt">{{VAG_BOX_FILE}}</span>
 vagrant box list</code></pre>
 <h3 id="vms-status">VMs STATUS</h3>
@@ -1500,7 +1901,7 @@ vagrant ssh-config vm2 <span class="kw">&gt;&gt;</span> ~/.ssh/config
 vagrant sandbox on
 vagrant up
 
-<span class="kw">echo</span> vm1 vm2 <span class="kw">|</span> <span class="kw">xargs</span> -n 1 knife solo prepare 
+<span class="kw">echo</span> vm1 vm2 <span class="kw">|</span> <span class="kw">xargs</span> -n 1 knife solo prepare
 
 vagrant halt
 vagrant sandbox commit
@@ -1520,6 +1921,127 @@ vagrant up
 <h4 id="現在sandboxモードかどうかの確認">現在sandboxモードかどうかの確認</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash">vagrant sandbox status</code></pre>
 <h1 id="oracle">ORACLE</h1>
+<h2 id="data-pump">DATA PUMP</h2>
+<form class="form-horizontal">
+  <div class="form-group">
+    
+<label class="control-label col-xs-6">TARGET SID</label>
+<div class="col-xs-6">
+    
+<input v-model="DP_SID" value="sid" class="form-control" type="text" onclick="this.select();">
+</div>
+  </div>
+  <div class="form-group">
+    
+<label class="control-label col-xs-6">DUMP FILE</label>
+<div class="col-xs-6">
+    
+<input v-model="DP_DMP" value="filename.dmp" class="form-control" type="text" onclick="this.select();">
+</div>
+  </div>
+</form>
+
+<h3 id="export-1">EXPORT</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">expdp <span class="kw">\</span>
+    system/manager@<span class="dt">{{DP_SID}}</span> <span class="kw">\</span>
+    <span class="ot">dumpfile=</span><span class="dt">{{DP_DMP}}</span> <span class="kw">\</span>
+    <span class="ot">full=</span>Y <span class="kw">\</span>
+    <span class="ot">content=</span>metadata_only <span class="kw">\</span>
+
+    SCHEMAS <span class="kw">\</span>
+    TABLES <span class="kw">\</span>
+    <span class="ot">STATUS=</span>30 <span class="kw">\</span>
+    <span class="ot">dumpfile=</span>dir_punp:<span class="dt">{{DP_DMP}}</span> <span class="kw">\</span></code></pre>
+<p>DIR なければ、~oracle/admin/{{DP_SID}}/dpdump に落ちる</p>
+<h3 id="import-1">IMPORT</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash">impdp <span class="kw">\</span>
+    system/manager@<span class="dt">{{DP_SID}}</span> <span class="kw">\</span>
+    <span class="ot">dumpfile=</span><span class="dt">{{DP_SID}}</span> <span class="kw">\</span>
+    <span class="ot">STATUS=</span>30 <span class="kw">\</span>
+    <span class="ot">table_exists_action=</span><span class="st">&#39;TRUNCATE&#39;</span> <span class="kw">\</span>
+    <span class="ot">Parallel=</span>2 <span class="kw">\</span>
+    <span class="ot">INCLUDE=</span>SCHEMA:<span class="st">&quot;KY,KX,REPADMIN,EQP,MNG&quot;</span>
+
+    <span class="ot">INCLUDE=</span>SCHEMA:<span class="st">&quot;=&#39;in(&#39;KY&#39;,&#39;KX&#39;,&#39;EQP&#39;,&#39;REPADMIN&#39;,&#39;MNG&#39;)&#39;&quot;</span> 
+             
+
+    <span class="ot">FULL=</span>N <span class="kw">\</span>
+
+    <span class="ot">sqlfile=</span>kx.sql <span class="kw">\</span>
+    <span class="ot">directory=</span>dir_punp <span class="kw">\</span>
+    <span class="ot">EXCLUDE=</span>SCHEMA:<span class="st">&quot;=&#39;HR&#39;&quot;</span> </code></pre>
+<h3 id="mkdir-1">MKDIR</h3>
+<p>DIR なければ、${ORACLE_HOME}/rdbms/log を探す。</p>
+<pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">create</span> <span class="kw">or</span> <span class="kw">replace</span> <span class="kw">directory</span> dir_punp <span class="kw">as</span> <span class="st">&#39;/usr1/oradba/pump&#39;</span>;
+<span class="co">-- grant read,write on directory dir_punp to ORAUSERNAME;               </span>
+<span class="co">-- commit;                                                              </span>
+<span class="co">-- drop directory dir_punp</span></code></pre>
+<h2 id="schema">SCHEMA</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash">sqlplus /nolog</code></pre>
+<h3 id="select-all">select all</h3>
+<pre class="sourceCode sql"><code class="sourceCode sql">conn system/manager@DBNAME <span class="kw">as</span> <span class="kw">sysdba</span>
+<span class="co">--</span>
+<span class="kw">select</span> username <span class="kw">from</span> dba_users;</code></pre>
+<h3 id="not-defaults">NOT DEFAULTS</h3>
+<p>たぶん</p>
+<pre class="sourceCode sql"><code class="sourceCode sql">conn system/manager@DBNAME <span class="kw">as</span> <span class="kw">sysdba</span>
+<span class="co">--</span>
+<span class="kw">select</span> username <span class="kw">from</span> DBA_USERS
+<span class="kw">where</span>
+    initial_rsrc_consumer_group != <span class="st">&#39;SYS_GROUP&#39;</span> 
+<span class="kw">and</span> default_tablespace <span class="kw">not</span> <span class="kw">like</span> <span class="st">&#39;SYS%&#39;</span> 
+<span class="kw">and</span> account_status = <span class="st">&#39;OPEN&#39;</span>;</code></pre>
+<h2 id="names">NAMES</h2>
+<h3 id="global-db">global db</h3>
+<pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> * <span class="kw">from</span> <span class="kw">global_name</span>;</code></pre>
+<h3 id="db">DB</h3>
+<pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="fu">sys_context</span>(<span class="st">&#39;USERENV&#39;</span>,<span class="st">&#39;db_name&#39;</span>) <span class="kw">from</span> dual;</code></pre>
+<h3 id="instance">instance</h3>
+<pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="fu">sys_context</span>(<span class="st">&#39;USERENV&#39;</span>,<span class="st">&#39;instance_name&#39;</span>) <span class="kw">from</span> dual;</code></pre>
+<h3 id="current-user">current user</h3>
+<pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="fu">user</span> <span class="kw">from</span> dual;</code></pre>
+<h2 id="proc">PROC</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">PROC</th>
+<th style="text-align: left;">NAME</th>
+<th style="text-align: center;">WHAT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ora_j</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: center;">ジョブ関連</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ora_smon</td>
+<td style="text-align: left;">システムモニタ</td>
+<td style="text-align: center;">インスタンス回復、デフラグ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ora_dbw</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: center;">バッファ・キャッシュからデータファイルへの書込み</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ora_lsm</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ora_mmon</td>
+<td style="text-align: left;">管理モニタ?</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ora_cjq</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: center;">?</td>
+</tr>
+</tbody>
+</table>
 <h2 id="setting">SETTING</h2>
 <h3 id="tnsnames.ora">TNSNAMES.ORA</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cat</span> <span class="ot">$ORACLE_HOME</span>/network/admin/tnsnames.ora</code></pre>
@@ -1596,6 +2118,19 @@ col <span class="kw">PASSWORD</span> format a20
 <span class="kw">from</span>
   dual
 ;</code></pre>
+<pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CONNECT</span> sys/manager@DBNAME <span class="kw">AS</span> <span class="kw">SYSDBA</span>
+<span class="kw">SET</span> ECHO <span class="kw">ON</span>
+<span class="kw">SET</span> SERVEROUTPUT <span class="kw">ON</span>
+<span class="kw">BEGIN</span>
+<span class="kw">for</span> obj <span class="kw">in</span> (<span class="kw">select</span> <span class="kw">replace</span>(OBJECT_TYPE,<span class="st">&#39; &#39;</span>, <span class="st">&#39;_&#39;</span>) <span class="kw">as</span> OBJECT_TYPE, OBJECT_NAME, OWNER <span class="kw">from</span> dba_objects <span class="kw">where</span> OWNER=<span class="st">&#39;OWNNAME&#39;</span> <span class="kw">and</span> OBJECT_TYPE != <span class="st">&#39;DATABASE LINK&#39;</span>) <span class="kw">loop</span>
+    DBMS_OUTPUT.PUT_LINE(<span class="st">&#39;{TYPE:&#39;</span> || obj.OBJECT_TYPE || <span class="st">&#39; ,NAME:&#39;</span> || obj.OBJECT_NAME || <span class="st">&#39;, OWNER:&#39;</span> || obj.OWNER || <span class="st">&#39;}&#39;</span>);
+    <span class="kw">for</span> rec <span class="kw">in</span> (<span class="kw">select</span> dbms_metadata.get_ddl(obj.OBJECT_TYPE, obj.OBJECT_NAME, obj.OWNER) <span class="kw">as</span> <span class="kw">ddl</span> <span class="kw">from</span> dual) <span class="kw">loop</span>
+        DBMS_OUTPUT.PUT_LINE(rec.ddl);
+    <span class="kw">end</span> <span class="kw">loop</span>;
+<span class="kw">end</span> <span class="kw">loop</span>;
+<span class="kw">END</span>;
+/
+exit</code></pre>
 <h2 id="multi-master-replication">MULTI MASTER REPLICATION</h2>
 <form class="form-horizontal">
 
@@ -1731,7 +2266,7 @@ col <span class="kw">PASSWORD</span> format a20
 /
 <span class="co">-- 1/8640 = 10sec</span></code></pre>
 <h4 id="check">Check</h4>
-<pre class="sourceCode sql"><code class="sourceCode sql"><span class="co">-- conn repadmin/repadmin@???_{{ORA_REPTNSNAME}}</span>
+<pre class="sourceCode sql"><code class="sourceCode sql"><span class="co">-- conn repadmin/repadmin@{{ORA_REPSITE_A}}_{{ORA_REPTNSNAME}}</span>
 
 <span class="kw">set</span> linesize <span class="dv">150</span>
 col job    format <span class="st">&#39;00000&#39;</span>
@@ -1796,5 +2331,10 @@ col <span class="dt">INTERVAL</span> format a10
 <pre class="sourceCode sql"><code class="sourceCode sql">conn repadmin/repadmin@{{ORA_REPSITE_A}}_{{ORA_REPTNSNAME}}
 
 <span class="kw">exec</span> dbms_repcat.suspend_master_activity(gname=&gt;<span class="st">&#39;{{ORA_REPTNSNAME}}_REPG&#39;</span>);</code></pre>
+
+<!-- <script src="./vue.min.js"></script> -->
+<!-- <script>var body = new Vue({el:'body'})</script> -->
+<!-- <script src="./memo.vue.js"></script> -->
+
 </body>
 </html>
