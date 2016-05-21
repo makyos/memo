@@ -40,6 +40,18 @@ to top,bottom: Command + UP, DOWN
 
 ### 再起動する
 
+## Shell
+
+### Execute Command
+
+Ctr + r
+
+### Show Output
+
+">Shell: Show Command Log  
+
+
+
 # Handsontable
 
 ## CSS
