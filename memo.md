@@ -1,3 +1,171 @@
+# ntp
+
+### 同期状況
+
+```
+/usr/sbin/ntpq -p
+```
+
+```
+     remote           refid      st t when poll reach   delay   offset  jitter
+==============================================================================
+*196.2.33.10     LOCAL(0)         6 u  503 1024  377    1.656   -0.089   0.048
+ 196.2.34.10     .INIT.          16 u    - 1024    0    0.000    0.000   0.000
+ 196.3.33.10     .INIT.          16 u    - 1024    0    0.000    0.000   0.000
+ 196.3.34.10     .INIT.          16 u    - 1024    0    0.000    0.000   0.000
+```
+
+#### Windows
+
+管理者コマンド
+
+```
+w32tm /query /peers
+```
+
+
+### 強制同期
+
+```
+sudo service ntpd restart
+```
+
+#### Windows
+
+管理者コマンド
+
+```
+w32tm /resync /nowait
+```
+
+
+### Windows
+
+gpedit.msc で以下を実施
+
+* ntp クライアントの有効化
+* ntp サーバの設定(192.168.0.1,0x1)
+
+service.msc の Windows Time で以下を実施
+
+* (再)起動
+* 自動起動 
+
+# CentreCOM SH210(x210)
+
+## 状況表示
+
+### ポートの状態
+
+```
+show interface status
+```
+
+表示例
+
+```
+Port       Name               Status            Vlan Duplex   Speed Type
+port1.0.1                     connected            1 a-full  a-1000 1000BASE-T
+port1.0.2                     connected            1 a-full  a-1000 1000BASE-T
+port1.0.3                     notconnect           1 auto      auto 1000BASE-T
+port1.0.4                     connected            1 a-full  a-1000 1000BASE-T
+port1.0.5                     notconnect           1 auto      auto 1000BASE-T
+port1.0.6                     connected            1 a-full   a-100 1000BASE-T
+port1.0.7                     connected            1 a-full  a-1000 1000BASE-T
+port1.0.8                     connected            1 a-full  a-1000 1000BASE-T
+port1.0.9                     notconnect           1 auto      auto not present
+```
+
+## 基本設定(IP接続可能化)
+
+### RS-232C 接続
+
+USB to Serial ケーブルで接続、ドライバをインストールする。
+
+### IP ADDR 設定
+
+各モード(階層)プロンプト
+
+```
+>
+	#
+		(config)#
+			(config-if)#
+```
+
+```
+enable
+	configure terminal
+		interface vlan1
+			ip address 192.168.10.254/24
+
+		ip route 0.0.0.0/0 192.168.10.1
+
+	write file
+```
+
+
+
+### SSH(+SFTP) の有効化
+
+```
+>
+	#
+		(config)#
+			(config-if)#
+```
+
+```
+awplus> enable
+
+awplus# configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+
+awplus(config)#crypto key generate hostkey dsa
+
+Generating host key (1024 bits dsa)
+This may take a while. Please wait ... Done
+
+WARNING: The SSH server must now be enabled with "service ssh"
+
+awplus(config)# crypto key generate hostkey rsa
+
+Generating host key (1024 bits rsa)
+This may take a while. Please wait ... Done
+
+WARNING: The SSH server must now be enabled with "service ssh"
+
+awplus(config)# crypto key generate hostkey rsa1
+
+Generating host key (1024 bits rsa1)
+This may take a while. Please wait ... Done
+
+WARNING: The SSH server must now be enabled with "service ssh"
+
+awplus(config)# ssh server allow-users *
+awplus(config)# ssh server session-timeout 3600
+awplus(config)# service ssh
+awplus(config)# ^D
+awplus# write file
+
+Building configuration...
+[OK]
+```
+
+### ポート速度設定
+
+
+
+```
+awplus> enable
+awplus# configure terminal
+awplus(config)# interface port1.0.1
+awplus(config-if)# speed 10
+awplus(config-if)# duplex full
+```
+
+
+
 # Visual Studio Code
 
 ## 基本操作
@@ -35,7 +203,7 @@ to top,bottom: Command + UP, DOWN
 ### 内容を以下にする
 
 ```{.json}
-“locale”:”en-US”
+"locale":"en-US"
 ```
 
 ### 再起動する
@@ -2278,6 +2446,14 @@ find . -name '{{CMD_REPLACE_FILENAME}}' -type f -exec sed -i 's/{{CMD_REPLACE_BE
 
 
 # date
+
+
+## 設定
+
+``` {.bash}
+date --set "2016/12/31 12:34:56"
+```
+
 
 ## from 通算秒 to 日時
 
