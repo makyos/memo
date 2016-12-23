@@ -1,3 +1,18 @@
+# github
+
+## ssh key
+
+テスト
+```
+ssh -T git@github.com
+```
+初回は yes/no
+
+以下が出れば OK
+```
+Hi {USERNAME}! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
 # ntp
 
 ### 同期状況
