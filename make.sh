@@ -2,9 +2,9 @@
 
 while true; do
     nowstat="$(md5 -q memo.md)"
-    # echo $nowstat
     if [ "$nowstat" != "$oldstat" ]; then
 	    pandoc -s -f markdown -t html5 --template=html5.template -o memo.html memo.md
+        git --no-pager diff
         open memo.html
     fi
     oldstat="$nowstat"

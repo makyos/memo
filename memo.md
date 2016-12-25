@@ -1,8 +1,8 @@
 # github
 
-## ssh connect
+## USER/PASS Push
 
-### Web へペースト
+### 公開鍵を登録
 
 テスト
 ```
@@ -16,7 +16,14 @@ ssh -T git@github.com
 Hi {USERNAME}! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
-### clone したもの
+### remote URL を変更
+
+変更方法
+
+```
+git remote set-url origin git@github.com:{USER}:{REPOS.} 
+```
+
 
 確認方法
 
@@ -24,11 +31,6 @@ Hi {USERNAME}! You've successfully authenticated, but GitHub does not provide sh
 git remote -v
 ```
 
-変更方法
-
-```
-git remote set-url origin git@github.com:{USER}:{REPOS.} 
-```
 
 # ntp
 
