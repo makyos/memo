@@ -1,6 +1,8 @@
 # github
 
-## ssh key
+## ssh connect
+
+### Web へペースト
 
 テスト
 ```
@@ -12,6 +14,20 @@ ssh -T git@github.com
 ```
 Hi {USERNAME}! You've successfully authenticated, but GitHub does not provide shell access.
 ```
+
+### clone したもの
+
+確認方法
+
+```
+git remote -v
+```
+
+変更方法
+
+```
+git remote set-url origin git@github.com:{USER}:{REPOS.} 
+
 
 # ntp
 
