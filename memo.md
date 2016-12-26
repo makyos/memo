@@ -2288,6 +2288,15 @@ command もあるが、なんか違う。
 test ! -e /vagrant/rpm/gitlab-7.3.2_omnibus-1.el6.x86_64.rpm; echo $?
 ```
 
+# cut
+
+## 1列目だけ
+
+```
+cut -d ' ' -f1
+```
+
+
 # grep
 
 ## AND
