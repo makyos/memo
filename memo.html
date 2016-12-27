@@ -59,20 +59,58 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="xmonada">XMONADa</h1>
+<h2 id="dmenuランチャ">dmenu(ランチャ)</h2>
+<h3 id="install-run">install &amp; run</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> apt-get search dmenu</code></pre></div>
+<p>MOD + [P]</p>
+<h2 id="設定更新">設定更新</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">xmonad</span> --recompile <span class="kw">&amp;&amp;</span> <span class="kw">xmonad</span> --restart</code></pre></div>
+<h2 id="キーバインド">キーバインド</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">キーバインド</th>
+<th style="text-align: center;">働き</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MOD + SHIFT + RET</td>
+<td style="text-align: center;">新しいタイルにターミナルを開く</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MOD + [J]/[K]</td>
+<td style="text-align: center;">タイルフォーカスを移動</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MOD + SHIFT + [J]/[K]</td>
+<td style="text-align: center;">フォーカスタイルと隣接タイルと入れ替える</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MOD + [1]/.../[9]</td>
+<td style="text-align: center;">仮想デスクトップを切り替える</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MOD + SPC</td>
+<td style="text-align: center;">タイルのレイアウト方法を切り替える</td>
+</tr>
+</tbody>
+</table>
 <h1 id="github">github</h1>
 <h2 id="userpass-push">USER/PASS Push</h2>
 <h3 id="公開鍵を登録">公開鍵を登録</h3>
 <p>テスト</p>
-<pre><code>ssh -T git@github.com
-Hi {USERNAME}! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ssh</span> -T git@github.com
+<span class="kw">Hi</span> <span class="dt">{USERNAME}</span>! You<span class="st">&#39;ve successfully authenticated, but GitHub does not provide shell access.</span></code></pre></div>
 <h3 id="remote-url-を変更">remote URL を変更</h3>
 <p>変更方法</p>
-<pre><code>git remote set-url origin git@github.com:{USER}:{REPOS.} </code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> remote set-url origin git@github.com:<span class="dt">{USER}:{REPOS.}</span> </code></pre></div>
 <p>確認方法</p>
 <pre><code>git remote -v</code></pre>
 <h1 id="ntp">ntp</h1>
 <h3 id="同期状況">同期状況</h3>
-<pre><code>/usr/sbin/ntpq -p</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/usr/sbin/ntpq</span> -p</code></pre></div>
 <pre><code>     remote           refid      st t when poll reach   delay   offset  jitter
 ==============================================================================
 *196.2.33.10     LOCAL(0)         6 u  503 1024  377    1.656   -0.089   0.048
@@ -81,12 +119,12 @@ Hi {USERNAME}! You&#39;ve successfully authenticated, but GitHub does not provid
  196.3.34.10     .INIT.          16 u    - 1024    0    0.000    0.000   0.000</code></pre>
 <h4 id="windows">Windows</h4>
 <p>管理者コマンド</p>
-<pre><code>w32tm /query /peers</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">w32tm</span> /query /peers</code></pre></div>
 <h3 id="強制同期">強制同期</h3>
-<pre><code>sudo service ntpd restart</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> service ntpd restart</code></pre></div>
 <h4 id="windows-1">Windows</h4>
 <p>管理者コマンド</p>
-<pre><code>w32tm /resync /nowait</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">w32tm</span> /resync /nowait</code></pre></div>
 <h3 id="windows-2">Windows</h3>
 <p>gpedit.msc で以下を実施</p>
 <ul>
@@ -101,84 +139,84 @@ Hi {USERNAME}! You&#39;ve successfully authenticated, but GitHub does not provid
 <h1 id="centrecom-sh210x210">CentreCOM SH210(x210)</h1>
 <h2 id="状況表示">状況表示</h2>
 <h3 id="ポートの状態">ポートの状態</h3>
-<pre><code>show interface status</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">show</span> interface status</code></pre></div>
 <p>表示例</p>
-<pre><code>Port       Name               Status            Vlan Duplex   Speed Type
-port1.0.1                     connected            1 a-full  a-1000 1000BASE-T
-port1.0.2                     connected            1 a-full  a-1000 1000BASE-T
-port1.0.3                     notconnect           1 auto      auto 1000BASE-T
-port1.0.4                     connected            1 a-full  a-1000 1000BASE-T
-port1.0.5                     notconnect           1 auto      auto 1000BASE-T
-port1.0.6                     connected            1 a-full   a-100 1000BASE-T
-port1.0.7                     connected            1 a-full  a-1000 1000BASE-T
-port1.0.8                     connected            1 a-full  a-1000 1000BASE-T
-port1.0.9                     notconnect           1 auto      auto not present</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Port</span>       Name               Status            Vlan Duplex   Speed Type
+<span class="kw">port1.0.1</span>                     connected            1 a-full  a-1000 1000BASE-T
+<span class="kw">port1.0.2</span>                     connected            1 a-full  a-1000 1000BASE-T
+<span class="kw">port1.0.3</span>                     notconnect           1 auto      auto 1000BASE-T
+<span class="kw">port1.0.4</span>                     connected            1 a-full  a-1000 1000BASE-T
+<span class="kw">port1.0.5</span>                     notconnect           1 auto      auto 1000BASE-T
+<span class="kw">port1.0.6</span>                     connected            1 a-full   a-100 1000BASE-T
+<span class="kw">port1.0.7</span>                     connected            1 a-full  a-1000 1000BASE-T
+<span class="kw">port1.0.8</span>                     connected            1 a-full  a-1000 1000BASE-T
+<span class="kw">port1.0.9</span>                     notconnect           1 auto      auto not present</code></pre></div>
 <h2 id="基本設定ip接続可能化">基本設定(IP接続可能化)</h2>
 <h3 id="rs-232c-接続">RS-232C 接続</h3>
 <p>USB to Serial ケーブルで接続、ドライバをインストールする。</p>
 <h3 id="ip-addr-設定">IP ADDR 設定</h3>
 <p>各モード(階層)プロンプト</p>
-<pre><code>&gt;
-    #
-        (config)#
-            (config-if)#</code></pre>
-<pre><code>enable
-    configure terminal
-        interface vlan1
-            ip address 192.168.10.254/24
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">&gt;</span>
+    <span class="co">#</span>
+        <span class="kw">(config)</span>#
+            <span class="kw">(config-if)</span>#</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">enable</span>
+    <span class="kw">configure</span> terminal
+        <span class="kw">interface</span> vlan1
+            <span class="kw">ip</span> address 192.168.10.254/24
 
-        ip route 0.0.0.0/0 192.168.10.1
+        <span class="kw">ip</span> route 0.0.0.0/0 192.168.10.1
 
-    write file</code></pre>
+    <span class="kw">write</span> file</code></pre></div>
 <h3 id="sshsftp-の有効化">SSH(+SFTP) の有効化</h3>
-<pre><code>&gt;
-    #
-        (config)#
-            (config-if)#</code></pre>
-<pre><code>awplus&gt; enable
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">&gt;</span>
+    <span class="co">#</span>
+        <span class="kw">(config)</span>#
+            <span class="kw">(config-if)</span>#</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">awplus&gt;</span> enable
 
-awplus# configure terminal
-Enter configuration commands, one per line.  End with CNTL/Z.
+<span class="kw">awplus</span># configure terminal
+<span class="kw">Enter</span> configuration commands, one per line.  End with CNTL/Z.
 
-awplus(config)#crypto key generate hostkey dsa
+<span class="kw">awplus</span>(config)#<span class="kw">crypto</span> key generate hostkey dsa
 
-Generating host key (1024 bits dsa)
-This may take a while. Please wait ... Done
+<span class="kw">Generating</span> host key (1024 bits dsa)
+<span class="kw">This</span> may take a while. Please wait ... Done
 
-WARNING: The SSH server must now be enabled with &quot;service ssh&quot;
+<span class="kw">WARNING</span>: The SSH server must now be enabled with <span class="st">&quot;service ssh&quot;</span>
 
-awplus(config)# crypto key generate hostkey rsa
+<span class="kw">awplus</span>(config)# <span class="kw">crypto</span> key generate hostkey rsa
 
-Generating host key (1024 bits rsa)
-This may take a while. Please wait ... Done
+<span class="kw">Generating</span> host key (1024 bits rsa)
+<span class="kw">This</span> may take a while. Please wait ... Done
 
-WARNING: The SSH server must now be enabled with &quot;service ssh&quot;
+<span class="kw">WARNING</span>: The SSH server must now be enabled with <span class="st">&quot;service ssh&quot;</span>
 
-awplus(config)# crypto key generate hostkey rsa1
+<span class="kw">awplus</span>(config)# <span class="kw">crypto</span> key generate hostkey rsa1
 
-Generating host key (1024 bits rsa1)
-This may take a while. Please wait ... Done
+<span class="kw">Generating</span> host key (1024 bits rsa1)
+<span class="kw">This</span> may take a while. Please wait ... Done
 
-WARNING: The SSH server must now be enabled with &quot;service ssh&quot;
+<span class="kw">WARNING</span>: The SSH server must now be enabled with <span class="st">&quot;service ssh&quot;</span>
 
-awplus(config)# ssh server allow-users *
-awplus(config)# ssh server session-timeout 3600
-awplus(config)# service ssh
-awplus(config)# ^D
-awplus# write file
+<span class="kw">awplus</span>(config)# <span class="kw">ssh</span> server allow-users *
+<span class="kw">awplus</span>(config)# <span class="kw">ssh</span> server session-timeout 3600
+<span class="kw">awplus</span>(config)# <span class="kw">service</span> ssh
+<span class="kw">awplus</span>(config)# ^<span class="kw">D</span>
+<span class="kw">awplus</span># write file
 
-Building configuration...
-[OK]</code></pre>
+<span class="kw">Building</span> configuration...
+[<span class="kw">OK</span>]</code></pre></div>
 <h3 id="ポート速度設定">ポート速度設定</h3>
-<pre><code>awplus&gt; enable
-awplus# configure terminal
-awplus(config)# interface port1.0.1
-awplus(config-if)# speed 10
-awplus(config-if)# duplex full</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">awplus&gt;</span> enable
+<span class="kw">awplus</span># configure terminal
+<span class="kw">awplus</span>(config)# <span class="kw">interface</span> port1.0.1
+<span class="kw">awplus</span>(config-if)# <span class="kw">speed</span> 10
+<span class="kw">awplus</span>(config-if)# <span class="kw">duplex</span> full</code></pre></div>
 <h1 id="visual-studio-code">Visual Studio Code</h1>
 <h2 id="基本操作">基本操作</h2>
 <h3 id="コマンドラインから起動">コマンドラインから起動</h3>
-<pre><code>code .</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">code</span> .</code></pre></div>
 <h3 id="コマンドパレットの呼出し">コマンドパレットの呼出し</h3>
 <table>
 <tbody>
@@ -203,7 +241,7 @@ awplus(config-if)# duplex full</code></pre>
 <h3 id="locale.json-を開く">locale.json を開く</h3>
 <pre><code>&gt;言語を構成する</code></pre>
 <h3 id="内容を以下にする">内容を以下にする</h3>
-<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="er">&quot;locale&quot;:&quot;en-US&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="st">&quot;locale&quot;</span>:<span class="st">&quot;en-US&quot;</span></code></pre></div>
 <h3 id="再起動する">再起動する</h3>
 <h1 id="handsontable">Handsontable</h1>
 <h2 id="css">CSS</h2>

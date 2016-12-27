@@ -82,7 +82,7 @@ h1 {
 
   background-color: #ddd;
   line-height: 1.75;
-  border-radius: 5px;
+  border-radius: 9px;
   /* border: solid; */
   /* border-color: black; */
   padding-left: 13px;
@@ -92,8 +92,8 @@ h1 {
 }
 h1:before {
     counter-increment: C1;
-    content: counter(C1) " ";
-    color: black;
+    content: counter(C1) ". ";
+    color: white;
 }
 
 
@@ -107,7 +107,7 @@ h2 {
 }
 h2:before {
     counter-increment: C2;
-    content: counter(C1) "."counter(C2) " ";
+    content: counter(C1) "."counter(C2) ". ";
 }
 
 h3 {

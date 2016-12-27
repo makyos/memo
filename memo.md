@@ -1,3 +1,33 @@
+# XMONAD
+
+## dmenu(ランチャ)
+
+### install & run
+
+```{.bash}
+sudo apt-get search dmenu
+```
+
+MOD + [P]
+
+
+## 設定更新
+
+```{.bash}
+xmonad --recompile && xmonad --restart
+```
+
+## キーバインド
+
+キーバインド                 働き
+------------------------   -----------------------------------
+MOD + SHIFT + RET          新しいタイルにターミナルを開く
+MOD + [J]/[K]              タイルフォーカスを移動
+MOD + SHIFT + [J]/[K]      フォーカスタイルと隣接タイルと入れ替える
+MOD + [1]/.../[9]          仮想デスクトップを切り替える
+MOD + SPC                  タイルのレイアウト方法を切り替える
+
+
 
 # github
 
@@ -6,7 +36,7 @@
 ### 公開鍵を登録
 
 テスト
-```
+```{.bash}
 ssh -T git@github.com
 Hi {USERNAME}! You've successfully authenticated, but GitHub does not provide shell access.
 ```
@@ -15,7 +45,7 @@ Hi {USERNAME}! You've successfully authenticated, but GitHub does not provide sh
 
 変更方法
 
-```
+```{.bash}
 git remote set-url origin git@github.com:{USER}:{REPOS.} 
 ```
 
@@ -31,7 +61,7 @@ git remote -v
 
 ### 同期状況
 
-```
+```{.bash}
 /usr/sbin/ntpq -p
 ```
 
@@ -48,14 +78,14 @@ git remote -v
 
 管理者コマンド
 
-```
+```{.bash}
 w32tm /query /peers
 ```
 
 
 ### 強制同期
 
-```
+```{.bash}
 sudo service ntpd restart
 ```
 
@@ -63,7 +93,7 @@ sudo service ntpd restart
 
 管理者コマンド
 
-```
+```{.bash}
 w32tm /resync /nowait
 ```
 
@@ -86,13 +116,13 @@ service.msc の Windows Time で以下を実施
 
 ### ポートの状態
 
-```
+```{.bash}
 show interface status
 ```
 
 表示例
 
-```
+```{.bash}
 Port       Name               Status            Vlan Duplex   Speed Type
 port1.0.1                     connected            1 a-full  a-1000 1000BASE-T
 port1.0.2                     connected            1 a-full  a-1000 1000BASE-T
@@ -115,14 +145,14 @@ USB to Serial ケーブルで接続、ドライバをインストールする。
 
 各モード(階層)プロンプト
 
-```
+```{.bash}
 >
 	#
 		(config)#
 			(config-if)#
 ```
 
-```
+```{.bash}
 enable
 	configure terminal
 		interface vlan1
@@ -137,14 +167,14 @@ enable
 
 ### SSH(+SFTP) の有効化
 
-```
+```{.bash}
 >
 	#
 		(config)#
 			(config-if)#
 ```
 
-```
+```{.bash}
 awplus> enable
 
 awplus# configure terminal
@@ -185,7 +215,7 @@ Building configuration...
 
 
 
-```
+```{.bash}
 awplus> enable
 awplus# configure terminal
 awplus(config)# interface port1.0.1
@@ -201,7 +231,7 @@ awplus(config-if)# duplex full
 
 ### コマンドラインから起動
 
-```
+```{.bash}
 code .
 ```
 
@@ -231,7 +261,7 @@ to top,bottom: Command + UP, DOWN
 
 ### 内容を以下にする
 
-```{.json}
+```{.bash}
 "locale":"en-US"
 ```
 
