@@ -1,4 +1,33 @@
+
 # XMONAD
+
+## MOD Key Change
+
+### .xmonad
+
+```{.hs}
+-- [MOD]=[Windows]
+modMask = myModMask
+```
+### .Xmodmap
+
+```
+clear Lock
+keycode  66 = Super_L
+```
+
+```{.bash}
+xmodmap -e "clear Lock"
+xmodmap -e "keycode  66 = Super_L"
+```
+
+### .xinitrc
+
+```
+xmodmap $HOME/.Xmodmap
+```
+
+ 
 
 ## dmenu(ランチャ)
 
