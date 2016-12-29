@@ -11,7 +11,9 @@ modMask = myModMask
 ```
 ### .Xmodmap
 
+
 ```
+! [caps]=[Windows] に
 clear Lock
 keycode  66 = Super_L
 ```
