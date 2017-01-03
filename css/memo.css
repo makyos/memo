@@ -20,6 +20,7 @@ body {
   padding: 30px;
 
   column-width: 333px;
+  -moz-column-width: 333px;
   -webkit-column-width: 333px;
   /* column-count: 3; */
   /* -webkit-column-count: 3; */

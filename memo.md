@@ -3,14 +3,14 @@
 
 ## MOD Key Change
 
-### .xmonad
+#### .xmonad
 
 ```{.hs}
 -- [MOD]=[Windows]
 modMask = myModMask
 ```
-### .Xmodmap
 
+#### .Xmodmap
 
 ```
 ! [caps]=[Windows] に
@@ -23,7 +23,7 @@ xmodmap -e "clear Lock"
 xmodmap -e "keycode  66 = Super_L"
 ```
 
-### .xinitrc
+#### .xinitrc
 
 ```
 xmodmap $HOME/.Xmodmap
@@ -940,26 +940,22 @@ a=aaa
 <form class="form-horizontal">
 
 <div class="form-group">
-<label class="control-label col-xs-6">SERVER ADDRESS & PORT</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='192.168.0.247:9200'">
-</div>
-</div>
+<label class="control-label col-xs-4">SERVER ADDRESS & PORT</label>
+<div class="col-xs-8">
+<input class="form-control " type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='192.168.0.247:9200'">
+</div></div>
 
 <div class="form-group">
-<label class="control-label col-xs-6">INDEX NAME</label>
-<div class="col-xs-6">
+<label class="control-label col-xs-4">INDEX NAME</label>
+<div class="col-xs-8">
 <input class="form-control" type="text" onclick="this.select();" ng-model="ES_INDEX_NAME" ng-init="ES_INDEX_NAME='db-name'">
-</div>
-</div>
-
+</div></div>
 
 <div class="form-group">
 <label class="control-label col-xs-6">TYPE NAME</label>
 <div class="col-xs-6">
 <input class="form-control" type="text" onclick="this.select();" ng-model="ES_TYPE_NAME" ng-init="ES_TYPE_NAME='table-name'">
-</div>
-</div>
+</div></div>
 
 </form>
 
