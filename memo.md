@@ -1,4 +1,3 @@
-
 # XMONAD
 
 ## MOD Key Change
@@ -1697,17 +1696,41 @@ vboxmanage modifyhd sda.vdi --compact
 
 # TMUX
 
-## NEW
+## Config
 
-```
+Triger(Ctr+[b]...)            Action
+----------------------------  -------------
+:source-file ~/.tmux.conf      設定反映
+
+
+## Session
+
+プロジェクト単位に作成、アタッチする。
+
+```{.bash}
+## 一覧表示
+tmux ls
+## 作成
 tmux new -s <session>
-```
-
-## KILL
-
-```
+## 削除（個別）
 tmux kill-session -t <session>
+## 削除（全て）
+tmux kill-server
 ```
+
+## Pane
+
+ウインドウを分割する。
+
+Triger(Ctr+[b]...)                         Action
+-----------------------------------------  -------------
+"                                          上下に分割
+%                                          左右に分割
+o                                          Pane を移動
+[SPC]                                      レイアウト切り替え
+[Ctr]+[カーソル]                           サイズ変更
+:set-window-option synchronize-panes on    各 Pain にキー入力をブロードキャストする
+:set-window-option synchronize-panes off   各 Pain にキー入力をブロードキャストしない
 
 
 
