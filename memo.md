@@ -5,8 +5,9 @@
 
 ### .xmonad
 
+MOD to [WINDOWS]
+
 ```{.hs}
--- [MOD]=[Windows]
 modMask = myModMask
 ```
 ### .Xmodmap
