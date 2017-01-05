@@ -59,6 +59,25 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="mozc">MOZC</h1>
+<p>よくわからんが日本語入力できなくなったとき。</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/usr/lib/mozc/mozc_renderer</span> <span class="kw">&amp;</span></code></pre></div>
+<h1 id="ufw">ufw</h1>
+<h2 id="basics">BASICS</h2>
+<p>デフォルトは無効 (ubuntu server 16.10) 。</p>
+<p>有効化すると下記の状態となるため、クライアント運用は可能。</p>
+<ul>
+<li>deny (incoming) --- 入力 NG</li>
+<li>allow (outgoing) --- 出力 OK</li>
+<li>disabled (routed) --- 転送 NG</li>
+</ul>
+<h3 id="su">su</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> su -</code></pre></div>
+<h3 id="display-status">Display STATUS</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ufw</span> status verbose</code></pre></div>
+<h3 id="enabledisable">ENABLE/DISABLE</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ufw</span> enable</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ufw</span> disable</code></pre></div>
 <h1 id="xmonad">XMONAD</h1>
 <h2 id="mod-key-change">MOD Key Change</h2>
 <h4 id="xmonad-1">.xmonad</h4>
@@ -821,7 +840,7 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> datetime
 datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span class="sc">%d</span><span class="st">_%H-%M-%S&#39;</span>)</code></pre></div>
 <h1 id="crudsqlrest">CRUD/SQL/REST</h1>
-<h2 id="basics">BASICs</h2>
+<h2 id="basics-1">BASICs</h2>
 <table>
 <thead>
 <tr class="header">
@@ -1481,7 +1500,7 @@ var graph = new vis.Graph(container, data);
 <h3 id="docker_host">DOCKER_HOST</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">DOCKER_HOST=</span>tcp://localhost:4243</code></pre></div>
 <h1 id="ansible">ANSIBLE</h1>
-<h2 id="basics-1">BASICS</h2>
+<h2 id="basics-2">BASICS</h2>
 <h3 id="ping">ping</h3>
 <p>実行前に接続できるか確認する。</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ansible</span> -i hosts all -m ping</code></pre></div>
@@ -1712,6 +1731,14 @@ var graph = new vis.Graph(container, data);
 <tr class="even">
 <td style="text-align: center;">$</td>
 <td style="text-align: left;">今の行のケツ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">[CTR]+[b]</td>
+<td style="text-align: left;">ページアップ</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[CTR]+[f]</td>
+<td style="text-align: left;">ページダウン</td>
 </tr>
 </tbody>
 </table>

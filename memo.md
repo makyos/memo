@@ -1,3 +1,48 @@
+# MOZC
+
+よくわからんが日本語入力できなくなったとき。
+
+```{.bash}
+/usr/lib/mozc/mozc_renderer &
+```
+
+# ufw
+
+## BASICS
+
+デフォルトは無効 (ubuntu server 16.10) 。
+
+有効化すると下記の状態となるため、クライアント運用は可能。
+
+ * deny (incoming) --- 入力 NG
+ * allow (outgoing) --- 出力 OK
+ * disabled (routed) --- 転送 NG
+
+
+### su
+
+```{.bash}
+sudo su -
+```
+
+### Display STATUS
+
+```{.bash}
+ufw status verbose
+```
+
+### ENABLE/DISABLE
+
+```{.bash}
+ufw enable
+```
+
+```{.bash}
+ufw disable
+```
+
+
+
 # XMONAD
 
 ## MOD Key Change
@@ -2715,12 +2760,14 @@ scp -P 22 -rq tcp/ username@192.168.33.32:/home/aaa/
 
 ### カーソル移動
 
- key  move  
------ -----
- 1G   1 行目のあたま  
- G    最終行のケツ
- ~    今の行のあたま
- $    今の行のケツ
+ key           move  
+-------------- -----
+ 1G            1 行目のあたま  
+ G             最終行のケツ
+ ~             今の行のあたま
+ $             今の行のケツ
+ [CTR]+[b]     ページアップ
+ [CTR]+[f]     ページダウン
 
 # WINDOWS
 
