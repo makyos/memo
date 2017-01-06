@@ -1,3 +1,18 @@
+# Load
+
+## CPU
+
+```{.bash}
+yes > /dev/null
+```
+
+## DISK
+
+```{.bash}
+while true; do dd if=/dev/zero of=./tmpfile bs=1M count=1000; done; rm ./tmpfile
+```
+
+
 # MOZC
 
 よくわからんが日本語入力できなくなったとき。

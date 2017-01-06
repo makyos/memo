@@ -59,6 +59,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="load">Load</h1>
+<h2 id="cpu">CPU</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yes</span> <span class="kw">&gt;</span> /dev/null</code></pre></div>
+<h2 id="disk">DISK</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="kw">true;</span> <span class="kw">do</span> <span class="kw">dd</span> if=/dev/zero of=./tmpfile bs=1M count=1000<span class="kw">;</span> <span class="kw">done</span>; <span class="kw">rm</span> ./tmpfile</code></pre></div>
 <h1 id="mozc">MOZC</h1>
 <p>よくわからんが日本語入力できなくなったとき。</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/usr/lib/mozc/mozc_renderer</span> <span class="kw">&amp;</span></code></pre></div>
@@ -358,7 +363,7 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cp</span> filename{,<span class="kw">`date</span> +<span class="st">&#39;__%Y-%m-%d_%H-%M-%S&#39;</span><span class="kw">`</span>}<span class="kw">.tgz</span>
 <span class="co"># cp filename.tgz filename__2015-01-23_23-05-58.tgz</span></code></pre></div>
 <h1 id="virtual-box">VIRTUAL BOX</h1>
-<h2 id="disk">DISK</h2>
+<h2 id="disk-1">DISK</h2>
 <h3 id="create-shareable">create shareable</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">vboxmanage</span> createhd --size 1000 --variant Fixed --filename disk1.vdi
 <span class="kw">vboxmanage</span> modifyhd --type shareable disk1.vdi</code></pre></div>
@@ -1464,7 +1469,7 @@ var graph = new vis.Graph(container, data);
 <p>差分統合されない。</p>
 <h4 id="save">SAVE</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> save <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> <span class="kw">&gt;</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.save.tar</code></pre></div>
-<h4 id="load">LOAD</h4>
+<h4 id="load-1">LOAD</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> load <span class="kw">&lt;</span> <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span>.save.tar</code></pre></div>
 <h3 id="remove-all-container">REMOVE ALL CONTAINER</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rm <span class="kw">`docker</span> ps -aq<span class="kw">`</span></code></pre></div>
