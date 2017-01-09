@@ -59,6 +59,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="syslog">SYSLOG</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{COMMAND}</span> <span class="kw">2&gt;&amp;1</span> <span class="kw">|</span> <span class="kw">tee</span> <span class="kw">&gt;(logger</span> -i -t <span class="st">&quot;{TAG}&quot;</span><span class="kw">)</span></code></pre></div>
 <h1 id="load">Load</h1>
 <h2 id="cpu">CPU</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yes</span> <span class="kw">&gt;</span> /dev/null</code></pre></div>
@@ -676,25 +678,35 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <h1 id="elastic-search">ELASTIC SEARCH</h1>
 <form class="form-horizontal">
 <div class="form-group">
-<label class="control-label col-xs-4">SERVER ADDRESS &amp; PORT</label>
-<div class="col-xs-8">
-<p><input class="form-control " type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='192.168.0.247:9200'"></p>
+<label class="control-label col-xs-6">SERVER ADDRESS &amp; PORT</label>
+<div class="col-xs-6">
+<p><input class="form-control " type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='localhost:9200'"></p>
 </div>
 </div>
 <div class="form-group">
-<label class="control-label col-xs-4">INDEX NAME</label>
-<div class="col-xs-8">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="ES_INDEX_NAME" ng-init="ES_INDEX_NAME='db-name'"></p>
+<label class="control-label col-xs-6">INDEX NAME</label>
+<div class="col-xs-6">
+<p><input class="form-control" type="text" onclick="this.select();" ng-model="ES_INDEX_NAME" ng-init="ES_INDEX_NAME='test_index'"></p>
 </div>
 </div>
 <div class="form-group">
 <label class="control-label col-xs-6">TYPE NAME</label>
 <div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="ES_TYPE_NAME" ng-init="ES_TYPE_NAME='table-name'"></p>
+<p><input class="form-control" type="text" onclick="this.select();" ng-model="ES_TYPE_NAME" ng-init="ES_TYPE_NAME='test-type'"></p>
 </div>
 </div>
 </form>
+<h2 id="metricbeat">Metricbeat</h2>
+<h3 id="start-1">Start</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> ./metricbeat -e -c metricbeat.yml</code></pre></div>
+<h3 id="kibana">Kibana</h3>
+<h4 id="discover-index">Discover Index</h4>
+<pre><code>metricbeat-*</code></pre>
+<h4 id="create-dushbord">Create Dushbord</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">./scripts/import_dashboards</span></code></pre></div>
 <h2 id="index">INDEX</h2>
+<h3 id="list">List</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET localhost:9200/_aliases?pretty</code></pre></div>
 <h3 id="create">create</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}&#39;</span></code></pre></div>
 <h3 id="look">look</h3>
@@ -783,7 +795,7 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <h1 id="tcpdump">TCPDUMP</h1>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tcpdump</span> -Xs 256 -n -i eth1 dst port 50012</code></pre></div>
 <h1 id="scheme">SCHEME</h1>
-<h2 id="list">LIST</h2>
+<h2 id="list-1">LIST</h2>
 <table>
 <thead>
 <tr class="header">
@@ -953,7 +965,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h3 id="csv-data-import">CSV DATA IMPORT</h3>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">.separator ,
 .import <span class="kw">FILE</span> TAB</code></pre></div>
-<h3 id="list-1">LIST</h3>
+<h3 id="list-2">LIST</h3>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">.tables</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> name <span class="kw">from</span> sqlite_master <span class="kw">where</span> type=<span class="st">&#39;table&#39;</span> <span class="kw">order</span> <span class="kw">by</span> name;</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="st">&#39;.import ./csv/&#39;</span> || name || <span class="st">&#39;.csv &#39;</span> || name <span class="kw">from</span> sqlite_master <span class="kw">where</span> type=<span class="st">&#39;table&#39;</span> <span class="kw">order</span> <span class="kw">by</span> name;</code></pre></div>
@@ -1253,8 +1265,37 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h3 id="pull">PULL</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> pull origin master</code></pre></div>
 <h1 id="docker">DOCKER</h1>
-<h2 id="misc">MISC</h2>
-<h3 id="install-5">install</h3>
+<h2 id="setup-1">Setup</h2>
+<h3 id="install-5">Install</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> cask install docker</code></pre></div>
+<h3 id="hello-world">Hello World</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run hello-world</code></pre></div>
+<h2 id="docker-compose">docker-compose</h2>
+<h4 id="docker-compose.yml">docker-compose.yml</h4>
+<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="fu">centos:</span>
+  <span class="fu">image:</span> centos:latest
+  <span class="fu">container_name:</span> centos7
+  <span class="fu">entrypoint:</span> tail -f /dev/null</code></pre></div>
+<h3 id="updown">UP/DOWN</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker-compose</span> up</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker-compose</span> down</code></pre></div>
+<h2 id="container">CONTAINER</h2>
+<h3 id="list-3">LIST</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> ps -a</code></pre></div>
+<h3 id="run-stop">RUN &amp; STOP</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run -d -p 80:80 --name web nginx</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> stop <span class="dt">{CONTAINER}</span></code></pre></div>
+<h3 id="remove">REMOVE</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rm <span class="dt">{CONTAINER}</span></code></pre></div>
+<h3 id="connect">CONNECT</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> exec -it <span class="dt">{CONTAINER}</span> /bin/bash</code></pre></div>
+<h2 id="image">IMAGE</h2>
+<h3 id="list-4">LIST</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> images</code></pre></div>
+<h3 id="remove-1">REMOVE</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="dt">{IMAGE}</span></code></pre></div>
+<h2 id="old">OLD</h2>
+<h3 id="install-6">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> install -y docker-io.x86_64</code></pre></div>
 <h3 id="ps">PS</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">watch</span> -n 2 <span class="st">&#39;df -h; echo; free -m; echo; docker ps -a|head; echo; docker images -a&#39;</span></code></pre></div>
@@ -1449,7 +1490,7 @@ var graph = new vis.Graph(container, data);
 <h3 id="build">BUILD</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> build -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> build --rm=true -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre></div>
-<h3 id="run-stop">RUN / STOP</h3>
+<h3 id="run-stop-1">RUN / STOP</h3>
 <h4 id="run">RUN</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run -i -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> /bin/bash</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run -i -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> /usr/sbin/sshd -D</code></pre></div>
@@ -1494,7 +1535,7 @@ var graph = new vis.Graph(container, data);
 <span class="kw">docker</span> rmi <span class="ot">$(</span><span class="kw">docker</span> images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;{print $3}&#39;</span><span class="ot">)</span></code></pre></div>
 <p>docker rmi $(docker images -a | awk '{print $3}')</p>
 <h2 id="boot2docker">boot2docker</h2>
-<h3 id="install-6">install</h3>
+<h3 id="install-7">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> install docker boot2docker</code></pre></div>
 <h3 id="up">up</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">boot2docker</span> init
@@ -2036,14 +2077,14 @@ restart</code></pre>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yumdownloader</span> --resolve <span class="dt">{{YUM_PKG}}</span></code></pre></div>
 <h3 id="install-from-local-rpm">INSTALL from LOCAL RPM</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> --disablerepo=<span class="dt">\*</span> -y localinstall ./*.rpm</code></pre></div>
-<h3 id="list-2">LIST</h3>
+<h3 id="list-5">LIST</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> <span class="dt">{{YUM_OPT}}</span> list</code></pre></div>
 <h1 id="chef">CHEF</h1>
-<h2 id="misc-1">MISC</h2>
+<h2 id="misc">MISC</h2>
 <h3 id="create-cookbok">CREATE cookbok</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">knife</span> cookbook create app -o site-cookbooks</code></pre></div>
 <h1 id="virualbox">VirualBox</h1>
-<h2 id="image">image</h2>
+<h2 id="image-1">image</h2>
 <h3 id="from-vmware">from vmware</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">VBoxManage</span> clonehd --format VDI cyua.vmdk cyua.vdi</code></pre></div>
 <h1 id="vagrant">VAGRANT</h1>
@@ -2285,7 +2326,7 @@ restart</code></pre>
 <span class="kw">set</span> feedback <span class="kw">off</span>
 <span class="co">-- set numw X</span></code></pre></div>
 <h2 id="enterprise-manager">Enterprise Manager</h2>
-<h3 id="updown">UP/DOWN</h3>
+<h3 id="updown-1">UP/DOWN</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">emctl</span> start dbconsole
 <span class="kw">emctl</span> stop dbconsole</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ORACLE_UNQNAME=</span>KX <span class="kw">emctl</span> start dbconsole</code></pre></div>
@@ -2311,7 +2352,7 @@ restart</code></pre>
 <h3 id="get-instance-name">get instance name</h3>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="fu">sys_context</span>(<span class="st">&#39;USERENV&#39;</span>, <span class="st">&#39;instance_name&#39;</span>) <span class="kw">from</span> dual;</code></pre></div>
 <h3 id="db-link">DB Link</h3>
-<h4 id="connect">connect</h4>
+<h4 id="connect-1">connect</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlplus</span> sys/manager@<span class="kw">&lt;</span>db<span class="kw">&gt;</span> as sysdba</code></pre></div>
 <h4 id="show-status">show status</h4>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">set</span> linesize <span class="dv">100</span>

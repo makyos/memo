@@ -1,3 +1,9 @@
+# SYSLOG
+
+```{.bash}
+{COMMAND} 2>&1 | tee >(logger -i -t "{TAG}")
+```
+
 # Load
 
 ## CPU
@@ -1000,26 +1006,56 @@ a=aaa
 <form class="form-horizontal">
 
 <div class="form-group">
-<label class="control-label col-xs-4">SERVER ADDRESS & PORT</label>
-<div class="col-xs-8">
-<input class="form-control " type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='192.168.0.247:9200'">
+<label class="control-label col-xs-6">SERVER ADDRESS & PORT</label>
+<div class="col-xs-6">
+<input class="form-control " type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='localhost:9200'">
 </div></div>
 
 <div class="form-group">
-<label class="control-label col-xs-4">INDEX NAME</label>
-<div class="col-xs-8">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ES_INDEX_NAME" ng-init="ES_INDEX_NAME='db-name'">
+<label class="control-label col-xs-6">INDEX NAME</label>
+<div class="col-xs-6">
+<input class="form-control" type="text" onclick="this.select();" ng-model="ES_INDEX_NAME" ng-init="ES_INDEX_NAME='test_index'">
 </div></div>
 
 <div class="form-group">
 <label class="control-label col-xs-6">TYPE NAME</label>
 <div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ES_TYPE_NAME" ng-init="ES_TYPE_NAME='table-name'">
+<input class="form-control" type="text" onclick="this.select();" ng-model="ES_TYPE_NAME" ng-init="ES_TYPE_NAME='test-type'">
 </div></div>
 
 </form>
 
+## Metricbeat
+
+### Start
+
+```{.bash}
+sudo ./metricbeat -e -c metricbeat.yml
+```
+
+### Kibana
+
+#### Discover Index
+
+```
+metricbeat-*
+```
+
+#### Create Dushbord
+
+```{.bash}
+./scripts/import_dashboards
+```
+
+
+
 ## INDEX
+
+### List
+
+```{.bash}
+curl -XGET localhost:9200/_aliases?pretty
+```
 
 ### create
 
@@ -1911,15 +1947,94 @@ git pull origin master
 
 # DOCKER
 
+## Setup
+
+### Install
+
+```{.bash}
+brew cask install docker
+```
+
+### Hello World
+
+```{.bash}
+docker run hello-world
+```
+
+## docker-compose
+
+#### docker-compose.yml
+
+```{.yaml}
+centos:
+  image: centos:latest
+  container_name: centos7
+  entrypoint: tail -f /dev/null
+```
+
+### UP/DOWN
+
+```{.bash}
+docker-compose up
+```
+
+```{.bash}
+docker-compose down
+```
+
+## CONTAINER
+
+### LIST
+
+```{.bash}
+docker ps -a
+```
+
+### RUN & STOP
+
+```{.bash}
+docker run -d -p 80:80 --name web nginx
+```
+
+``` {.bash}
+docker stop {CONTAINER}
+```
+
+### REMOVE
+
+``` {.bash}
+docker rm {CONTAINER}
+```
+
+### CONNECT
+
+``` {.bash}
+docker exec -it {CONTAINER} /bin/bash
+```
+
+## IMAGE
+
+### LIST
+
+```{.bash}
+docker images
+```
+
+### REMOVE
+
+``` {.bash}
+docker rmi {IMAGE}
+```
 
 
-## MISC
+
+## OLD
 
 ### install
 
 ``` {.bash}
 yum install -y docker-io.x86_64
-````
+```
 
 ### PS
 

@@ -8,7 +8,7 @@ while true; do
 	pandoc -s -f markdown -t html5 --template=template.html -o memo.html memo.md
         git --no-pager diff
 	# [ "$(uname)" = "Linux"  ] && chromium-browser memo.html &
-        [ "$(uname)" = "Darwin" ] && open memo.html
+        # [ "$(uname)" = "Darwin" ] && open memo.html
     fi
     oldstat="$nowstat"
     sleep 1
