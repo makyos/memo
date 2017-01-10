@@ -1025,12 +1025,33 @@ a=aaa
 
 </form>
 
+## Setup
+
+#### ubuntu
+
+```{.bash}
+sysctl vm.max_map_count
+sudo sysctl -w vm.max_map_count=262144
+sysctl vm.max_map_count
+```
+
+
 ## Metricbeat
 
 ### Start
 
 ```{.bash}
 sudo ./metricbeat -e -c metricbeat.yml
+```
+
+```{.bash}
+sudo service metricbeat start
+```
+
+### Template?
+
+```{.bash}
+curl -XPUT 'http://localhost:9200/_template/metricbeat' -d@/etc/metricbeat/metricbeat.template.json
 ```
 
 ### Kibana
@@ -1043,10 +1064,16 @@ metricbeat-*
 
 #### Create Dushbord
 
+#### tar.gz
+
 ```{.bash}
 ./scripts/import_dashboards
 ```
 
+#### deb
+```{.bash}
+/usr/share/metricbeat/scripts
+```
 
 
 ## INDEX

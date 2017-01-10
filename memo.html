@@ -696,14 +696,25 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 </div>
 </div>
 </form>
+<h2 id="setup-1">Setup</h2>
+<h4 id="ubuntu">ubuntu</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sysctl</span> vm.max_map_count
+<span class="kw">sudo</span> sysctl -w vm.max_map_count=262144
+<span class="kw">sysctl</span> vm.max_map_count</code></pre></div>
 <h2 id="metricbeat">Metricbeat</h2>
 <h3 id="start-1">Start</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> ./metricbeat -e -c metricbeat.yml</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> service metricbeat start</code></pre></div>
+<h3 id="template">Template?</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://localhost:9200/_template/metricbeat&#39;</span> -d@/etc/metricbeat/metricbeat.template.json</code></pre></div>
 <h3 id="kibana">Kibana</h3>
 <h4 id="discover-index">Discover Index</h4>
 <pre><code>metricbeat-*</code></pre>
 <h4 id="create-dushbord">Create Dushbord</h4>
+<h4 id="tar.gz">tar.gz</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">./scripts/import_dashboards</span></code></pre></div>
+<h4 id="deb">deb</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/usr/share/metricbeat/scripts</span></code></pre></div>
 <h2 id="index">INDEX</h2>
 <h3 id="list">List</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET localhost:9200/_aliases?pretty</code></pre></div>
@@ -1265,7 +1276,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h3 id="pull">PULL</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> pull origin master</code></pre></div>
 <h1 id="docker">DOCKER</h1>
-<h2 id="setup-1">Setup</h2>
+<h2 id="setup-2">Setup</h2>
 <h3 id="install-5">Install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> cask install docker</code></pre></div>
 <h3 id="hello-world">Hello World</h3>
