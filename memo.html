@@ -59,6 +59,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="postgres">POSTGRES</h1>
+<h2 id="client">CLIENT</h2>
+<h3 id="connect">CONNECT</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">psql</span> -h <span class="dt">{PG_SRV_ADDRESS}</span> -U <span class="dt">{PG_USER}</span></code></pre></div>
 <h1 id="syslog">SYSLOG</h1>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{COMMAND}</span> <span class="kw">2&gt;&amp;1</span> <span class="kw">|</span> <span class="kw">tee</span> <span class="kw">&gt;(logger</span> -i -t <span class="st">&quot;{TAG}&quot;</span><span class="kw">)</span></code></pre></div>
 <h1 id="load">Load</h1>
@@ -1279,6 +1283,10 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h2 id="setup-2">Setup</h2>
 <h3 id="install-5">Install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> cask install docker</code></pre></div>
+<h3 id="without-sudo">WITHOUT sudo</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># sudo groupadd docker</span>
+<span class="kw">sudo</span> gpasswd -a <span class="ot">${USER}</span> docker
+<span class="kw">sudo</span> service docker restart</code></pre></div>
 <h3 id="hello-world">Hello World</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run hello-world</code></pre></div>
 <h2 id="docker-compose">docker-compose</h2>
@@ -1298,7 +1306,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> stop <span class="dt">{CONTAINER}</span></code></pre></div>
 <h3 id="remove">REMOVE</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rm <span class="dt">{CONTAINER}</span></code></pre></div>
-<h3 id="connect">CONNECT</h3>
+<h3 id="connect-1">CONNECT</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> exec -it <span class="dt">{CONTAINER}</span> /bin/bash</code></pre></div>
 <h2 id="image">IMAGE</h2>
 <h3 id="list-4">LIST</h3>
@@ -2363,7 +2371,7 @@ restart</code></pre>
 <h3 id="get-instance-name">get instance name</h3>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="fu">sys_context</span>(<span class="st">&#39;USERENV&#39;</span>, <span class="st">&#39;instance_name&#39;</span>) <span class="kw">from</span> dual;</code></pre></div>
 <h3 id="db-link">DB Link</h3>
-<h4 id="connect-1">connect</h4>
+<h4 id="connect-2">connect</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlplus</span> sys/manager@<span class="kw">&lt;</span>db<span class="kw">&gt;</span> as sysdba</code></pre></div>
 <h4 id="show-status">show status</h4>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">set</span> linesize <span class="dv">100</span>

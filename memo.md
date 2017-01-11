@@ -1,3 +1,14 @@
+# POSTGRES
+
+## CLIENT
+
+### CONNECT
+
+```{.bash}
+psql -h {PG_SRV_ADDRESS} -U {PG_USER}
+```
+
+
 # SYSLOG
 
 ```{.bash}
@@ -1981,6 +1992,16 @@ git pull origin master
 ```{.bash}
 brew cask install docker
 ```
+
+### WITHOUT sudo
+
+```{.bash}
+# sudo groupadd docker
+sudo gpasswd -a ${USER} docker
+sudo service docker restart
+```
+
+
 
 ### Hello World
 
