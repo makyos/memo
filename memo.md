@@ -9,6 +9,7 @@ psql -h {PG_SRV_ADDRESS} -U {PG_USER}
 ```
 
 
+
 # SYSLOG
 
 ```{.bash}
@@ -220,7 +221,39 @@ service.msc の Windows Time で以下を実施
 
 # CentreCOM SH210(x210)
 
+## PORT SHUTDOWN
+
+```{.bash}
+show interface status
+enable
+configure terminal
+interface port1.0.8
+shutdown
+exit
+exit
+write file
+show interface status
+```
+
+
+
 ## 状況表示
+
+### RUNNING-CONFIG
+
+```{.bash}
+enable
+show running-config
+```
+
+### MAC ADDRESS Filter
+
+???
+
+```{.bash}
+mac address-table static
+```
+
 
 ### ポートの状態
 

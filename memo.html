@@ -179,7 +179,23 @@ keycode  66 = Super_L</code></pre>
 <li>自動起動</li>
 </ul>
 <h1 id="centrecom-sh210x210">CentreCOM SH210(x210)</h1>
+<h2 id="port-shutdown">PORT SHUTDOWN</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">show</span> interface status
+<span class="kw">enable</span>
+<span class="kw">configure</span> terminal
+<span class="kw">interface</span> port1.0.8
+<span class="kw">shutdown</span>
+<span class="kw">exit</span>
+<span class="kw">exit</span>
+<span class="kw">write</span> file
+<span class="kw">show</span> interface status</code></pre></div>
 <h2 id="状況表示">状況表示</h2>
+<h3 id="running-config">RUNNING-CONFIG</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">enable</span>
+<span class="kw">show</span> running-config</code></pre></div>
+<h3 id="mac-address-filter">MAC ADDRESS Filter</h3>
+<p>???</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mac</span> address-table static</code></pre></div>
 <h3 id="ポートの状態">ポートの状態</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">show</span> interface status</code></pre></div>
 <p>表示例</p>
