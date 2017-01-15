@@ -1084,12 +1084,16 @@ sysctl vm.max_map_count
 
 ### Start
 
+#### ubuntu
+
 ```{.bash}
 sudo ./metricbeat -e -c metricbeat.yml
 ```
 
+#### macOS
+
 ```{.bash}
-sudo service metricbeat start
+sudo ./metricbeat -e -c metricbeat.yml -d "publish"
 ```
 
 ### Template?

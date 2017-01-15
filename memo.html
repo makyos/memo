@@ -723,8 +723,10 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <span class="kw">sysctl</span> vm.max_map_count</code></pre></div>
 <h2 id="metricbeat">Metricbeat</h2>
 <h3 id="start-1">Start</h3>
+<h4 id="ubuntu-1">ubuntu</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> ./metricbeat -e -c metricbeat.yml</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> service metricbeat start</code></pre></div>
+<h4 id="macos">macOS</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> ./metricbeat -e -c metricbeat.yml -d <span class="st">&quot;publish&quot;</span></code></pre></div>
 <h3 id="template">Template?</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://localhost:9200/_template/metricbeat&#39;</span> -d@/etc/metricbeat/metricbeat.template.json</code></pre></div>
 <h3 id="kibana">Kibana</h3>
