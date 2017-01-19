@@ -1,3 +1,9 @@
+# hecate
+
+```{.bash}
+go get -u github.com/evanmiller/hecate
+```
+
 # POSTGRES
 
 ## CLIENT
@@ -2038,6 +2044,7 @@ sudo gpasswd -a ${USER} docker
 sudo service docker restart
 ```
 
+最ログインが必要！
 
 
 ### Hello World
