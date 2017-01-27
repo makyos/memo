@@ -59,6 +59,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="neo4j">neo4j</h1>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">create</span> (a_san<span class="ch">:Person</span> { name:<span class="ot">&quot;Aさん&quot;</span>, 所属:<span class="ot">&quot;開発部&quot;</span>})
+<span class="kw">create</span> (b_san<span class="ch">:Person</span> { name:<span class="ot">&quot;Bさん&quot;</span>, 所属:<span class="ot">&quot;経理部&quot;</span>})
+
+<span class="kw">create</span> (a_san)-[r:知ってる]-&gt;(b_san)
+
+match (a_san<span class="ch">:Person</span>),(b_san<span class="ch">:Person</span>)
+<span class="kw">where</span> a_san.name=<span class="ot">&quot;Aさん&quot;</span> <span class="kw">and</span> b_san.name=<span class="ot">&quot;Bさん&quot;</span>
+<span class="kw">create</span> (a_san)-[r:知ってる]-&gt;(b_san)
+<span class="kw">return</span> r;</code></pre></div>
+<h2 id="misk">misk</h2>
+<p>いらんイメージ消して、docker 再起動したらいけた。謎。</p>
+<pre><code>ERROR: for neo4j  Cannot start service neo4j: oci runtime error: process_linux.go:330: running prestart hook 0 caused &quot;fork/exec /usr/bin/dockerd (deleted): no such file or directory: &quot;</code></pre>
 <h1 id="hecate">hecate</h1>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">go</span> get -u github.com/evanmiller/hecate</code></pre></div>
 <h1 id="postgres">POSTGRES</h1>
@@ -274,6 +287,9 @@ keycode  66 = Super_L</code></pre>
 <span class="kw">awplus</span>(config-if)# <span class="kw">speed</span> 10
 <span class="kw">awplus</span>(config-if)# <span class="kw">duplex</span> full</code></pre></div>
 <h1 id="visual-studio-code">Visual Studio Code</h1>
+<h2 id="gnome">GNOME</h2>
+<p>マルチカーソル(Alt)が効かない場合</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">gsettings</span> set org.gnome.desktop.wm.preferences mouse-button-modifier <span class="st">&quot;&lt;Super&gt;&quot;</span></code></pre></div>
 <h2 id="基本操作">基本操作</h2>
 <h3 id="コマンドラインから起動">コマンドラインから起動</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">code</span> .</code></pre></div>
@@ -1334,7 +1350,8 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> images</code></pre></div>
 <h3 id="remove-1">REMOVE</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="dt">{IMAGE}</span></code></pre></div>
-<h2 id="old">OLD</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="ot">$(</span><span class="kw">docker</span> images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;/^&lt;none&gt;/ { print $3 }&#39;</span><span class="ot">)</span></code></pre></div>
+<h1 id="docker.old">Docker.OLD</h1>
 <h3 id="install-6">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> install -y docker-io.x86_64</code></pre></div>
 <h3 id="ps">PS</h3>
@@ -1374,68 +1391,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <span class="co"># Install bundler</span>
 <span class="kw">RUN</span> gem update --system
 <span class="kw">RUN</span> gem install bundler --no-rdoc --no-ri</code></pre></div>
-<h1 id="iptables">IPTABLES</h1>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">● 現在の設定の確認
-<span class="kw">iptables</span> -L
-
-● <span class="kw">FORWARD</span>は使わない
-<span class="kw">iptables</span> -P FORWARD DROP
-
-● まずは全許可に
-<span class="kw">iptables</span> -P INPUT ACCEPT
-
-● デフォルトのルールを全て削除
-<span class="kw">iptables</span> -F
-
-● 自分自身からのパケットは全許可
-<span class="kw">iptables</span> -A INPUT -i lo -j ACCEPT
-
-● <span class="kw">SSH</span>許可 or SSH自分(255.255.255.255)だけ許可
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 22 -j ACCEPT
- <span class="kw">or</span>
- <span class="kw">iptables</span> -A INPUT -s 255.255.255.255 -p tcp --dport 22 -j ACCEPT
-
-● <span class="kw">FTP</span>(20,21,4000-4029) の接続を許可
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 20 -j ACCEPT
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 21 -j ACCEPT
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 4000:4029 -j ACCEPT
-
-● <span class="kw">http</span>, https の接続を許可
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 80 -j ACCEPT
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 443 -j ACCEPT
-
-● <span class="kw">POP</span>(受信メール)の許可
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 110 -j ACCEPT
-
-● <span class="kw">SMTP</span>(送信メール)の許可【これをしないと世間からメールが来なくなる！】
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 25 -j ACCEPT
-
-● <span class="kw">SUBMISSION</span> ポートを開放
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 587 -j ACCEPT
-
-● <span class="kw">PostgreSQL</span>も外から使います
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 5432 -j ACCEPT
-
-● <span class="kw">DNS</span>関係
-<span class="kw">iptables</span> -A INPUT -p tcp --dport 53 -j ACCEPT
-<span class="kw">iptables</span> -A INPUT -p udp --dport 53 -j ACCEPT
-
-● <span class="kw">PING</span>を許可
-<span class="kw">iptables</span> -A INPUT -p icmp -j ACCEPT
-
-● <span class="kw">TCP</span>の接続開始と応答、FTPデータなどを許可【これをしないと外にメールが飛ばなくなる】
-<span class="kw">iptables</span> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-
-● 設定したルール以外のパケットを拒否
-<span class="kw">iptables</span> -P INPUT DROP</code></pre></div>
-<h3 id="port-forward">port forward</h3>
-<h4 id="vsftpd">vsftpd</h4>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">pasv_enable=</span>YES
-<span class="ot">pasv_min_port=</span>20
-<span class="ot">pasv_max_port=</span>20
-<span class="ot">pasv_address=</span><span class="dt">{global_ip_address}</span>
-
-<span class="kw">iptables</span> -I FORWARD -p tcp --dport 20 -j ACCEPT</code></pre></div>
 <h2 id="command-graph">COMMAND GRAPH</h2>
 <div id="docker_graph" style="width: 100%; height: 300px; border: 1px solid lightgray;">
 <div id="graph-navigation_wrapper" style="position: absolute; width: 100%; height: 300px;">
@@ -1585,6 +1540,68 @@ var graph = new vis.Graph(container, data);
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">boot2docker</span> ssh</code></pre></div>
 <h3 id="docker_host">DOCKER_HOST</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">DOCKER_HOST=</span>tcp://localhost:4243</code></pre></div>
+<h1 id="iptables">IPTABLES</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">● 現在の設定の確認
+<span class="kw">iptables</span> -L
+
+● <span class="kw">FORWARD</span>は使わない
+<span class="kw">iptables</span> -P FORWARD DROP
+
+● まずは全許可に
+<span class="kw">iptables</span> -P INPUT ACCEPT
+
+● デフォルトのルールを全て削除
+<span class="kw">iptables</span> -F
+
+● 自分自身からのパケットは全許可
+<span class="kw">iptables</span> -A INPUT -i lo -j ACCEPT
+
+● <span class="kw">SSH</span>許可 or SSH自分(255.255.255.255)だけ許可
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 22 -j ACCEPT
+ <span class="kw">or</span>
+ <span class="kw">iptables</span> -A INPUT -s 255.255.255.255 -p tcp --dport 22 -j ACCEPT
+
+● <span class="kw">FTP</span>(20,21,4000-4029) の接続を許可
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 20 -j ACCEPT
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 21 -j ACCEPT
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 4000:4029 -j ACCEPT
+
+● <span class="kw">http</span>, https の接続を許可
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 80 -j ACCEPT
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 443 -j ACCEPT
+
+● <span class="kw">POP</span>(受信メール)の許可
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 110 -j ACCEPT
+
+● <span class="kw">SMTP</span>(送信メール)の許可【これをしないと世間からメールが来なくなる！】
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 25 -j ACCEPT
+
+● <span class="kw">SUBMISSION</span> ポートを開放
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 587 -j ACCEPT
+
+● <span class="kw">PostgreSQL</span>も外から使います
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 5432 -j ACCEPT
+
+● <span class="kw">DNS</span>関係
+<span class="kw">iptables</span> -A INPUT -p tcp --dport 53 -j ACCEPT
+<span class="kw">iptables</span> -A INPUT -p udp --dport 53 -j ACCEPT
+
+● <span class="kw">PING</span>を許可
+<span class="kw">iptables</span> -A INPUT -p icmp -j ACCEPT
+
+● <span class="kw">TCP</span>の接続開始と応答、FTPデータなどを許可【これをしないと外にメールが飛ばなくなる】
+<span class="kw">iptables</span> -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+● 設定したルール以外のパケットを拒否
+<span class="kw">iptables</span> -P INPUT DROP</code></pre></div>
+<h3 id="port-forward">port forward</h3>
+<h4 id="vsftpd">vsftpd</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">pasv_enable=</span>YES
+<span class="ot">pasv_min_port=</span>20
+<span class="ot">pasv_max_port=</span>20
+<span class="ot">pasv_address=</span><span class="dt">{global_ip_address}</span>
+
+<span class="kw">iptables</span> -I FORWARD -p tcp --dport 20 -j ACCEPT</code></pre></div>
 <h1 id="ansible">ANSIBLE</h1>
 <h2 id="basics-2">BASICS</h2>
 <h3 id="ping">ping</h3>

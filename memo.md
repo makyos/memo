@@ -1,3 +1,29 @@
+# neo4j
+
+```{.sql}
+create (a_san:Person { name:"Aさん", 所属:"開発部"})
+create (b_san:Person { name:"Bさん", 所属:"経理部"})
+
+create (a_san)-[r:知ってる]->(b_san)
+
+match (a_san:Person),(b_san:Person)
+where a_san.name="Aさん" and b_san.name="Bさん"
+create (a_san)-[r:知ってる]->(b_san)
+return r;
+```
+
+
+
+## misk
+
+いらんイメージ消して、docker 再起動したらいけた。謎。
+
+```
+ERROR: for neo4j  Cannot start service neo4j: oci runtime error: process_linux.go:330: running prestart hook 0 caused "fork/exec /usr/bin/dockerd (deleted): no such file or directory: "
+```
+
+
+
 # hecate
 
 ```{.bash}
@@ -373,6 +399,15 @@ awplus(config-if)# duplex full
 
 
 # Visual Studio Code
+
+## GNOME
+
+マルチカーソル(Alt)が効かない場合
+
+```{.bash}
+gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier "<Super>"
+```
+
 
 ## 基本操作
 
@@ -2118,9 +2153,11 @@ docker images
 docker rmi {IMAGE}
 ```
 
+```{.bash}
+docker rmi $(docker images -a | awk '/^<none>/ { print $3 }')
+```
 
-
-## OLD
+# Docker.OLD
 
 ### install
 
@@ -2175,80 +2212,6 @@ RUN ruby-build 2.1.2 /usr/local
 RUN gem update --system
 RUN gem install bundler --no-rdoc --no-ri
 ```
-
-# IPTABLES
-
-``` {.bash}
-● 現在の設定の確認
-iptables -L
-
-● FORWARDは使わない
-iptables -P FORWARD DROP
-
-● まずは全許可に
-iptables -P INPUT ACCEPT
-
-● デフォルトのルールを全て削除
-iptables -F
-
-● 自分自身からのパケットは全許可
-iptables -A INPUT -i lo -j ACCEPT
-
-● SSH許可 or SSH自分(255.255.255.255)だけ許可
-iptables -A INPUT -p tcp --dport 22 -j ACCEPT
- or
- iptables -A INPUT -s 255.255.255.255 -p tcp --dport 22 -j ACCEPT
-
-● FTP(20,21,4000-4029) の接続を許可
-iptables -A INPUT -p tcp --dport 20 -j ACCEPT
-iptables -A INPUT -p tcp --dport 21 -j ACCEPT
-iptables -A INPUT -p tcp --dport 4000:4029 -j ACCEPT
-
-● http, https の接続を許可
-iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -p tcp --dport 443 -j ACCEPT
-
-● POP(受信メール)の許可
-iptables -A INPUT -p tcp --dport 110 -j ACCEPT
-
-● SMTP(送信メール)の許可【これをしないと世間からメールが来なくなる！】
-iptables -A INPUT -p tcp --dport 25 -j ACCEPT
-
-● SUBMISSION ポートを開放
-iptables -A INPUT -p tcp --dport 587 -j ACCEPT
-
-● PostgreSQLも外から使います
-iptables -A INPUT -p tcp --dport 5432 -j ACCEPT
-
-● DNS関係
-iptables -A INPUT -p tcp --dport 53 -j ACCEPT
-iptables -A INPUT -p udp --dport 53 -j ACCEPT
-
-● PINGを許可
-iptables -A INPUT -p icmp -j ACCEPT
-
-● TCPの接続開始と応答、FTPデータなどを許可【これをしないと外にメールが飛ばなくなる】
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-
-● 設定したルール以外のパケットを拒否
-iptables -P INPUT DROP
-```
-
-
-
-### port forward
-
-#### vsftpd
-
-``` {.bash}
-pasv_enable=YES
-pasv_min_port=20
-pasv_max_port=20
-pasv_address={global_ip_address}
-
-iptables -I FORWARD -p tcp --dport 20 -j ACCEPT
-```
-
 
 ## COMMAND GRAPH
 
@@ -2528,6 +2491,84 @@ boot2docker ssh
 ``` {.bash}
 export DOCKER_HOST=tcp://localhost:4243
 ```
+
+
+
+
+# IPTABLES
+
+``` {.bash}
+● 現在の設定の確認
+iptables -L
+
+● FORWARDは使わない
+iptables -P FORWARD DROP
+
+● まずは全許可に
+iptables -P INPUT ACCEPT
+
+● デフォルトのルールを全て削除
+iptables -F
+
+● 自分自身からのパケットは全許可
+iptables -A INPUT -i lo -j ACCEPT
+
+● SSH許可 or SSH自分(255.255.255.255)だけ許可
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+ or
+ iptables -A INPUT -s 255.255.255.255 -p tcp --dport 22 -j ACCEPT
+
+● FTP(20,21,4000-4029) の接続を許可
+iptables -A INPUT -p tcp --dport 20 -j ACCEPT
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+iptables -A INPUT -p tcp --dport 4000:4029 -j ACCEPT
+
+● http, https の接続を許可
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+● POP(受信メール)の許可
+iptables -A INPUT -p tcp --dport 110 -j ACCEPT
+
+● SMTP(送信メール)の許可【これをしないと世間からメールが来なくなる！】
+iptables -A INPUT -p tcp --dport 25 -j ACCEPT
+
+● SUBMISSION ポートを開放
+iptables -A INPUT -p tcp --dport 587 -j ACCEPT
+
+● PostgreSQLも外から使います
+iptables -A INPUT -p tcp --dport 5432 -j ACCEPT
+
+● DNS関係
+iptables -A INPUT -p tcp --dport 53 -j ACCEPT
+iptables -A INPUT -p udp --dport 53 -j ACCEPT
+
+● PINGを許可
+iptables -A INPUT -p icmp -j ACCEPT
+
+● TCPの接続開始と応答、FTPデータなどを許可【これをしないと外にメールが飛ばなくなる】
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+● 設定したルール以外のパケットを拒否
+iptables -P INPUT DROP
+```
+
+
+
+### port forward
+
+#### vsftpd
+
+``` {.bash}
+pasv_enable=YES
+pasv_min_port=20
+pasv_max_port=20
+pasv_address={global_ip_address}
+
+iptables -I FORWARD -p tcp --dport 20 -j ACCEPT
+```
+
+
 
 
 # ANSIBLE
