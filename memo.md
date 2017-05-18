@@ -139,7 +139,7 @@ xmodmap -e "keycode  66 = Super_L"
 xmodmap $HOME/.Xmodmap
 ```
 
- 
+
 
 ## dmenu(ランチャ)
 
@@ -172,9 +172,7 @@ MOD + SPC                  タイルのレイアウト方法を切り替える
 
 # github
 
-## USER/PASS Push
-
-### 公開鍵を登録
+## 公開鍵を登録
 
 テスト
 ```{.bash}
@@ -182,12 +180,12 @@ ssh -T git@github.com
 Hi {USERNAME}! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
-### remote URL を変更
+## remote URL を変更
 
 変更方法
 
 ```{.bash}
-git remote set-url origin git@github.com:{USER}:{REPOS.} 
+git remote set-url origin git@github.com:{USER}:{REPOS.}
 ```
 
 
@@ -195,6 +193,13 @@ git remote set-url origin git@github.com:{USER}:{REPOS.}
 
 ```
 git remote -v
+```
+
+## remote との比較
+
+```{.bash}
+git fetch origin
+git diff origin/master
 ```
 
 
@@ -249,7 +254,7 @@ gpedit.msc で以下を実施
 service.msc の Windows Time で以下を実施
 
 * (再)起動
-* 自動起動 
+* 自動起動
 
 # CentreCOM SH210(x210)
 
@@ -482,10 +487,10 @@ nmcli connection add \
       save yes \
       ip4 "10.0.0.10/24" \
       gw4 "0.0.0.0"
- 
+
 nmcli connection mod ipv4.method manual ipv4.addresses "192.168.0.100/24"
 ```
- 
+
 ### DEL
 
 ```{.bash}
@@ -904,7 +909,7 @@ rm file.txt
 ## LS
 
 ```{.bash}
-tar zft AAA.tgz 
+tar zft AAA.tgz
 ```
 
 
@@ -1619,10 +1624,10 @@ M-% するときに、C-q C-j で改行挿入
 
 ### RECT
 
- key       move  
+ key       move
 --------- ------------------
- C-x r k   矩形領域カット  
- C-x r y   矩形領域ペースト  
+ C-x r k   矩形領域カット
+ C-x r y   矩形領域ペースト
 
 ### PACKEAGE
 
@@ -1816,6 +1821,13 @@ swapon {{LINUX_SWAP_FILE}}
 ``` {.bash}
 {{LINUX_SWAP_FILE}} swap swap defaults
 ```
+
+## dir to iso
+
+``` {.bash}
+mkisofs -R -d -l -N -L -o DIRNAME.iso DIRNAME
+```
+
 
 
 # P2V
@@ -3023,9 +3035,9 @@ scp -P 22 -rq tcp/ username@192.168.33.32:/home/aaa/
 
 ### カーソル移動
 
- key           move  
+ key           move
 -------------- -----
- 1G            1 行目のあたま  
+ 1G            1 行目のあたま
  G             最終行のケツ
  ~             今の行のあたま
  $             今の行のケツ
@@ -3766,14 +3778,14 @@ impdp \
     Parallel=2 \
     INCLUDE=SCHEMA:"KY,KX,REPADMIN,EQP,MNG"
 
-    INCLUDE=SCHEMA:"='in('KY','KX','EQP','REPADMIN','MNG')'" 
-			 
+    INCLUDE=SCHEMA:"='in('KY','KX','EQP','REPADMIN','MNG')'"
+
 
     FULL=N \
 
     sqlfile=kx.sql \
     directory=dir_punp \
-    EXCLUDE=SCHEMA:"='HR'" 
+    EXCLUDE=SCHEMA:"='HR'"
 
 ```
 
@@ -3785,8 +3797,8 @@ DIR なければ、${ORACLE_HOME}/rdbms/log を探す。
 
 ```{.sql}
 create or replace directory dir_punp as '/usr1/oradba/pump';
--- grant read,write on directory dir_punp to ORAUSERNAME;               
--- commit;                                                              
+-- grant read,write on directory dir_punp to ORAUSERNAME;
+-- commit;
 -- drop directory dir_punp
 ```
 
@@ -3814,8 +3826,8 @@ conn system/manager@DBNAME as sysdba
 --
 select username from DBA_USERS
 where
-    initial_rsrc_consumer_group != 'SYS_GROUP' 
-and default_tablespace not like 'SYS%' 
+    initial_rsrc_consumer_group != 'SYS_GROUP'
+and default_tablespace not like 'SYS%'
 and account_status = 'OPEN';
 ```
 
@@ -3837,7 +3849,7 @@ select * from global_name;
 select sys_context('USERENV','db_name') from dual;
 ```
 
-### instance 
+### instance
 
 ```{.sql}
 select sys_context('USERENV','instance_name') from dual;

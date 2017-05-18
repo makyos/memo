@@ -155,16 +155,18 @@ keycode  66 = Super_L</code></pre>
 </tbody>
 </table>
 <h1 id="github">github</h1>
-<h2 id="userpass-push">USER/PASS Push</h2>
-<h3 id="公開鍵を登録">公開鍵を登録</h3>
+<h2 id="公開鍵を登録">公開鍵を登録</h2>
 <p>テスト</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ssh</span> -T git@github.com
 <span class="kw">Hi</span> <span class="dt">{USERNAME}</span>! You<span class="st">&#39;ve successfully authenticated, but GitHub does not provide shell access.</span></code></pre></div>
-<h3 id="remote-url-を変更">remote URL を変更</h3>
+<h2 id="remote-url-を変更">remote URL を変更</h2>
 <p>変更方法</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> remote set-url origin git@github.com:<span class="dt">{USER}:{REPOS.}</span> </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> remote set-url origin git@github.com:<span class="dt">{USER}:{REPOS.}</span></code></pre></div>
 <p>確認方法</p>
 <pre><code>git remote -v</code></pre>
+<h2 id="remote-との比較">remote との比較</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> fetch origin
+<span class="kw">git</span> diff origin/master</code></pre></div>
 <h1 id="ntp">ntp</h1>
 <h3 id="同期状況">同期状況</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/usr/sbin/ntpq</span> -p</code></pre></div>
@@ -338,7 +340,7 @@ keycode  66 = Super_L</code></pre>
       save yes \
       ip4 <span class="st">&quot;10.0.0.10/24&quot;</span> \
       gw4 <span class="st">&quot;0.0.0.0&quot;</span>
- 
+
 <span class="kw">nmcli</span> connection mod ipv4.method manual ipv4.addresses <span class="st">&quot;192.168.0.100/24&quot;</span></code></pre></div>
 <h3 id="del">DEL</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">nmcli</span> connection delete eno1-1</code></pre></div>
@@ -576,7 +578,7 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <span class="kw">rm</span> file.txt</code></pre></div>
 <h1 id="tar">TAR</h1>
 <h2 id="ls">LS</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> zft AAA.tgz </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> zft AAA.tgz</code></pre></div>
 <h2 id="matome">MATOME</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">f</span> in ./*.tgz <span class="kw">;</span> <span class="kw">do</span> <span class="kw">tar</span> zxvf <span class="ot">$f</span> <span class="kw">;</span> <span class="kw">done</span></code></pre></div>
 <h1 id="netstat">NETSTAT</h1>
@@ -1146,6 +1148,8 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <span class="kw">swapon</span> <span class="dt">{{LINUX_SWAP_FILE}}</span></code></pre></div>
 <h4 id="etcfstab-1">/etc/fstab</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{LINUX_SWAP_FILE}}</span> <span class="kw">swap</span> swap defaults</code></pre></div>
+<h2 id="dir-to-iso">dir to iso</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkisofs</span> -R -d -l -N -L -o DIRNAME.iso DIRNAME</code></pre></div>
 <h1 id="p2v">P2V</h1>
 <h2 id="physical-drive-to-image-file">physical drive to image file</h2>
 <h3 id="physical-drive-のセクタサイズを調べる">physical drive のセクタサイズを調べる</h3>
@@ -2281,19 +2285,19 @@ restart</code></pre>
     Parallel=2 \
     INCLUDE=SCHEMA:<span class="st">&quot;KY,KX,REPADMIN,EQP,MNG&quot;</span>
 
-    <span class="ot">INCLUDE=</span>SCHEMA:<span class="st">&quot;=&#39;in(&#39;KY&#39;,&#39;KX&#39;,&#39;EQP&#39;,&#39;REPADMIN&#39;,&#39;MNG&#39;)&#39;&quot;</span> 
-             
+    <span class="ot">INCLUDE=</span>SCHEMA:<span class="st">&quot;=&#39;in(&#39;KY&#39;,&#39;KX&#39;,&#39;EQP&#39;,&#39;REPADMIN&#39;,&#39;MNG&#39;)&#39;&quot;</span>
+
 
     <span class="ot">FULL=</span>N <span class="kw">\</span>
 
     <span class="ot">sqlfile=</span>kx.sql <span class="kw">\</span>
     <span class="ot">directory=</span>dir_punp <span class="kw">\</span>
-    <span class="ot">EXCLUDE=</span>SCHEMA:<span class="st">&quot;=&#39;HR&#39;&quot;</span> </code></pre></div>
+    <span class="ot">EXCLUDE=</span>SCHEMA:<span class="st">&quot;=&#39;HR&#39;&quot;</span></code></pre></div>
 <h3 id="mkdir-1">MKDIR</h3>
 <p>DIR なければ、${ORACLE_HOME}/rdbms/log を探す。</p>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">create</span> <span class="kw">or</span> <span class="kw">replace</span> <span class="kw">directory</span> dir_punp <span class="kw">as</span> <span class="st">&#39;/usr1/oradba/pump&#39;</span>;
-<span class="co">-- grant read,write on directory dir_punp to ORAUSERNAME;               </span>
-<span class="co">-- commit;                                                              </span>
+<span class="co">-- grant read,write on directory dir_punp to ORAUSERNAME;</span>
+<span class="co">-- commit;</span>
 <span class="co">-- drop directory dir_punp</span></code></pre></div>
 <h2 id="schema">SCHEMA</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlplus</span> /nolog</code></pre></div>
@@ -2307,8 +2311,8 @@ restart</code></pre>
 <span class="co">--</span>
 <span class="kw">select</span> username <span class="kw">from</span> DBA_USERS
 <span class="kw">where</span>
-    initial_rsrc_consumer_group != <span class="st">&#39;SYS_GROUP&#39;</span> 
-<span class="kw">and</span> default_tablespace <span class="kw">not</span> <span class="kw">like</span> <span class="st">&#39;SYS%&#39;</span> 
+    initial_rsrc_consumer_group != <span class="st">&#39;SYS_GROUP&#39;</span>
+<span class="kw">and</span> default_tablespace <span class="kw">not</span> <span class="kw">like</span> <span class="st">&#39;SYS%&#39;</span>
 <span class="kw">and</span> account_status = <span class="st">&#39;OPEN&#39;</span>;</code></pre></div>
 <h2 id="names">NAMES</h2>
 <h3 id="global-db">global db</h3>
