@@ -1,3 +1,21 @@
+
+# Checksum
+
+### on Windows
+
+Apprication Control に手動追加するときに必要。
+
+```{.bash}
+certutil -hashfile {{FILENAME}} SHA1
+```
+
+### on Linux
+
+```{.bash}
+md5sum {{FILENAME}}
+```
+
+
 # neo4j
 
 ```{.sql}
@@ -1758,6 +1776,12 @@ ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず "ja
 growisofs -dvd-compat -Z /dev/dvdrw={{ISO_FILEPATH}}
 ```
 
+## dir to iso
+
+``` {.bash}
+genisoimage -allow-limited-size -o DIRNAME.iso DIRNAME
+```
+
 
 ### DISC to ISO FILE
 
@@ -1822,11 +1846,6 @@ swapon {{LINUX_SWAP_FILE}}
 {{LINUX_SWAP_FILE}} swap swap defaults
 ```
 
-## dir to iso
-
-``` {.bash}
-mkisofs -R -d -l -N -L -o DIRNAME.iso DIRNAME
-```
 
 
 
@@ -4019,6 +4038,17 @@ select
      <OBJECT_TYPE>
    , <OBJECT_NAME>
    , <OWNER>
+  )
+from
+  dual
+;
+
+-- database link
+select
+  dbms_metadata.get_ddl (
+     'db_link'
+   , <OBJECT_NAME>
+   , 'public'
   )
 from
   dual

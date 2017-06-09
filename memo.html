@@ -59,6 +59,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body  ng-controller="memoCtrl">
+<h1 id="checksum">Checksum</h1>
+<h3 id="on-windows">on Windows</h3>
+<p>Apprication Control に手動追加するときに必要。</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">certutil</span> -hashfile <span class="dt">{{FILENAME}}</span> SHA1</code></pre></div>
+<h3 id="on-linux">on Linux</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">md5sum</span> <span class="dt">{{FILENAME}}</span></code></pre></div>
 <h1 id="neo4j">neo4j</h1>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">create</span> (a_san<span class="ch">:Person</span> { name:<span class="ot">&quot;Aさん&quot;</span>, 所属:<span class="ot">&quot;開発部&quot;</span>})
 <span class="kw">create</span> (b_san<span class="ch">:Person</span> { name:<span class="ot">&quot;Bさん&quot;</span>, 所属:<span class="ot">&quot;経理部&quot;</span>})
@@ -1117,6 +1123,8 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 </form>
 <h3 id="iso-to-dvd">ISO to DVD</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">growisofs</span> -dvd-compat -Z /dev/dvdrw=<span class="dt">{{ISO_FILEPATH}}</span></code></pre></div>
+<h2 id="dir-to-iso">dir to iso</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">genisoimage</span> -allow-limited-size -o DIRNAME.iso DIRNAME</code></pre></div>
 <h3 id="disc-to-iso-file">DISC to ISO FILE</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> if=/dev/sr0 of=<span class="dt">{{ISO_FILEPATH}}</span></code></pre></div>
 <h3 id="mount-iso-file">MOUNT ISO FILE</h3>
@@ -1148,8 +1156,6 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <span class="kw">swapon</span> <span class="dt">{{LINUX_SWAP_FILE}}</span></code></pre></div>
 <h4 id="etcfstab-1">/etc/fstab</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{LINUX_SWAP_FILE}}</span> <span class="kw">swap</span> swap defaults</code></pre></div>
-<h2 id="dir-to-iso">dir to iso</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkisofs</span> -R -d -l -N -L -o DIRNAME.iso DIRNAME</code></pre></div>
 <h1 id="p2v">P2V</h1>
 <h2 id="physical-drive-to-image-file">physical drive to image file</h2>
 <h3 id="physical-drive-のセクタサイズを調べる">physical drive のセクタサイズを調べる</h3>
@@ -2434,6 +2440,17 @@ col <span class="kw">PASSWORD</span> format a20
      &lt;OBJECT_TYPE&gt;
    , &lt;OBJECT_NAME&gt;
    , &lt;OWNER&gt;
+  )
+<span class="kw">from</span>
+  dual
+;
+
+<span class="co">-- database link</span>
+<span class="kw">select</span>
+  dbms_metadata.get_ddl (
+     <span class="st">&#39;db_link&#39;</span>
+   , &lt;OBJECT_NAME&gt;
+   , <span class="st">&#39;public&#39;</span>
   )
 <span class="kw">from</span>
   dual
