@@ -3663,6 +3663,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "chef/centos-6.5"
   config.vm.synced_folder "~/src/", "/vagrant/src"
+  config.ssh.insert_key = false
 
   (1..NUM_INSTANCES).each do |i|
 

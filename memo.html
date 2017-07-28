@@ -2207,6 +2207,7 @@ restart</code></pre>
 
   config.vm.box = <span class="st">&quot;chef/centos-6.5&quot;</span>
   config.vm.synced_folder <span class="st">&quot;~/src/&quot;</span>, <span class="st">&quot;/vagrant/src&quot;</span>
+  config.ssh.insert_key = <span class="dv">false</span>
 
   (<span class="dv">1</span>..<span class="dt">NUM_INSTANCES</span>).each <span class="kw">do</span> |i|
 
