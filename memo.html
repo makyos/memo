@@ -4,22 +4,10 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <title></title>
-
-
-  <script src="./asset/angular.min.js"></script>
-
-  <link rel="stylesheet" href="./asset/bootstrap-3.1.1-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./asset/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
-
-  <script src="./asset/vis/dist/vis.js"></script>
-  <link  href="./asset/vis/dist/vis.css" rel="stylesheet" type="text/css" />
-
-  <script src="./js/memo.js"></script>
-  <link rel="stylesheet" href="./css/memo.css">
-
-  <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="asset/bootstrap-3.1.1-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="asset/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
+  <link  href="asset/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+  <script src="asset/vis/dist/vis.js"></script>
   <style type="text/css">
 div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -58,13 +46,41 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
 </head>
-<body  ng-controller="memoCtrl">
+<body>
+<h1 id="vue.js-test">Vue.js TEST</h1>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vue_test', data: {message:'str'}});})</script>
+<div id="vue_test">
+<form class="form-horizontal">
+<div class="form-group">
+<label class="control-label col-xs-6">LABEL</label>
+<div class="col-xs-6">
+<p><input class="form-control" v-model="message" onClick="this.select();" type="text"></p>
+</div>
+</div>
+</form>
+<h2 id="h2">h2</h2>
+<p>だだがき</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">hello</span> {{ message }}</code></pre></div>
+</div>
 <h1 id="checksum">Checksum</h1>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#Checksum', data: {filename:'$FILENAME'}});})</script>
+<div id="Checksum">
+<form class="form-horizontal">
+<div class="form-group">
+<label class="control-label col-xs-6">FILE NAME</label>
+<div class="col-xs-6">
+<p><input class="form-control" v-model="filename" onClick="this.select();" type="text"></p>
+</div>
+</div>
+</form>
 <h3 id="on-windows">on Windows</h3>
 <p>Apprication Control に手動追加するときに必要。</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">certutil</span> -hashfile <span class="dt">{{FILENAME}}</span> SHA1</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">certutil</span> -hashfile {{ filename }} <span class="kw">SHA1</span></code></pre></div>
 <h3 id="on-linux">on Linux</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">md5sum</span> <span class="dt">{{FILENAME}}</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">md5sum</span> {{ filename }}</code></pre></div>
+</div>
 <h1 id="neo4j">neo4j</h1>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">create</span> (a_san<span class="ch">:Person</span> { name:<span class="ot">&quot;Aさん&quot;</span>, 所属:<span class="ot">&quot;開発部&quot;</span>})
 <span class="kw">create</span> (b_san<span class="ch">:Person</span> { name:<span class="ot">&quot;Bさん&quot;</span>, 所属:<span class="ot">&quot;経理部&quot;</span>})
@@ -2661,10 +2677,12 @@ col <span class="dt">INTERVAL</span> format a10
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">conn repadmin/repadmin@{{ORA_REPSITE_A}}_{{ORA_REPTNSNAME}}
 
 <span class="kw">exec</span> dbms_repcat.suspend_master_activity(gname=&gt;<span class="st">&#39;{{ORA_REPTNSNAME}}_REPG&#39;</span>);</code></pre></div>
-
-<!-- <script src="./vue.min.js"></script> -->
-<!-- <script>var body = new Vue({el:'body'})</script> -->
-<!-- <script src="./memo.vue.js"></script> -->
-
+<script src="asset/vue.js"></script>
+<!-- <script src="./asset/angular.min.js"></script> -->
+<script src="js/memo.js"></script>
+<link rel="stylesheet" href="./css/memo.css">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </body>
 </html>

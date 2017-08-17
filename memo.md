@@ -1,20 +1,57 @@
 
+# Vue.js TEST
+
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vue_test', data: {message:'str'}});})</script>
+
+<div id='vue_test'>
+<form class="form-horizontal">
+<div class="form-group">
+<label class="control-label col-xs-6">LABEL</label>
+<div class="col-xs-6">
+<input class="form-control" v-model="message" onClick="this.select();" type="text">
+</div></div>
+</form>
+
+## h2
+
+だだがき
+
+```{.bash}
+hello {{ message }}
+```
+
+</div>
+
 # Checksum
+
+<script>window.addEventListener('load', function () {
+new Vue({el:'#Checksum', data: {filename:'$FILENAME'}});})</script>
+
+<div id='Checksum'>
+<form class="form-horizontal">
+<div class="form-group">
+<label class="control-label col-xs-6">FILE NAME</label>
+<div class="col-xs-6">
+<input class="form-control" v-model="filename" onClick="this.select();" type="text">
+</div></div>
+</form>
 
 ### on Windows
 
 Apprication Control に手動追加するときに必要。
 
 ```{.bash}
-certutil -hashfile {{FILENAME}} SHA1
+certutil -hashfile {{ filename }} SHA1
 ```
 
 ### on Linux
 
 ```{.bash}
-md5sum {{FILENAME}}
+md5sum {{ filename }}
 ```
 
+</div>
 
 # neo4j
 
@@ -2310,8 +2347,6 @@ Stoped -- rm ;    \
 }'};
 var graph = new vis.Graph(container, data);
 </script>
-
-
 
 
 ## USE

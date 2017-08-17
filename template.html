@@ -10,22 +10,10 @@ $if(date-meta)$
   <meta name="dcterms.date" content="$date-meta$">
 $endif$
   <title>$if(title-prefix)$$title-prefix$ - $endif$$if(pagetitle)$$pagetitle$$endif$</title>
-
-
-  <script src="./asset/angular.min.js"></script>
-
-  <link rel="stylesheet" href="./asset/bootstrap-3.1.1-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./asset/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
-
-  <script src="./asset/vis/dist/vis.js"></script>
-  <link  href="./asset/vis/dist/vis.css" rel="stylesheet" type="text/css" />
-
-  <script src="./js/memo.js"></script>
-  <link rel="stylesheet" href="./css/memo.css">
-
-  <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="asset/bootstrap-3.1.1-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="asset/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
+  <link  href="asset/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+  <script src="asset/vis/dist/vis.js"></script>
 $if(quotes)$
   <style type="text/css">
     q { quotes: "“" "”" "‘" "’"; }
@@ -46,7 +34,7 @@ $for(header-includes)$
   $header-includes$
 $endfor$
 </head>
-<body  ng-controller="memoCtrl">
+<body>
 $for(include-before)$
 $include-before$
 $endfor$
@@ -70,10 +58,12 @@ $body$
 $for(include-after)$
 $include-after$
 $endfor$
-
-<!-- <script src="./vue.min.js"></script> -->
-<!-- <script>var body = new Vue({el:'body'})</script> -->
-<!-- <script src="./memo.vue.js"></script> -->
-
+<script src="asset/vue.js"></script>
+<!-- <script src="./asset/angular.min.js"></script> -->
+<script src="js/memo.js"></script>
+<link rel="stylesheet" href="./css/memo.css">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </body>
 </html>
