@@ -47,6 +47,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body>
+<h1 id="vuecomponent">VueComponent</h1>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vuecompo',
+data: {
+opt:'str'
+}
+});})</script>
+<div id="vuecompo">
+<form class="form-horizontal">
+<my-component opt="labelname"></my-component>
+<form>
+<h2 id="h2">h2</h2>
+<p>L1 is {{ opt }}</p>
+</div>
 <h1 id="vue.js-test">Vue.js TEST</h1>
 <script>window.addEventListener('load', function () {
 new Vue({el:'#vue_test', data: {message:'str'}});})</script>
@@ -59,7 +73,7 @@ new Vue({el:'#vue_test', data: {message:'str'}});})</script>
 </div>
 </div>
 </form>
-<h2 id="h2">h2</h2>
+<h2 id="h2-1">h2</h2>
 <p>だだがき</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">hello</span> {{ message }}</code></pre></div>
 </div>
@@ -2677,7 +2691,7 @@ col <span class="dt">INTERVAL</span> format a10
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">conn repadmin/repadmin@{{ORA_REPSITE_A}}_{{ORA_REPTNSNAME}}
 
 <span class="kw">exec</span> dbms_repcat.suspend_master_activity(gname=&gt;<span class="st">&#39;{{ORA_REPTNSNAME}}_REPG&#39;</span>);</code></pre></div>
-<script src="asset/vue.js"></script>
+<script src="asset/vue.min.js"></script>
 <!-- <script src="./asset/angular.min.js"></script> -->
 <script src="js/memo.js"></script>
 <link rel="stylesheet" href="./css/memo.css">

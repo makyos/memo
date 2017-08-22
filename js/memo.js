@@ -12,3 +12,15 @@ function memoCtrl($scope) {
     }
 }
 
+
+Vue.component('my-component', {
+    props: ['opt'],
+    template: '<div class="form-group"><label class="control-label col-xs-6">{{ opt }}</label><div class="col-xs-6"><input class="form-control" onClick="this.select();" type="text"></div></div>'
+    // template:`<h3>
+    // 	{{ opt }}
+    // </h3>`
+    // template: '<div class="form-group"><label class="control-label col-xs-6">{{ opt }}</label><div class="col-xs-6"><input class="form-control" v-model="{{ this.opt }}" onClick="this.select();" type="text"></div></div>'
+})
+
+
+

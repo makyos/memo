@@ -1,3 +1,25 @@
+# VueComponent
+
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vuecompo',
+data: {
+opt:'str'
+}
+});})</script>
+
+<div id="vuecompo">
+<form class="form-horizontal">
+<my-component opt="labelname"></my-component>
+<form>
+
+
+## h2
+
+L1 is {{ opt }}
+
+</div>
+
+
 
 # Vue.js TEST
 
@@ -13,6 +35,7 @@ new Vue({el:'#vue_test', data: {message:'str'}});})</script>
 </div></div>
 </form>
 
+
 ## h2
 
 だだがき
@@ -22,6 +45,7 @@ hello {{ message }}
 ```
 
 </div>
+
 
 # Checksum
 
