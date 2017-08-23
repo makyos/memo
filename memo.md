@@ -2,20 +2,15 @@
 
 <script>window.addEventListener('load', function () {
 new Vue({el:'#vuecompo',
-data: {
-opt:'str'
-}
+data(){opt3:''}
 });})</script>
 
 <div id="vuecompo">
-<form class="form-horizontal">
-<my-component opt="labelname"></my-component>
-<form>
-
+<my opt1="label" opt2="input" v-model="opt3"></my>
 
 ## h2
 
-L1 is {{ opt }}
+L1 is {{ opt3 }}
 
 </div>
 
@@ -2788,6 +2783,13 @@ grep 'AAA' | grep 'BBB'
 ``` {.bash}
 grep 'AAA.*BBB'
 ```
+
+### 複数行
+
+``` {.bash}
+grep -P 'AAA[\s\S]*?BBB'
+```
+
 
 ## OR
 

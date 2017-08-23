@@ -50,16 +50,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 id="vuecomponent">VueComponent</h1>
 <script>window.addEventListener('load', function () {
 new Vue({el:'#vuecompo',
-data: {
-opt:'str'
-}
+data(){opt3:''}
 });})</script>
 <div id="vuecompo">
-<form class="form-horizontal">
-<my-component opt="labelname"></my-component>
-<form>
+<p><my opt1="label" opt2="input" v-model="opt3"></my></p>
 <h2 id="h2">h2</h2>
-<p>L1 is {{ opt }}</p>
+<p>L1 is {{ opt3 }}</p>
 </div>
 <h1 id="vue.js-test">Vue.js TEST</h1>
 <script>window.addEventListener('load', function () {
@@ -1704,6 +1700,8 @@ var graph = new vis.Graph(container, data);
 <h2 id="and">AND</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> <span class="st">&#39;AAA&#39;</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="st">&#39;BBB&#39;</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> <span class="st">&#39;AAA.*BBB&#39;</span></code></pre></div>
+<h3 id="複数行">複数行</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> -P <span class="st">&#39;AAA[\s\S]*?BBB&#39;</span></code></pre></div>
 <h2 id="or">OR</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">grep</span> <span class="st">&#39;AAA\|BBB&#39;</span></code></pre></div>
 <h2 id="not">NOT</h2>
