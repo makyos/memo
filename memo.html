@@ -49,41 +49,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <body>
 <h1 id="vuecomponent">VueComponent</h1>
 <script>window.addEventListener('load', function () {
-new Vue({el:'#vuecompo',
-data(){opt3:''}
-});})</script>
-<div id="vuecompo">
-<p><my opt1="label" opt2="input" v-model="opt3"></my></p>
-<h2 id="h2">h2</h2>
-<p>L1 is {{ opt3 }}</p>
-</div>
-<h1 id="vue.js-test">Vue.js TEST</h1>
-<script>window.addEventListener('load', function () {
-new Vue({el:'#vue_test', data: {message:'str'}});})</script>
-<div id="vue_test">
+new Vue({el:'#app1',data:{label:'',input1:'$input1',input2: '$input2'}});})</script>
+<div id="app1">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">LABEL</label>
-<div class="col-xs-6">
-<p><input class="form-control" v-model="message" onClick="this.select();" type="text"></p>
-</div>
-</div>
+<varin label="input1" v-model="input1"></varin> <varin label="input2" v-model="input2"></varin>
 </form>
-<h2 id="h2-1">h2</h2>
-<p>だだがき</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">hello</span> {{ message }}</code></pre></div>
+<h2 id="h2">h2</h2>
+<pre><code>L1 is {{ input1 }}
+L2 is {{ input2 }}</code></pre>
 </div>
 <h1 id="checksum">Checksum</h1>
 <script>window.addEventListener('load', function () {
-new Vue({el:'#Checksum', data: {filename:'$FILENAME'}});})</script>
+new Vue({el:'#Checksum', data: {label:'',filename:'$FILENAME'}});})</script>
 <div id="Checksum">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">FILE NAME</label>
-<div class="col-xs-6">
-<p><input class="form-control" v-model="filename" onClick="this.select();" type="text"></p>
-</div>
-</div>
+<varin label="file name" v-model="filename"></varin>
 </form>
 <h3 id="on-windows">on Windows</h3>
 <p>Apprication Control に手動追加するときに必要。</p>

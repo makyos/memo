@@ -1,42 +1,19 @@
 # VueComponent
 
 <script>window.addEventListener('load', function () {
-new Vue({el:'#vuecompo',
-data(){opt3:''}
-});})</script>
+new Vue({el:'#app1',data:{label:'',input1:'$input1',input2: '$input2'}});})</script>
 
-<div id="vuecompo">
-<my opt1="label" opt2="input" v-model="opt3"></my>
-
-## h2
-
-L1 is {{ opt3 }}
-
-</div>
-
-
-
-# Vue.js TEST
-
-<script>window.addEventListener('load', function () {
-new Vue({el:'#vue_test', data: {message:'str'}});})</script>
-
-<div id='vue_test'>
+<div id="app1">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">LABEL</label>
-<div class="col-xs-6">
-<input class="form-control" v-model="message" onClick="this.select();" type="text">
-</div></div>
+<varin label="input1" v-model="input1"></varin>
+<varin label="input2" v-model="input2"></varin>
 </form>
 
-
 ## h2
 
-だだがき
-
-```{.bash}
-hello {{ message }}
+```
+L1 is {{ input1 }}
+L2 is {{ input2 }}
 ```
 
 </div>
@@ -45,15 +22,11 @@ hello {{ message }}
 # Checksum
 
 <script>window.addEventListener('load', function () {
-new Vue({el:'#Checksum', data: {filename:'$FILENAME'}});})</script>
+new Vue({el:'#Checksum', data: {label:'',filename:'$FILENAME'}});})</script>
 
 <div id='Checksum'>
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">FILE NAME</label>
-<div class="col-xs-6">
-<input class="form-control" v-model="filename" onClick="this.select();" type="text">
-</div></div>
+<varin label="file name" v-model="filename"></varin>
 </form>
 
 ### on Windows
