@@ -728,25 +728,15 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <span class="kw">[</span> <span class="ot">$a</span> <span class="ot">==</span> <span class="st">&#39;aaa&#39;</span><span class="kw"> ]</span> ; <span class="kw">echo</span> <span class="ot">$?</span>  <span class="co"># 0</span>
 <span class="kw">[</span> <span class="ot">$a</span> <span class="ot">!=</span> <span class="st">&#39;aaa&#39;</span><span class="kw"> ]</span> ; <span class="kw">echo</span> <span class="ot">$?</span>  <span class="co"># 1</span></code></pre></div>
 <h1 id="elastic-search">ELASTIC SEARCH</h1>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vesearch',data:{label:'',
+host:'localhost:9200',
+index:'{{ index }}',
+type:'{{ type }}'
+}});})</script>
+<div id="vesearch">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">SERVER ADDRESS &amp; PORT</label>
-<div class="col-xs-6">
-<p><input class="form-control " type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='localhost:9200'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-xs-6">INDEX NAME</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="ES_INDEX_NAME" ng-init="ES_INDEX_NAME='test_index'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-xs-6">TYPE NAME</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="ES_TYPE_NAME" ng-init="ES_TYPE_NAME='test-type'"></p>
-</div>
-</div>
+<varin label="SERVICE HOST:PORT" v-model="host"></varin> <varin label="INDEX NAME"        v-model="index"></varin> <varin label="TYPE NAME"         v-model="type"></varin>
 </form>
 <h2 id="setup-1">Setup</h2>
 <h4 id="ubuntu">ubuntu</h4>
@@ -760,7 +750,7 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <h4 id="macos">macOS</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> ./metricbeat -e -c metricbeat.yml -d <span class="st">&quot;publish&quot;</span></code></pre></div>
 <h3 id="template">Template?</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://localhost:9200/_template/metricbeat&#39;</span> -d@/etc/metricbeat/metricbeat.template.json</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://{{ host }}/_template/metricbeat&#39;</span> -d@/etc/metricbeat/metricbeat.template.json</code></pre></div>
 <h3 id="kibana">Kibana</h3>
 <h4 id="discover-index">Discover Index</h4>
 <pre><code>metricbeat-*</code></pre>
@@ -771,19 +761,19 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/usr/share/metricbeat/scripts</span></code></pre></div>
 <h2 id="index">INDEX</h2>
 <h3 id="list">List</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET localhost:9200/_aliases?pretty</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET {{ host }}<span class="kw">/_aliases?pretty</span></code></pre></div>
 <h3 id="create">create</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}&#39;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://{{ host }}/{{ index }}&#39;</span></code></pre></div>
 <h3 id="look">look</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}?pretty=true&#39;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET <span class="st">&#39;http://{{ host }}/{{ index }}?pretty=true&#39;</span></code></pre></div>
 <h3 id="delete">delete</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XDELETE <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}&#39;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XDELETE <span class="st">&#39;http://{{ host }}/{{ index }}&#39;</span></code></pre></div>
 <h2 id="type">TYPE</h2>
 <h3 id="create-1">create</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_mapping&#39;</span>  -d @<span class="dt">{{ES_TYPE_NAME}}</span>.json</code></pre></div>
-<h4 id="es_type_name.json">{{ES_TYPE_NAME}}.json</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://{{ host }}/{{ index }}/{{ type }}/_mapping&#39;</span>  -d @{{ type }}<span class="kw">.json</span></code></pre></div>
+<h4 id="type-.json">{{ type }}.json</h4>
 <div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
-    <span class="dt">&quot;{{ES_TYPE_NAME}}&quot;</span><span class="fu">:{</span>
+    <span class="dt">&quot;{{ type }}&quot;</span><span class="fu">:{</span>
         <span class="dt">&quot;properties&quot;</span><span class="fu">:{</span>
             <span class="dt">&quot;@timestamp&quot;</span><span class="fu">:{</span>
                 <span class="dt">&quot;type&quot;</span><span class="fu">:</span><span class="st">&quot;date&quot;</span>
@@ -807,9 +797,9 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
     <span class="fu">}</span>
 <span class="fu">}</span></code></pre></div>
 <h3 id="look-1">look</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_mapping?pretty=true&#39;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET <span class="st">&#39;http://{{ host }}/{{ index }}/{{ type }}/_mapping?pretty=true&#39;</span></code></pre></div>
 <h3 id="delete-1">delete</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}&#39;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET <span class="st">&#39;http://{{ host }}/{{ index }}/{{ type }}&#39;</span></code></pre></div>
 <h2 id="bulk-import">BULK IMPORT</h2>
 <h4 id="importdatafile.json"><span class="citation" data-cites="IMPORTDATAFILE.json">@IMPORTDATAFILE.json</span></h4>
 <div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span><span class="dt">&quot;index&quot;</span><span class="fu">:{}}</span>
@@ -819,13 +809,14 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <span class="fu">{</span><span class="dt">&quot;index&quot;</span><span class="fu">:{}}</span>
 <span class="fu">{</span><span class="dt">&quot;@timestamp&quot;</span><span class="fu">:</span><span class="st">&quot;2014-11-01 00:01:01&quot;</span><span class="fu">,</span><span class="dt">&quot;srv&quot;</span><span class="fu">:</span><span class="st">&quot;srv_A&quot;</span><span class="fu">,</span><span class="dt">&quot;pid&quot;</span><span class="fu">:</span><span class="dv">4645</span><span class="fu">,</span><span class="dt">&quot;user&quot;</span><span class="fu">:</span><span class="st">&quot;root&quot;</span><span class="fu">,</span><span class="dt">&quot;pr&quot;</span><span class="fu">:</span><span class="st">&quot;15&quot;</span><span class="fu">,</span><span class="dt">&quot;ni&quot;</span><span class="fu">:</span><span class="st">&quot;0&quot;</span><span class="fu">,</span><span class="dt">&quot;virt&quot;</span><span class="fu">:</span><span class="dv">6276</span><span class="fu">,</span><span class="dt">&quot;res&quot;</span><span class="fu">:</span><span class="dv">948</span><span class="fu">,</span><span class="dt">&quot;shr&quot;</span><span class="fu">:</span><span class="dv">668</span><span class="fu">,</span><span class="dt">&quot;s&quot;</span><span class="fu">:</span><span class="st">&quot;R&quot;</span><span class="fu">,</span><span class="dt">&quot;cpu&quot;</span><span class="fu">:</span><span class="fl">1.9</span><span class="fu">,</span><span class="dt">&quot;mem&quot;</span><span class="fu">:</span><span class="fl">0.0</span><span class="fu">,</span><span class="dt">&quot;times&quot;</span><span class="fu">:</span><span class="st">&quot;0:00.01&quot;</span><span class="fu">,</span><span class="dt">&quot;cmd0&quot;</span><span class="fu">:</span><span class="st">&quot;top&quot;</span><span class="fu">,</span><span class="dt">&quot;cmd&quot;</span><span class="fu">:</span><span class="st">&quot;top -b -n 1 -c&quot;</span><span class="fu">}</span></code></pre></div>
 <h3 id="normal-size">NORMAL SIZE</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPOST <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_bulk&#39;</span> --data-binary @IMPORTDATAFILE.json  <span class="kw">&gt;</span> /dev/null</code></pre></div>
-<h3 id="laerge-size">LAERGE SIZE</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPOST <span class="st">&#39;http://{{ host }}/{{ index }}/{{ type }}/_bulk&#39;</span> --data-binary @IMPORTDATAFILE.json  <span class="kw">&gt;</span> /dev/null</code></pre></div>
+<h3 id="laerge-sizesplit">LAERGE SIZE(SPLIT)</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">split</span> IMPORTDATAFILE.json -l 100000
-<span class="kw">time</span> for f in x??<span class="kw">;</span> <span class="kw">do</span> <span class="kw">curl</span> -XPOST <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_bulk&#39;</span> --data-binary @<span class="ot">$f</span> <span class="kw">&gt;</span> /dev/null<span class="kw">;</span> <span class="kw">done</span>
+<span class="kw">time</span> for f in x??<span class="kw">;</span> <span class="kw">do</span> <span class="kw">curl</span> -XPOST <span class="st">&#39;http://{{ host }}/{{ index }}/{{ type }}/_bulk&#39;</span> --data-binary @<span class="ot">$f</span> <span class="kw">&gt;</span> /dev/null<span class="kw">;</span> <span class="kw">done</span>
 <span class="kw">rm</span> -f x??</code></pre></div>
 <h2 id="search-1">SEARCH</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET <span class="st">&#39;http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_search&#39;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET <span class="st">&#39;http://{{ host }}/{{ index }}/{{ type }}/_search&#39;</span></code></pre></div>
+</div>
 <h1 id="bz2">BZ2</h1>
 <h3 id="extract">EXTRACT</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> jxvf FILE.tar.bz2</code></pre></div>
@@ -974,53 +965,29 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h1 id="wget">WGET</h1>
 <h2 id="ftp">FTP</h2>
 <h3 id="ftp-get">FTP GET</h3>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vwgetftp',data:{label:'',
+ftpserver:'ftpserver',
+ftpuser: 'user',
+ftppass: 'passwd',
+fname: 'getfilename'
+}});})</script>
+<div id="vwgetftp">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">SERVER NAME</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="WGET_FTP_SERVER" ng-init="WGET_FTP_SERVER='SERVER'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-xs-6">FTP USER</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="WGET_FTP_USER" ng-init="WGET_FTP_USER='user'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-xs-6">FTP PASSWORD</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="WGET_FTP_PASS" ng-init="WGET_FTP_PASS='passwd'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-xs-6">get FILE</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="WGET_GET_FILE" ng-init="WGET_GET_FILE='filename'"></p>
-</div>
-</div>
+<varin label="ftp server" v-model="ftpserver"></varin> <varin label="ftp user" v-model="ftpuser"></varin> <varin label="ftp pass" v-model="ftppass"></varin> <varin label="file name" v-model="fname"></varin>
 </form>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> --ftp-user=<span class="dt">{{WGET_FTP_USER}}</span> --ftp-password=<span class="dt">{{WGET_FTP_PASS}}</span> ftp://<span class="dt">{{WGET_FTP_SERVER}}/{{WGET_GET_FILE}}</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> --ftp-user=<span class="dt">{{ftpuser}}</span> --ftp-password=<span class="dt">{{ftppass}}</span> ftp://<span class="dt">{{ftpserver}}/{{fname}}</span></code></pre></div>
+</div>
 <h1 id="sqlite3">SQLITE3</h1>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vsqlite',data:{label:'',
+SQLITE_DB_NAME: 'MYDB',
+SQLITE_TAB_NAME: 'MYTAB',
+SQLITE_SQL_FILE: 'MYFILE'
+}});})</script>
+<div id="vsqlite">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">DATABASE NAME</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="SQLITE_DB_NAME" ng-init="SQLITE_DB_NAME='./mnt'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-xs-6">TABLE NAME</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="SQLITE_TAB_NAME" ng-init="SQLITE_TAB_NAME='TAB'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-xs-6">SQL FILE NAME</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="SQLITE_SQL_FILE" ng-init="SQLITE_SQL_FILE='AAA.sql'"></p>
-</div>
-</div>
+<varin label="DATABASE NAME" v-model="SQLITE_DB_NAME"></varin> <varin label="TABLE NAME" v-model="SQLITE_TAB_NAME"></varin> <varin label="SQL-FILE NAME" v-model="SQLITE_SQL_FILE"></varin>
 </form>
 <h2 id="database">DATABASE</h2>
 <h3 id="createconnect-database">create/connect DATABASE</h3>
@@ -1048,6 +1015,7 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">create</span> <span class="kw">table</span> {{SQLITE_TAB_NAME}};</code></pre></div>
 <h3 id="source">SOURCE</h3>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">.schema {{SQLITE_TAB_NAME}}</code></pre></div>
+</div>
 <h1 id="emacs">EMACS</h1>
 <h3 id="replace-cr">REPLACE &amp; CR</h3>
 <p>M-% するときに、C-q C-j で改行挿入</p>

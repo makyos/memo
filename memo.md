@@ -1140,27 +1140,20 @@ a=aaa
 
 # ELASTIC SEARCH
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vesearch',data:{label:'',
+host:'localhost:9200',
+index:'{{ index }}',
+type:'{{ type }}'
+}});})</script>
+
+<div id="vesearch">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-xs-6">SERVER ADDRESS & PORT</label>
-<div class="col-xs-6">
-<input class="form-control " type="text" onclick="this.select();" ng-model="ES_SERVER_ADDRESS" ng-init="ES_SERVER_ADDRESS='localhost:9200'">
-</div></div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">INDEX NAME</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ES_INDEX_NAME" ng-init="ES_INDEX_NAME='test_index'">
-</div></div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">TYPE NAME</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ES_TYPE_NAME" ng-init="ES_TYPE_NAME='test-type'">
-</div></div>
-
+<varin label="SERVICE HOST:PORT" v-model="host"></varin>
+<varin label="INDEX NAME"        v-model="index"></varin>
+<varin label="TYPE NAME"         v-model="type"></varin>
 </form>
+
 
 ## Setup
 
@@ -1192,7 +1185,7 @@ sudo ./metricbeat -e -c metricbeat.yml -d "publish"
 ### Template?
 
 ```{.bash}
-curl -XPUT 'http://localhost:9200/_template/metricbeat' -d@/etc/metricbeat/metricbeat.template.json
+curl -XPUT 'http://{{ host }}/_template/metricbeat' -d@/etc/metricbeat/metricbeat.template.json
 ```
 
 ### Kibana
@@ -1222,25 +1215,25 @@ metricbeat-*
 ### List
 
 ```{.bash}
-curl -XGET localhost:9200/_aliases?pretty
+curl -XGET {{ host }}/_aliases?pretty
 ```
 
 ### create
 
 ``` {.bash}
-curl -XPUT 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}'
+curl -XPUT 'http://{{ host }}/{{ index }}'
 ```
 
 ### look
 
 ``` {.bash}
-curl -XGET 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}?pretty=true'
+curl -XGET 'http://{{ host }}/{{ index }}?pretty=true'
 ```
 
 ### delete
 
 ``` {.bash}
-curl -XDELETE 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}'
+curl -XDELETE 'http://{{ host }}/{{ index }}'
 ```
 
 
@@ -1249,14 +1242,14 @@ curl -XDELETE 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}'
 ### create
 
 ``` {.bash}
-curl -XPUT 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_mapping'  -d @{{ES_TYPE_NAME}}.json
+curl -XPUT 'http://{{ host }}/{{ index }}/{{ type }}/_mapping'  -d @{{ type }}.json
 ```
 
-#### {{ES_TYPE_NAME}}.json
+#### {{ type }}.json
 
 ``` {.json}
 {
-    "{{ES_TYPE_NAME}}":{
+    "{{ type }}":{
         "properties":{
             "@timestamp":{
                 "type":"date"
@@ -1284,13 +1277,13 @@ curl -XPUT 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_map
 ### look
 
 ``` {.bash}
-curl -XGET 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_mapping?pretty=true'
+curl -XGET 'http://{{ host }}/{{ index }}/{{ type }}/_mapping?pretty=true'
 ```
 
 ### delete
 
 ``` {.bash}
-curl -XGET 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}'
+curl -XGET 'http://{{ host }}/{{ index }}/{{ type }}'
 ```
 
 
@@ -1310,15 +1303,15 @@ curl -XGET 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}'
 ### NORMAL SIZE
 
 ``` {.bash}
-curl -XPOST 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_bulk' --data-binary @IMPORTDATAFILE.json  > /dev/null
+curl -XPOST 'http://{{ host }}/{{ index }}/{{ type }}/_bulk' --data-binary @IMPORTDATAFILE.json  > /dev/null
 ```
 
 
-### LAERGE SIZE
+### LAERGE SIZE(SPLIT)
 
 ``` {.bash}
 split IMPORTDATAFILE.json -l 100000
-time for f in x??; do curl -XPOST 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_bulk' --data-binary @$f > /dev/null; done
+time for f in x??; do curl -XPOST 'http://{{ host }}/{{ index }}/{{ type }}/_bulk' --data-binary @$f > /dev/null; done
 rm -f x??
 ```
 
@@ -1326,9 +1319,10 @@ rm -f x??
 ## SEARCH
 
 ``` {.bash}
-curl -XGET 'http://{{ES_SERVER_ADDRESS}}/{{ES_INDEX_NAME}}/{{ES_TYPE_NAME}}/_search'
+curl -XGET 'http://{{ host }}/{{ index }}/{{ type }}/_search'
 ```
 
+</div>
 
 
 
@@ -1521,68 +1515,43 @@ perl -pe 's/\n/\r\n/' UNIX.txt > Win.txt
 
 ### FTP GET
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vwgetftp',data:{label:'',
+ftpserver:'ftpserver',
+ftpuser: 'user',
+ftppass: 'passwd',
+fname: 'getfilename'
+}});})</script>
+
+<div id="vwgetftp">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-xs-6">SERVER NAME</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="WGET_FTP_SERVER" ng-init="WGET_FTP_SERVER='SERVER'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">FTP USER</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="WGET_FTP_USER" ng-init="WGET_FTP_USER='user'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">FTP PASSWORD</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="WGET_FTP_PASS" ng-init="WGET_FTP_PASS='passwd'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">get FILE</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="WGET_GET_FILE" ng-init="WGET_GET_FILE='filename'">
-</div>
-</div>
-
+<varin label="ftp server" v-model="ftpserver"></varin>
+<varin label="ftp user" v-model="ftpuser"></varin>
+<varin label="ftp pass" v-model="ftppass"></varin>
+<varin label="file name" v-model="fname"></varin>
 </form>
 
+
 ``` {.bash}
-wget --ftp-user={{WGET_FTP_USER}} --ftp-password={{WGET_FTP_PASS}} ftp://{{WGET_FTP_SERVER}}/{{WGET_GET_FILE}}
+wget --ftp-user={{ftpuser}} --ftp-password={{ftppass}} ftp://{{ftpserver}}/{{fname}}
 ```
 
+</div>
 
 # SQLITE3
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#vsqlite',data:{label:'',
+SQLITE_DB_NAME: 'MYDB',
+SQLITE_TAB_NAME: 'MYTAB',
+SQLITE_SQL_FILE: 'MYFILE'
+}});})</script>
+
+<div id="vsqlite">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-xs-6">DATABASE NAME</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="SQLITE_DB_NAME" ng-init="SQLITE_DB_NAME='./mnt'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">TABLE NAME</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="SQLITE_TAB_NAME" ng-init="SQLITE_TAB_NAME='TAB'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">SQL FILE NAME</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="SQLITE_SQL_FILE" ng-init="SQLITE_SQL_FILE='AAA.sql'">
-</div>
-</div>
-
+<varin label="DATABASE NAME" v-model="SQLITE_DB_NAME"></varin>
+<varin label="TABLE NAME" v-model="SQLITE_TAB_NAME"></varin>
+<varin label="SQL-FILE NAME" v-model="SQLITE_SQL_FILE"></varin>
 </form>
 
 ## DATABASE
@@ -1599,14 +1568,12 @@ sqlite3 {{SQLITE_DB_NAME}}.sqlite3
 
 ## TABLE
 
-
 ### CSV DATA IMPORT
 
 ``` {.sql}
 .separator ,
 .import FILE TAB
 ```
-
 
 ### LIST
 
@@ -1633,10 +1600,6 @@ select '.import ./csv/' || name || '.csv ' || name from sqlite_master where type
 sqlite3 {{SQLITE_DB_NAME}} < {{SQLITE_SQL_FILE}}
 ```
 
-
-
-
-
 ### CREATE
 
 ``` {.sql}
@@ -1660,6 +1623,7 @@ create table {{SQLITE_TAB_NAME}};
 .schema {{SQLITE_TAB_NAME}}
 ```
 
+</div>
 
 
 # EMACS
