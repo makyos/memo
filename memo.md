@@ -1157,8 +1157,8 @@ a=aaa
 <script>window.addEventListener('load', function () {
 new Vue({el:'#vesearch',data:{label:'',
 host:'localhost:9200',
-index:'{{ index }}',
-type:'{{ type }}'
+index:'myindex',
+type:'mytype'
 }});})</script>
 
 <div id="vesearch">
