@@ -47,9 +47,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body>
+<template id=varin>
+<div class="form-group">
+<label class="control-label col-xs-6">{{ label }}</label>
+<div class="col-xs-6">
+<p><input class="form-control" :value="value" v-on:input="onInput" onClick="this.select();"  type="text" /></p>
+</div>
+</div>
+<p></template></p>
 <h1 id="vuecomponent">VueComponent</h1>
 <script>window.addEventListener('load', function () {
-new Vue({el:'#app1',data:{label:'',input1:'$input1',input2: '$input2'}});})</script>
+new Vue({el:'#app1',data:{label:''
+,input1: '$input1'
+,input2: '$input2'
+}});})</script>
 <div id="app1">
 <form class="form-horizontal">
 <varin label="input1" v-model="input1"></varin> <varin label="input2" v-model="input2"></varin>
@@ -60,15 +71,17 @@ L2 is {{ input2 }}</code></pre>
 </div>
 <h1 id="checksum">Checksum</h1>
 <script>window.addEventListener('load', function () {
-new Vue({el:'#Checksum', data: {label:'',filename:'$FILENAME'}});})</script>
+new Vue({el:'#Checksum', data: {label:''
+,filename:'$FILENAME'
+}});})</script>
 <div id="Checksum">
 <form class="form-horizontal">
-<varin label="file name" v-model="filename"></varin>
+<varin label="TARGET FILE NAME" v-model="filename"></varin>
 </form>
-<h3 id="on-windows">on Windows</h3>
+<h4 id="on-windows">on Windows</h4>
 <p>Apprication Control に手動追加するときに必要。</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">certutil</span> -hashfile {{ filename }} <span class="kw">SHA1</span></code></pre></div>
-<h3 id="on-linux">on Linux</h3>
+<h4 id="on-linux">on Linux</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">md5sum</span> {{ filename }}</code></pre></div>
 </div>
 <h1 id="neo4j">neo4j</h1>
@@ -966,11 +979,11 @@ datetime.datetime.today().strftime(<span class="st">&#39;%Y-%m-</span><span clas
 <h2 id="ftp">FTP</h2>
 <h3 id="ftp-get">FTP GET</h3>
 <script>window.addEventListener('load', function () {
-new Vue({el:'#vwgetftp',data:{label:'',
-ftpserver:'ftpserver',
-ftpuser: 'user',
-ftppass: 'passwd',
-fname: 'getfilename'
+new Vue({el:'#vwgetftp',data:{label:''
+,ftpserver : 'ftpserver'
+,ftpuser   : 'user'
+,ftppass   : 'passwd'
+,fname     : 'getfilename'
 }});})</script>
 <div id="vwgetftp">
 <form class="form-horizontal">
@@ -980,10 +993,10 @@ fname: 'getfilename'
 </div>
 <h1 id="sqlite3">SQLITE3</h1>
 <script>window.addEventListener('load', function () {
-new Vue({el:'#vsqlite',data:{label:'',
-SQLITE_DB_NAME: 'MYDB',
-SQLITE_TAB_NAME: 'MYTAB',
-SQLITE_SQL_FILE: 'MYFILE'
+new Vue({el:'#vsqlite',data:{label:''
+,SQLITE_DB_NAME : 'MYDB'
+,SQLITE_TAB_NAME: 'MYTAB'
+,SQLITE_SQL_FILE: 'MYFILE'
 }});})</script>
 <div id="vsqlite">
 <form class="form-horizontal">
@@ -1040,16 +1053,6 @@ SQLITE_SQL_FILE: 'MYFILE'
 </table>
 <h3 id="packeage">PACKEAGE</h3>
 <p>M-x packeage-list-packeage</p>
-<h1 id="escape-text">ESCAPE TEXT</h1>
-<form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">TEXT</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="ESC_INPUT" ng-init="ESC_INPUT='http://hellowork/jobs'"></p>
-</div>
-</div>
-</form>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{esc_ret()}}</span></code></pre></div>
 <h1 id="ruby-1">RUBY</h1>
 <h2 id="rbenv">rbenv</h2>
 <h3 id="install-2">install</h3>
@@ -1081,27 +1084,22 @@ SQLITE_SQL_FILE: 'MYFILE'
 <p>ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず &quot;ja_JP.UTF-8&quot; になってしまう。</p>
 <h1 id="linux">LINUX</h1>
 <h2 id="use-disc-media">USE DISC MEDIA</h2>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-diskimage',data:{label:''
+,ISO_FILEPATH: 'medianame.iso'
+,ISO_MOUNTPOINT: '/mnt/dvd'
+}});})</script>
+<div id="app-diskimage">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">FILE NAME</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="ISO_FILEPATH" ng-init="ISO_FILEPATH='./filename.iso'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-xs-6">MOUNT POINT</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="ISO_MOUNTPOINT" ng-init="ISO_MOUNTPOINT='/mnt/dvd'"></p>
-</div>
-</div>
+<varin label="ISO FILE NAME" v-model="ISO_FILEPATH"></varin> <varin label="MOUNT POINT" v-model="ISO_MOUNTPOINT"></varin>
 </form>
-<h3 id="iso-to-dvd">ISO to DVD</h3>
+<h4 id="iso-to-dvd">ISO to DVD</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">growisofs</span> -dvd-compat -Z /dev/dvdrw=<span class="dt">{{ISO_FILEPATH}}</span></code></pre></div>
-<h2 id="dir-to-iso">dir to iso</h2>
+<h4 id="dir-to-iso">dir to iso</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">genisoimage</span> -allow-limited-size -o DIRNAME.iso DIRNAME</code></pre></div>
-<h3 id="disc-to-iso-file">DISC to ISO FILE</h3>
+<h4 id="disc-to-iso-file">DISC to ISO FILE</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> if=/dev/sr0 of=<span class="dt">{{ISO_FILEPATH}}</span></code></pre></div>
-<h3 id="mount-iso-file">MOUNT ISO FILE</h3>
+<h4 id="mount-iso-file">MOUNT ISO FILE</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkdir</span> -p <span class="dt">{{ISO_MOUNTPOINT}}</span>
 <span class="kw">mount</span> -t iso9660 -o loop <span class="dt">{{ISO_FILEPATH}}</span> <span class="dt">{{ISO_MOUNTPOINT}}</span></code></pre></div>
 <p>umount</p>
@@ -1111,17 +1109,18 @@ SQLITE_SQL_FILE: 'MYFILE'
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">echo</span> <span class="st">&quot;{{ISO_FILEPATH}} {{ISO_MOUNTPOINT}} iso9660 loop,ro,auto 0 0&quot;</span> <span class="kw">&gt;&gt;</span> /etc/fstab
 <span class="kw">cat</span> /etc/fstab
 <span class="kw">mount</span> -a</code></pre></div>
+</div>
 <h2 id="lock-tray">LOCK TRAY?</h2>
 <p>VirtualBox やらの VM が邪魔してる場合あり。とめよ。</p>
 <h2 id="make-swap">MAKE SWAP</h2>
 <h3 id="on-file">on FILE</h3>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-make-swap',data:{label:''
+,LINUX_SWAP_FILE: '/swapfile'
+}});})</script>
+<div id="app-make-swap">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">SWAP FILE NAME</label>
-<div class="col-xs-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="LINUX_SWAP_FILE" ng-init="LINUX_SWAP_FILE='/swapfile'"></p>
-</div>
-</div>
+<varin label="FILE NAME" v-model="LINUX_SWAP_FILE"></varin>
 </form>
 <p>example 255MB(4096x65536)</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">dd</span> if=/dev/zero  of=<span class="dt">{{LINUX_SWAP_FILE}}</span> bs=4096 count=65536
@@ -1130,6 +1129,7 @@ SQLITE_SQL_FILE: 'MYFILE'
 <span class="kw">swapon</span> <span class="dt">{{LINUX_SWAP_FILE}}</span></code></pre></div>
 <h4 id="etcfstab-1">/etc/fstab</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{{LINUX_SWAP_FILE}}</span> <span class="kw">swap</span> swap defaults</code></pre></div>
+</div>
 <h1 id="p2v">P2V</h1>
 <h2 id="physical-drive-to-image-file">physical drive to image file</h2>
 <h3 id="physical-drive-のセクタサイズを調べる">physical drive のセクタサイズを調べる</h3>
@@ -1233,37 +1233,18 @@ SQLITE_SQL_FILE: 'MYFILE'
 </tbody>
 </table>
 <h1 id="git">GIT</h1>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-git',data:{label:''
+,GIT_REPONAME: 'dir/name.git'
+,GIT_ROOT    : '/var/lib/git'
+,GIT_REMOTE  : '192.168.0.10'
+,GIT_USER    : 'git'
+,GIT_SSH     : '2203'
+,GIT_COMMENT : 'テスト'
+}});})</script>
+<div id="app-git">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-sm-6">REPO NAME</label>
-<div class="col-sm-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="GIT_REPONAME" ng-init="GIT_REPONAME='dir/name.git'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-sm-6">REPO ROOT</label>
-<div class="col-sm-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="GIT_ROOT" ng-init="GIT_ROOT='/var/lib/git'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-sm-6">GIT SERVER NAME</label>
-<div class="col-sm-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="GIT_REMOTE" ng-init="GIT_REMOTE='192.168.0.10'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-sm-6">GIT SERVER USER</label>
-<div class="col-sm-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="GIT_USER" ng-init="GIT_USER='git'"></p>
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-sm-6">GIT SERVER SSH PORT</label>
-<div class="col-sm-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="GIT_SSH" ng-init="GIT_SSH='2203'"></p>
-</div>
-</div>
+<varin label="REPO NAME" v-model="GIT_REPONAME"></varin> <varin label="ROOT" v-model="GIT_ROOT"></varin> <varin label="REMOTE" v-model="GIT_REMOTE"></varin> <varin label="USER" v-model="GIT_USER"></varin> <varin label="SSH" v-model="GIT_SSH"></varin> <varin label="COMMIT -m" v-model="GIT_COMMENT"></varin>
 </form>
 <h2 id="on-the-serverremote">on the SERVER(REMOTE)</h2>
 <h3 id="create-remote-rep.">CREATE REMOTE REP.</h3>
@@ -1283,14 +1264,6 @@ SQLITE_SQL_FILE: 'MYFILE'
 <h3 id="clone">CLONE</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> clone ssh://<span class="dt">{{GIT_USER}}@{{GIT_REMOTE}}:{{GIT_SSH}}{{GIT_ROOT}}/{{GIT_REPONAME}}</span></code></pre></div>
 <h3 id="commit">COMMIT</h3>
-<form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-sm-6">COMMIT COMMENT</label>
-<div class="col-sm-6">
-<p><input class="form-control" type="text" onclick="this.select();" ng-model="GIT_COMMENT" ng-init="GIT_COMMENT='テストコミット'"></p>
-</div>
-</div>
-</form>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> add .
 <span class="kw">git</span> commit -a -m <span class="st">&quot;{{GIT_COMMENT}}&quot;</span></code></pre></div>
 <h3 id="commit-log">COMMIT LOG</h3>
@@ -1299,6 +1272,7 @@ SQLITE_SQL_FILE: 'MYFILE'
 <pre><code>git push origin master</code></pre>
 <h3 id="pull">PULL</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> pull origin master</code></pre></div>
+</div>
 <h1 id="docker">DOCKER</h1>
 <h2 id="setup-2">Setup</h2>
 <h3 id="install-5">Install</h3>

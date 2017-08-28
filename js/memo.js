@@ -14,13 +14,7 @@ function memoCtrl($scope) {
 
 Vue.component('varin', {
 	props: ['label','value'],
-	template: `
-	<div class="form-group">
-	<label class="control-label col-xs-6">{{ label }}</label>
-	<div class="col-xs-6">
-	<input type="text" class="form-control" v-on:input="onInput" onClick="this.select();"/>
-	</div>
-	</div>`,
+	template: '#varin',
 	methods: { onInput (e) { this.$emit('input', e.target.value) }}
 })
 

@@ -1,7 +1,19 @@
+<template id=varin>
+<div class="form-group">
+<label class="control-label col-xs-6">{{ label }}</label>
+<div class="col-xs-6">
+<input class="form-control" :value="value" v-on:input="onInput" onClick="this.select();"  type="text" />
+</div>
+</div>
+</template>
+
 # VueComponent
 
 <script>window.addEventListener('load', function () {
-new Vue({el:'#app1',data:{label:'',input1:'$input1',input2: '$input2'}});})</script>
+new Vue({el:'#app1',data:{label:''
+,input1: '$input1'
+,input2: '$input2'
+}});})</script>
 
 <div id="app1">
 <form class="form-horizontal">
@@ -22,14 +34,16 @@ L2 is {{ input2 }}
 # Checksum
 
 <script>window.addEventListener('load', function () {
-new Vue({el:'#Checksum', data: {label:'',filename:'$FILENAME'}});})</script>
+new Vue({el:'#Checksum', data: {label:''
+,filename:'$FILENAME'
+}});})</script>
 
 <div id='Checksum'>
 <form class="form-horizontal">
-<varin label="file name" v-model="filename"></varin>
+<varin label="TARGET FILE NAME" v-model="filename"></varin>
 </form>
 
-### on Windows
+#### on Windows
 
 Apprication Control に手動追加するときに必要。
 
@@ -37,7 +51,7 @@ Apprication Control に手動追加するときに必要。
 certutil -hashfile {{ filename }} SHA1
 ```
 
-### on Linux
+#### on Linux
 
 ```{.bash}
 md5sum {{ filename }}
@@ -1516,11 +1530,11 @@ perl -pe 's/\n/\r\n/' UNIX.txt > Win.txt
 ### FTP GET
 
 <script>window.addEventListener('load', function () {
-new Vue({el:'#vwgetftp',data:{label:'',
-ftpserver:'ftpserver',
-ftpuser: 'user',
-ftppass: 'passwd',
-fname: 'getfilename'
+new Vue({el:'#vwgetftp',data:{label:''
+,ftpserver : 'ftpserver'
+,ftpuser   : 'user'
+,ftppass   : 'passwd'
+,fname     : 'getfilename'
 }});})</script>
 
 <div id="vwgetftp">
@@ -1541,10 +1555,10 @@ wget --ftp-user={{ftpuser}} --ftp-password={{ftppass}} ftp://{{ftpserver}}/{{fna
 # SQLITE3
 
 <script>window.addEventListener('load', function () {
-new Vue({el:'#vsqlite',data:{label:'',
-SQLITE_DB_NAME: 'MYDB',
-SQLITE_TAB_NAME: 'MYTAB',
-SQLITE_SQL_FILE: 'MYFILE'
+new Vue({el:'#vsqlite',data:{label:''
+,SQLITE_DB_NAME : 'MYDB'
+,SQLITE_TAB_NAME: 'MYTAB'
+,SQLITE_SQL_FILE: 'MYFILE'
 }});})</script>
 
 <div id="vsqlite">
@@ -1646,23 +1660,6 @@ M-x packeage-list-packeage
 
 
 
-# ESCAPE TEXT
-
-<form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-xs-6">TEXT</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ESC_INPUT" ng-init="ESC_INPUT='http://hellowork/jobs'">
-</div>
-</div>
-
-</form>
-
-``` {.bash}
-{{esc_ret()}}
-```
-
 # RUBY
 
 ## rbenv
@@ -1747,42 +1744,38 @@ ssh はログイン元の環境変数(LANG)を引継ぐため、意図せず "ja
 
 ## USE DISC MEDIA
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-diskimage',data:{label:''
+,ISO_FILEPATH: 'medianame.iso'
+,ISO_MOUNTPOINT: '/mnt/dvd'
+}});})</script>
 
+<div id="app-diskimage">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">FILE NAME</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ISO_FILEPATH" ng-init="ISO_FILEPATH='./filename.iso'">
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-xs-6">MOUNT POINT</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ISO_MOUNTPOINT" ng-init="ISO_MOUNTPOINT='/mnt/dvd'">
-</div>
-</div>
+<varin label="ISO FILE NAME" v-model="ISO_FILEPATH"></varin>
+<varin label="MOUNT POINT" v-model="ISO_MOUNTPOINT"></varin>
 </form>
 
-### ISO to DVD
+#### ISO to DVD
 
 ``` {.bash}
 growisofs -dvd-compat -Z /dev/dvdrw={{ISO_FILEPATH}}
 ```
 
-## dir to iso
+#### dir to iso
 
 ``` {.bash}
 genisoimage -allow-limited-size -o DIRNAME.iso DIRNAME
 ```
 
 
-### DISC to ISO FILE
+#### DISC to ISO FILE
 
 ``` {.bash}
 dd if=/dev/sr0 of={{ISO_FILEPATH}}
 ```
 
-### MOUNT ISO FILE
+#### MOUNT ISO FILE
 
 ``` {.bash}
 mkdir -p {{ISO_MOUNTPOINT}}
@@ -1805,6 +1798,8 @@ cat /etc/fstab
 mount -a
 ```
 
+</div>
+
 
 ## LOCK TRAY?
 
@@ -1815,13 +1810,14 @@ VirtualBox やらの VM が邪魔してる場合あり。とめよ。
 
 ### on FILE
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-make-swap',data:{label:''
+,LINUX_SWAP_FILE: '/swapfile'
+}});})</script>
+
+<div id="app-make-swap">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-xs-6">SWAP FILE NAME</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="LINUX_SWAP_FILE" ng-init="LINUX_SWAP_FILE='/swapfile'">
-</div>
-</div>
+<varin label="FILE NAME" v-model="LINUX_SWAP_FILE"></varin>
 </form>
 
 example 255MB(4096x65536)
@@ -1839,7 +1835,7 @@ swapon {{LINUX_SWAP_FILE}}
 {{LINUX_SWAP_FILE}} swap swap defaults
 ```
 
-
+</div>
 
 
 # P2V
@@ -1972,41 +1968,25 @@ o                                          Pane を移動
 
 # GIT
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-git',data:{label:''
+,GIT_REPONAME: 'dir/name.git'
+,GIT_ROOT    : '/var/lib/git'
+,GIT_REMOTE  : '192.168.0.10'
+,GIT_USER    : 'git'
+,GIT_SSH     : '2203'
+,GIT_COMMENT : 'テスト'
+}});})</script>
 
+<div id="app-git">
 <form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-sm-6">REPO NAME</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="GIT_REPONAME" ng-init="GIT_REPONAME='dir/name.git'">
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-sm-6">REPO ROOT</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="GIT_ROOT" ng-init="GIT_ROOT='/var/lib/git'">
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-sm-6">GIT SERVER NAME</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="GIT_REMOTE" ng-init="GIT_REMOTE='192.168.0.10'">
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-sm-6">GIT SERVER USER</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="GIT_USER" ng-init="GIT_USER='git'">
-</div>
-</div>
-<div class="form-group">
-<label class="control-label col-sm-6">GIT SERVER SSH PORT</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="GIT_SSH" ng-init="GIT_SSH='2203'">
-</div>
-</div>
+<varin label="REPO NAME" v-model="GIT_REPONAME"></varin>
+<varin label="ROOT" v-model="GIT_ROOT"></varin>
+<varin label="REMOTE" v-model="GIT_REMOTE"></varin>
+<varin label="USER" v-model="GIT_USER"></varin>
+<varin label="SSH" v-model="GIT_SSH"></varin>
+<varin label="COMMIT -m" v-model="GIT_COMMENT"></varin>
 </form>
-
-
 
 ## on the SERVER(REMOTE)
 
@@ -2048,17 +2028,6 @@ git clone ssh://{{GIT_USER}}@{{GIT_REMOTE}}:{{GIT_SSH}}{{GIT_ROOT}}/{{GIT_REPONA
 
 ### COMMIT
 
-
-<form class="form-horizontal">
-<div class="form-group">
-<label class="control-label col-sm-6">COMMIT COMMENT</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="GIT_COMMENT" ng-init="GIT_COMMENT='テストコミット'">
-</div>
-</div>
-</form>
-
-
 ``` {.bash}
 git add .
 git commit -a -m "{{GIT_COMMENT}}"
@@ -2080,7 +2049,7 @@ git push origin master
 git pull origin master
 ```
 
-
+</div>
 
 
 
