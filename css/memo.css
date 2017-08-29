@@ -56,7 +56,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
   background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 h1 tt, h1 code {
@@ -112,7 +112,7 @@ h2:before {
 }
 
 h3 {
-  font-size: 18px; 
+  font-size: 18px;
 }
 h3:before {
     counter-increment: C3;
@@ -342,3 +342,6 @@ pre code, pre tt {
     border: none;
 }
 
+[v-cloak] {
+  display: none;
+}

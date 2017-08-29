@@ -7,6 +7,93 @@
 </div>
 </template>
 
+
+# vSRX
+
+```{.sh}
+vagrant plugin install vagrant-junos
+vagrant plugin install vagrant-host-shell
+```
+
+ffi のコンパイルがどうのと出たら
+
+```{.sh}
+sudo apt-get install ruby-dev
+```
+
+#### Vagrantfile
+
+```{.ruby}
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.box = "juniper/vqfx10k-re"
+  config.vm.box_check_update = false
+  config.ssh.insert_key = false
+end
+```
+
+
+
+
+
+
+
+# RAID
+
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-raid',data:{label:''
+,hdd1: '/dev/sdd'
+,hdd2: '/dev/sde'
+,mdx:  '/dev/md1'
+}});})</script>
+
+<div id="app-raid">
+<form class="form-horizontal">
+<varin label="HDD-1"  v-model="hdd1"></varin>
+<varin label="HDD-2"  v-model="hdd2"></varin>
+<varin label="md no." v-model="mdx"></varin>
+</form>
+
+## HDD SETUP
+
+### パーティショニング
+
+```{.sh}
+parted -s {{hdd1}} "mklabel gpt"
+parted -s {{hdd2}} "mklabel gpt"
+parted -s {{hdd1}} "mkpart primary 0% 100%"
+parted -s {{hdd2}} "mkpart primary 0% 100%"
+```
+
+### フラグセット
+
+```{.sh}
+parted -s {{hdd1}} "set 1 raid on"
+parted -s {{hdd2}} "set 1 raid on"
+```
+
+## MAKE RAID
+
+#### RAID-1
+
+```{.sh}
+mdadm --create {{mdx}} --level=raid1 --raid-devices=2 {{hdd1}} {{hdd2}}
+```
+
+[y], [RET]
+
+## CHECK
+
+```{.sh}
+watch -d -n 2 cat /proc/mdstat
+```
+
+[UU] is OK
+
+</div>
+
+
 # VueComponent
 
 <script>window.addEventListener('load', function () {
@@ -2276,40 +2363,21 @@ var graph = new vis.Graph(container, data);
 
 ## USE
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-docker',data:{label:''
+,DOCKER_TARG_REPO: 'ubuntu'
+,DOCKER_TARG_TAG: 'ruby2'
+,DOCKER_IMAGE_ID: '${IMAGE_ID}'
+,DOCKER_CONTAINER_ID: '${CONTAINER_ID}'
+}});})</script>
 
-
+<div id="app-docker">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-sm-6">TARG REPOSITORY</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="DOCKER_TARG_REPO" ng-init="DOCKER_TARG_REPO='ubuntu'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">TARG TAG</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="DOCKER_TARG_TAG" ng-init="DOCKER_TARG_TAG='ruby2'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">IMAGE ID</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="DOCKER_IMAGE_ID" ng-init="DOCKER_IMAGE_ID='${IMAGE_ID}'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">CONTAINER ID</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="DOCKER_CONTAINER_ID" ng-init="DOCKER_CONTAINER_ID='${CONTAINER_ID}'">
-</div>
-</div>
-
+<varin label="REPO"         v-model="DOCKER_TARG_REPO"></varin>
+<varin label="TAG"          v-model="DOCKER_TARG_TAG"></varin>
+<varin label="IMAGE ID"     v-model="DOCKER_IMAGE_ID"></varin>
+<varin label="CONTAINER ID" v-model="DOCKER_CONTAINER_ID"></varin>
 </form>
-
 
 ### BUILD
 
@@ -2449,7 +2517,7 @@ docker rmi $(docker images -a | awk '{print $3}')
 
 docker rmi $(docker images -a | awk '{print $3}')
 
-
+</div>
 
 
 ## boot2docker
@@ -2817,29 +2885,18 @@ echo -e "
 
 # ファイルの内容置換
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-cmdreplace',data:{label:''
+,CMD_REPLACE_BEFOR    : 'BEFOR'
+,CMD_REPLACE_AFTER    : 'AFTER'
+,CMD_REPLACE_FILENAME : '*.html'
+}});})</script>
+
+<div id="app-cmdreplace">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-sm-6">BEFOR</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="CMD_REPLACE_BEFOR" ng-init="CMD_REPLACE_BEFOR='BEFOR'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">AFTER</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="CMD_REPLACE_AFTER" ng-init="CMD_REPLACE_AFTER='AFTER'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">FILENAME</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="CMD_REPLACE_FILENAME" ng-init="CMD_REPLACE_FILENAME='*.html'">
-</div>
-</div>
-
+<varin label="BEFOR" v-model="CMD_REPLACE_BEFOR"></varin>
+<varin label="AFTER" v-model="CMD_REPLACE_AFTER"></varin>
+<varin label="FILE"  v-model="CMD_REPLACE_FILENAME"></varin>
 </form>
 
 
@@ -2848,12 +2905,13 @@ grep -rl "{{CMD_REPLACE_BEFOR}}" */{{CMD_REPLACE_FILENAME}}
 perl -p -i.befor -e 's/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g' {{CMD_REPLACE_FILENAME}}
 ```
 
+OR
 
 ``` {.bash}
 find . -name '{{CMD_REPLACE_FILENAME}}' -type f -exec sed -i 's/{{CMD_REPLACE_BEFOR}}/{{CMD_REPLACE_AFTER}}/g' {} \;
 ```
 
-
+</div>
 
 
 
@@ -2922,27 +2980,17 @@ find | grep <検索文字> | xargs <コマンド>
 ```
 
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-fileandfile',data:{label:''
+,CMD_FILE1    : 'CMD_FILE1'
+,CMD_FILE2    : 'CMD_FILE2'
+}});})</script>
 
+<div id="app-fileandfile">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-sm-6">FILE1</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="CMD_FILE1" ng-init="CMD_FILE1='file1'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">FILE2</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="CMD_FILE2" ng-init="CMD_FILE2='file2'">
-</div>
-</div>
-
+<varin label="FILE-1" v-model="CMD_FILE1"></varin>
+<varin label="FILE-2" v-model="CMD_FILE2"></varin>
 </form>
-
-
-
 
 ### ナイスな diff
 
@@ -2955,6 +3003,8 @@ diff -y --suppress-common-lines {{CMD_FILE1}} {{CMD_FILE2}}
 ``` {.bash}
 paste  {{CMD_FILE1}} {{CMD_FILE2}}
 ```
+
+</div>
 
 ### プロンプト反転
 
@@ -3178,42 +3228,23 @@ save config
 
 ### 1:1 NAT
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-nxr120-nat',data:{label:''
+,nxr_e0ip    : '192.168.0.1'
+,NXR_RIP    : '192.168.0.10'
+,nxr_e1ip    : '11.22.33.1'
+,nxr_vip    : '11.22.33.10'
+}});})</script>
+
+<div id="app-nxr120-nat">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-sm-6">ethernet0 IP</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="nxr_e0ip" ng-init="nxr_e0ip='192.168.0.1'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">host IP</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="NXR_RIP" ng-init="NXR_RIP='192.168.0.10'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">ethernet1 IP</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="nxr_e1ip" ng-init="nxr_e1ip='11.22.33.44'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">host virtIP</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="nxr_vip" ng-init="nxr_vip='11.22.33.10'">
-</div>
-</div>
-
+<varin label="ethernet0 IP" v-model="nxr_e0ip"></varin>
+<varin label="host IP"      v-model="NXR_RIP"></varin>
+<varin label="ethernet1 IP" v-model="nxr_e1ip"></varin>
+<varin label="host virtIP"  v-model="nxr_vip"></varin>
 </form>
 
-
-
-
-```
+```{.sh}
 show config
 configure terminal
 
@@ -3240,9 +3271,11 @@ save config
 restart
 ```
 
+</div>
+
 ### ip filter
 
-```
+```{.sh}
 configure terminal
 
 ip access-list eth0_in permit 192.2.58.221/32 192.2.58.220/32 tcp any 22
@@ -3353,18 +3386,15 @@ SELINUX=disabled
 
 ## NETWORK
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-eth',data:{label:''
+,CENT_NET_IFNAME: 'eth0'
+}});})</script>
+
+<div id="app-eth">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-sm-6">I/F NAME</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="CENT_NET_IFNAME" ng-init="CENT_NET_IFNAME='eth0'">
-</div>
-</div>
-
+<varin label="I/F NAME"  v-model="CENT_NET_IFNAME"></varin>
 </form>
-
-
 
 ### IP アドレス・リンクスピード固定化
 
@@ -3447,28 +3477,21 @@ GATEWAY=192.168.0.123
 service network restart
 ```
 
+</div>
 
 # YUM
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-yum',data:{label:''
+,YUM_PKG: 'httpd'
+,YUM_OPT: 'YUM_OPT="--disablerepo=\\* --enablerepo=c6-media"'
+}});})</script>
+
+<div id="app-yum">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-sm-6">PKG NAME</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="YUM_PKG" ng-init="YUM_PKG='httpd'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">OPT</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="YUM_OPT" ng-init="YUM_OPT='--disablerepo=\\* --enablerepo=c6-media'">
-</div>
-</div>
-
+<varin label="PKG NAME"  v-model="YUM_PKG"></varin>
+<varin label="OPT"       v-model="YUM_OPT"></varin>
 </form>
-
-
 
 ## REPO
 
@@ -3532,6 +3555,7 @@ yum --disablerepo=\* -y localinstall ./*.rpm
 yum {{YUM_OPT}} list
 ```
 
+</div>
 
 
 # CHEF
@@ -3559,44 +3583,22 @@ VBoxManage clonehd --format VDI cyua.vmdk cyua.vdi
 
 # VAGRANT
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-vagrant',data:{label:''
+,VAG_BOX_FILE: './package.box'
+,VAG_BOX_NAME: 'centos65-x86_64-20131205'
+,VAG_VM_NAME: 'vm1'
+,VAG_VM_IP: 'VAG_VM_IP'
+,VAG_SSH_PORT: 'VAG_SSH_PORT=\'2205\''
+}});})</script>
+
+<div id="app-vagrant">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-sm-6">BOX FILE</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="VAG_BOX_FILE" ng-init="VAG_BOX_FILE='./package.box'">
-</div>
-</div>
-
-
-<div class="form-group">
-<label class="control-label col-sm-6">BOX NAME</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="VAG_BOX_NAME" ng-init="VAG_BOX_NAME='centos65-x86_64-20131205'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">VM NAME</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="VAG_VM_NAME" ng-init="VAG_VM_NAME='vm1'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">VM STATIC IP</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="VAG_VM_IP" ng-init="VAG_VM_IP='192.168.0.111'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-sm-6">VM SSH PORT</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="VAG_SSH_PORT" ng-init="VAG_SSH_PORT='2205'">
-</div>
-</div>
-
+<varin label="BOX FILE"     v-model="VAG_BOX_FILE"></varin>
+<varin label="BOX NAME"     v-model="VAG_BOX_NAME"></varin>
+<varin label="VM NAME"      v-model="VAG_VM_NAME"></varin>
+<varin label="VM STATIC IP" v-model="VAG_VM_IP"></varin>
+<varin label="VM SSH PORT"  v-model="VAG_SSH_PORT"></varin>
 </form>
 
 ## BOX
@@ -3716,7 +3718,7 @@ vagrant sandbox off
 vagrant sandbox status
 ```
 
-
+</div>
 
 # ORACLE
 
@@ -3927,16 +3929,16 @@ ORACLE_UNQNAME=KX emctl start dbconsole
 
 ## SQL
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-sql',data:{label:''
+,ORA_TAB_NAME: 'TABNAME'
+}});})</script>
+
+<div id="app-sql">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-xs-6">TAB NAME</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ORA_TAB_NAME" ng-init="ORA_TAB_NAME='TABNAME'">
-</div>
-</div>
-
+<varin label="TAB NAME"     v-model="ORA_TAB_NAME"></varin>
 </form>
+
 
 ### insert
 
@@ -3956,10 +3958,11 @@ update {{ORA_TAB_NAME}} set <COL1>='AAA' , <COL2>='BBB' where <COL3>='ZZZ';
 select column_name from user_cons_columns
 where constraint_name = (
       select constraint_name from user_constraints
-      where table_name = '" + tab + "' and constraint_type = 'P'
+      where table_name = '" + {{ORA_TAB_NAME}} + "' and constraint_type = 'P'
 )
 ```
 
+</div>
 
 ### get instance name
 
@@ -4042,38 +4045,21 @@ exit
 
 ## MULTI MASTER REPLICATION
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-ora-mmr',data:{label:''
+,ORA_REPSITE_A: 'AAA'
+,ORA_REPSITE_B: 'BBB'
+,ORA_REPTNSNAME: 'DB'
+,ORA_REP_TABNAME: 'TABLENAME'
+}});})</script>
+
+<div id="app-ora-mmr">
 <form class="form-horizontal">
-
-<div class="form-group">
-<label class="control-label col-xs-6">SITE A</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ORA_REPSITE_A" ng-init="ORA_REPSITE_A='AAA'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">SITE B</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ORA_REPSITE_B" ng-init="ORA_REPSITE_B='BBB'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">TNS</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ORA_REPTNSNAME" ng-init="ORA_REPTNSNAME='DB'">
-</div>
-</div>
-
-<div class="form-group">
-<label class="control-label col-xs-6">TABLE</label>
-<div class="col-xs-6">
-<input class="form-control" type="text" onclick="this.select();" ng-model="ORA_REP_TABNAME" ng-init="ORA_REP_TABNAME='TABLENAME'">
-</div>
-</div>
-
+<varin label="SITE A"  v-model="ORA_REPSITE_A"></varin>
+<varin label="SITE B"  v-model="ORA_REPSITE_B"></varin>
+<varin label="TNS"     v-model="ORA_REPTNSNAME"></varin>
+<varin label="TABLE"   v-model="ORA_REP_TABNAME"></varin>
 </form>
-
 
 
 ### SQLPLUS
@@ -4317,3 +4303,5 @@ conn repadmin/repadmin@{{ORA_REPSITE_A}}_{{ORA_REPTNSNAME}}
 
 exec dbms_repcat.suspend_master_activity(gname=>'{{ORA_REPTNSNAME}}_REPG');
 ```
+
+</div>
