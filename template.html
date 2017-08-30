@@ -10,10 +10,17 @@ $if(date-meta)$
   <meta name="dcterms.date" content="$date-meta$">
 $endif$
   <title>$if(title-prefix)$$title-prefix$ - $endif$$if(pagetitle)$$pagetitle$$endif$</title>
+  
   <link rel="stylesheet" href="asset/bootstrap-3.1.1-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="asset/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
+
   <link rel="stylesheet" href="./css/memo.css">
+
+  <script src="asset/vue.min.js"></script>
+  <script src="js/memo.js"></script>
+
   <link  href="asset/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+  <script src="asset/vis/dist/vis.js"></script>
 $if(quotes)$
   <style type="text/css">
     q { quotes: "“" "”" "‘" "’"; }
@@ -58,9 +65,6 @@ $body$
 $for(include-after)$
 $include-after$
 $endfor$
-<script src="asset/vue.min.js"></script>
-<script src="js/memo.js"></script>
-<script src="asset/vis/dist/vis.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
