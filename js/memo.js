@@ -18,3 +18,24 @@ Vue.component('varin', {
 	methods: { onInput (e) { this.$emit('input', e.target.value) }}
 })
 
+
+
+
+
+var titles = document.getElementsByTagName('h1');
+var titleTextArray = [];
+
+for (var i=0; i<titles.length; i += 1) {
+    var title = titles[i];
+    titleTextArray.push({
+	title: title.hasAttribute('alt-title') ? title.getAttribute('alt-title') : title.innerText,
+	href: title.id
+    });
+}
+
+var vm = new Vue({
+    el: '.menu',
+    data: {
+	titles: titleTextArray
+    }
+});

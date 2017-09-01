@@ -8,6 +8,13 @@
 </template>
 
 
+<ul class="menu">
+<li v-for="title in titles">
+<a v-bind:href="'#'+title.href">{{ title.title }}</a>
+</li>
+</ul>
+
+
 # vSRX
 
 ```{.sh}

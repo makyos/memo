@@ -16,9 +16,6 @@ $endif$
 
   <link rel="stylesheet" href="./css/memo.css">
 
-  <script src="asset/vue.min.js"></script>
-  <script src="js/memo.js"></script>
-
   <link  href="asset/vis/dist/vis.css" rel="stylesheet" type="text/css" />
   <script src="asset/vis/dist/vis.js"></script>
 $if(quotes)$
@@ -65,8 +62,10 @@ $body$
 $for(include-after)$
 $include-after$
 $endfor$
+<script src="asset/vue.min.js"></script>
+<script src="js/memo.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-</div>
+</body>
 </html>
