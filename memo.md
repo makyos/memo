@@ -357,6 +357,14 @@ git fetch origin
 git diff origin/master
 ```
 
+## 最終コミットまで戻す
+
+```{.sh}
+git reset --hard HEAD
+```
+
+
+
 
 # ntp
 
