@@ -365,7 +365,6 @@ REMORT  -> PULL         -> LOCAL   ; \
 \
 }'};
 var gitgraph = new vis.Graph(gitcontainer, gitdata);
-//gitgraph.setOptions({layout:{randomSeed: undefined, improvedLayout:true}});
 </script>
 
 
