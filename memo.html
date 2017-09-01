@@ -233,6 +233,37 @@ keycode  66 = Super_L</code></pre>
 </tbody>
 </table>
 <h1 id="github">github</h1>
+<h2 id="command-graph">COMMAND GRAPH</h2>
+<div id="gitgraph" style="width: 100%; height: 300px; border: 1px solid lightgray;">
+<div id="graph-navigation_wrapper" style="position: absolute; width: 100%; height: 300px;">
+<pre><code>&lt;div id=&quot;graph-navigation_zoomExtends&quot; class=&quot;graph-navigation zoomExtends&quot;&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<div class="graph-frame" style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+<pre><code>&lt;canvas style=&quot;position: relative; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%&quot;&gt;&lt;/canvas&gt;</code></pre>
+</div>
+</div>
+<script type="text/javascript">
+var gitcontainer = document.getElementById('gitgraph');
+var gitdata = {dot: 'digraph { \
+\
+WORKING  [shape=box,   fontColor=black,color=orange]; \
+STAGING  [shape=box,   fontColor=white,color=blue]; \
+LOCAL    [shape=box,   fontColor=white,color=red]; \
+REMORT   [shape=box,   fontColor=white,color=red]; \
+\
+WORKING -> ADD          -> STAGING ; \
+STAGING -> COMMIT       -> LOCAL   ; \
+LOCAL   -> PUSH         -> REMORT  ; \
+LOCAL   -> RESET_COMMIT -> WORKING ; \
+REMORT  -> FETCH        -> LOCAL   ; \
+REMORT  -> PULL         -> LOCAL   ; \
+           PULL         -> WORKING ; \
+\
+}'};
+var gitgraph = new vis.Graph(gitcontainer, gitdata);
+//gitgraph.setOptions({layout:{randomSeed: undefined, improvedLayout:true}});
+</script>
 <h2 id="公開鍵を登録">公開鍵を登録</h2>
 <p>テスト</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ssh</span> -T git@github.com
@@ -1404,7 +1435,7 @@ new Vue({el:'#app-git',data:{label:''
 <span class="co"># Install bundler</span>
 <span class="kw">RUN</span> gem update --system
 <span class="kw">RUN</span> gem install bundler --no-rdoc --no-ri</code></pre></div>
-<h2 id="command-graph">COMMAND GRAPH</h2>
+<h2 id="command-graph-1">COMMAND GRAPH</h2>
 <div id="docker_graph" style="width: 100%; height: 300px; border: 1px solid lightgray;">
 <div id="graph-navigation_wrapper" style="position: absolute; width: 100%; height: 300px;">
 <pre><code>&lt;div id=&quot;graph-navigation_zoomExtends&quot; class=&quot;graph-navigation zoomExtends&quot;&gt;

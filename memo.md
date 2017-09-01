@@ -334,6 +334,44 @@ MOD + SPC                  タイルのレイアウト方法を切り替える
 
 # github
 
+## COMMAND GRAPH
+
+<div id="gitgraph" style="width: 100%; height: 300px; border: 1px solid lightgray;">
+  <div id="graph-navigation_wrapper" style="position: absolute; width: 100%; height: 300px;">
+    <div id="graph-navigation_zoomExtends" class="graph-navigation zoomExtends">
+    </div>
+  </div>
+  <div class="graph-frame" style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+    <canvas style="position: relative; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%"></canvas>
+  </div>
+</div>
+
+<script type="text/javascript">
+var gitcontainer = document.getElementById('gitgraph');
+var gitdata = {dot: 'digraph { \
+\
+WORKING  [shape=box,   fontColor=black,color=orange]; \
+STAGING  [shape=box,   fontColor=white,color=blue]; \
+LOCAL    [shape=box,   fontColor=white,color=red]; \
+REMORT   [shape=box,   fontColor=white,color=red]; \
+\
+WORKING -> ADD          -> STAGING ; \
+STAGING -> COMMIT       -> LOCAL   ; \
+LOCAL   -> PUSH         -> REMORT  ; \
+LOCAL   -> RESET_COMMIT -> WORKING ; \
+REMORT  -> FETCH        -> LOCAL   ; \
+REMORT  -> PULL         -> LOCAL   ; \
+           PULL         -> WORKING ; \
+\
+}'};
+var gitgraph = new vis.Graph(gitcontainer, gitdata);
+//gitgraph.setOptions({layout:{randomSeed: undefined, improvedLayout:true}});
+</script>
+
+
+
+
+
 ## 公開鍵を登録
 
 テスト
