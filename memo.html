@@ -64,6 +64,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <a v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
+<h1 id="clamav">CLAMAV</h1>
+<h2 id="hand-scan">hand scan</h2>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">sudo</span> clamscan --infected --remove --recursive ./</code></pre></div>
 <h1 id="vsrx">vSRX</h1>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">vagrant</span> plugin install vagrant-junos
 <span class="kw">vagrant</span> plugin install vagrant-host-shell</code></pre></div>

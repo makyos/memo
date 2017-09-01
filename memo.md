@@ -14,6 +14,13 @@
 </li>
 </ul>
 
+# CLAMAV
+
+## hand scan
+
+```{.sh}
+sudo clamscan --infected --remove --recursive ./
+```
 
 # vSRX
 
