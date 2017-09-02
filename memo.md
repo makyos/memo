@@ -8,9 +8,9 @@
 </template>
 
 
-<ul class="menu">
-<li v-for="title in titles">
-<a v-bind:href="'#'+title.href">{{ title.title }}</a>
+<ul class="nav flex-column menu">
+<li class="nav-item" v-for="title in titles">
+<a class="nav-link active" v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
 

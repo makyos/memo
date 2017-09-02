@@ -59,9 +59,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 </div>
 <p></template></p>
-<ul class="menu">
-<li v-for="title in titles">
-<a v-bind:href="'#'+title.href">{{ title.title }}</a>
+<ul class="nav flex-column menu">
+<li class="nav-item" v-for="title in titles">
+<a class="nav-link active" v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
 <h1 id="clamav">CLAMAV</h1>
