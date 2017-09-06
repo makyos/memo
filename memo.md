@@ -2,7 +2,7 @@
 <div class="form-group">
 <label class="control-label col-xs-6">{{ label }}</label>
 <div class="col-xs-6">
-<input class="form-control" :value="value" v-on:input="onInput" onClick="this.select();"  type="text" />
+<input :id=label class="form-control" :value="value" v-on:input="onInput" onClick="this.select();"  type="text" />
 </div>
 </div>
 </template>
@@ -13,6 +13,37 @@
 <a class="nav-link active" v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
+
+
+# selenium
+
+## install
+
+### selenium
+
+```{.sh}
+# pip
+sudo apt-get install python-pip
+# selenium
+sudo pip install selenium
+```
+
+### WebDriver
+
+ブラウザごとに実行環境に合うものをダウンロードして、$PATH にコピーする。
+
+
+## hello world
+
+```{.py}
+#!/usr/bin/env python
+
+from selenium import webdriver
+
+browser = webdriver.Firefox()
+browser.get('http://www.ubuntu.com/')
+```
+
 
 # CLAMAV
 
@@ -71,21 +102,24 @@ new Vue({el:'#app-raid',data:{label:''
 
 ## HDD SETUP
 
-### パーティショニング
+### parted
+
+#### {{hdd1}}
 
 ```{.sh}
 parted -s {{hdd1}} "mklabel gpt"
-parted -s {{hdd2}} "mklabel gpt"
 parted -s {{hdd1}} "mkpart primary 0% 100%"
-parted -s {{hdd2}} "mkpart primary 0% 100%"
+parted -s {{hdd1}} "set 1 raid on"
 ```
 
-### フラグセット
+#### {{hdd2}}
 
 ```{.sh}
-parted -s {{hdd1}} "set 1 raid on"
+parted -s {{hdd2}} "mklabel gpt"
+parted -s {{hdd2}} "mkpart primary 0% 100%"
 parted -s {{hdd2}} "set 1 raid on"
 ```
+
 
 ## MAKE RAID
 

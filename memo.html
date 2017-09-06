@@ -55,7 +55,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="form-group">
 <label class="control-label col-xs-6">{{ label }}</label>
 <div class="col-xs-6">
-<p><input class="form-control" :value="value" v-on:input="onInput" onClick="this.select();"  type="text" /></p>
+<p><input :id=label class="form-control" :value="value" v-on:input="onInput" onClick="this.select();"  type="text" /></p>
 </div>
 </div>
 <p></template></p>
@@ -64,6 +64,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <a class="nav-link active" v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
+<h1 id="selenium">selenium</h1>
+<h2 id="install">install</h2>
+<h3 id="selenium-1">selenium</h3>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="co"># pip</span>
+<span class="kw">sudo</span> apt-get install python-pip
+<span class="co"># selenium</span>
+<span class="kw">sudo</span> pip install selenium</code></pre></div>
+<h3 id="webdriver">WebDriver</h3>
+<p>ブラウザごとに実行環境に合うものをダウンロードして、$PATH にコピーする。</p>
+<h2 id="hello-world">hello world</h2>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="co">#!/usr/bin/env python</span>
+
+<span class="im">from</span> selenium <span class="im">import</span> webdriver
+
+browser <span class="op">=</span> webdriver.Firefox()
+browser.get(<span class="st">&#39;http://www.ubuntu.com/&#39;</span>)</code></pre></div>
 <h1 id="clamav">CLAMAV</h1>
 <h2 id="hand-scan">hand scan</h2>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">sudo</span> clamscan --infected --remove --recursive ./</code></pre></div>
@@ -92,13 +108,14 @@ new Vue({el:'#app-raid',data:{label:''
 <varin label="HDD-1"  v-model="hdd1"></varin> <varin label="HDD-2"  v-model="hdd2"></varin> <varin label="md no." v-model="mdx"></varin>
 </form>
 <h2 id="hdd-setup">HDD SETUP</h2>
-<h3 id="パーティショニング">パーティショニング</h3>
+<h3 id="parted">parted</h3>
+<h4 id="hdd1">{{hdd1}}</h4>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">parted</span> -s <span class="dt">{{hdd1}}</span> <span class="st">&quot;mklabel gpt&quot;</span>
-<span class="kw">parted</span> -s <span class="dt">{{hdd2}}</span> <span class="st">&quot;mklabel gpt&quot;</span>
 <span class="kw">parted</span> -s <span class="dt">{{hdd1}}</span> <span class="st">&quot;mkpart primary 0% 100%&quot;</span>
-<span class="kw">parted</span> -s <span class="dt">{{hdd2}}</span> <span class="st">&quot;mkpart primary 0% 100%&quot;</span></code></pre></div>
-<h3 id="フラグセット">フラグセット</h3>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">parted</span> -s <span class="dt">{{hdd1}}</span> <span class="st">&quot;set 1 raid on&quot;</span>
+<span class="kw">parted</span> -s <span class="dt">{{hdd1}}</span> <span class="st">&quot;set 1 raid on&quot;</span></code></pre></div>
+<h4 id="hdd2">{{hdd2}}</h4>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">parted</span> -s <span class="dt">{{hdd2}}</span> <span class="st">&quot;mklabel gpt&quot;</span>
+<span class="kw">parted</span> -s <span class="dt">{{hdd2}}</span> <span class="st">&quot;mkpart primary 0% 100%&quot;</span>
 <span class="kw">parted</span> -s <span class="dt">{{hdd2}}</span> <span class="st">&quot;set 1 raid on&quot;</span></code></pre></div>
 <h2 id="make-raid">MAKE RAID</h2>
 <h4 id="raid-1">RAID-1</h4>
@@ -645,7 +662,7 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 
 [<span class="kw">Install</span>]
 <span class="ot">WantedBy=</span>multi-user.target</code></pre></div>
-<h3 id="install">INSTALL</h3>
+<h3 id="install-1">INSTALL</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> ln -s /etc/systemd/system/cp.path    /etc/systemd/system/multi-user.target.wants/
 <span class="kw">sudo</span> ln -s /etc/systemd/system/cp.service /etc/systemd/system/multi-user.target.wants/</code></pre></div>
 <h3 id="enable">ENABLE</h3>
@@ -775,7 +792,7 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <h2 id="generator">generator</h2>
 <h3 id="search">search</h3>
 <p><a href="http://yeoman.io/generators/" class="uri">http://yeoman.io/generators/</a></p>
-<h3 id="install-1">install</h3>
+<h3 id="install-2">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install -g generator-webapp</code></pre></div>
 <h2 id="generate-webapp">generate WEBAPP</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkdir</span> WEBAPPDIR <span class="kw">&amp;&amp;</span> <span class="kw">cd</span> WEBAPPDIR
@@ -1140,16 +1157,16 @@ new Vue({el:'#vsqlite',data:{label:''
 <p>M-x packeage-list-packeage</p>
 <h1 id="ruby-1">RUBY</h1>
 <h2 id="rbenv">rbenv</h2>
-<h3 id="install-2">install</h3>
+<h3 id="install-3">install</h3>
 <p>git clone</p>
 <h3 id="available-versions">available versions</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rbenv</span> install --list</code></pre></div>
-<h3 id="install-3">install</h3>
+<h3 id="install-4">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rbenv</span> install 2.1.2</code></pre></div>
 <h3 id="init">init</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rbenv</span> global 2.1.2</code></pre></div>
 <h2 id="ruby-build">ruby-build</h2>
-<h3 id="install-4">install</h3>
+<h3 id="install-5">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> clone https://github.com/sstephenson/ruby-build.git .ruby-build
 <span class="kw">.ruby-build/install.sh</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rm</span> -fr .ruby-build</code></pre></div>
@@ -1360,14 +1377,14 @@ new Vue({el:'#app-git',data:{label:''
 </div>
 <h1 id="docker">DOCKER</h1>
 <h2 id="setup-2">Setup</h2>
-<h3 id="install-5">Install</h3>
+<h3 id="install-6">Install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> cask install docker</code></pre></div>
 <h3 id="without-sudo">WITHOUT sudo</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># sudo groupadd docker</span>
 <span class="kw">sudo</span> gpasswd -a <span class="ot">${USER}</span> docker
 <span class="kw">sudo</span> service docker restart</code></pre></div>
 <p>最ログインが必要！</p>
-<h3 id="hello-world">Hello World</h3>
+<h3 id="hello-world-1">Hello World</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run hello-world</code></pre></div>
 <h2 id="docker-compose">docker-compose</h2>
 <h4 id="docker-compose.yml">docker-compose.yml</h4>
@@ -1395,7 +1412,7 @@ new Vue({el:'#app-git',data:{label:''
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="dt">{IMAGE}</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="ot">$(</span><span class="kw">docker</span> images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;/^&lt;none&gt;/ { print $3 }&#39;</span><span class="ot">)</span></code></pre></div>
 <h1 id="docker.old">Docker.OLD</h1>
-<h3 id="install-6">install</h3>
+<h3 id="install-7">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> install -y docker-io.x86_64</code></pre></div>
 <h3 id="ps">PS</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">watch</span> -n 2 <span class="st">&#39;df -h; echo; free -m; echo; docker ps -a|head; echo; docker images -a&#39;</span></code></pre></div>
@@ -1559,7 +1576,7 @@ new Vue({el:'#app-docker',data:{label:''
 <p>docker rmi $(docker images -a | awk '{print $3}')</p>
 </div>
 <h2 id="boot2docker">boot2docker</h2>
-<h3 id="install-7">install</h3>
+<h3 id="install-8">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> install docker boot2docker</code></pre></div>
 <h3 id="up">up</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">boot2docker</span> init
