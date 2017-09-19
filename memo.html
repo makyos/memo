@@ -342,8 +342,10 @@ var gitgraph = new vis.Graph(gitcontainer, gitdata);
 <p>確認方法</p>
 <pre><code>git remote -v</code></pre>
 <h2 id="remote-との比較">remote との比較</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> fetch origin
-<span class="kw">git</span> diff origin/master</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> fetch origin <span class="kw">&amp;&amp;</span> <span class="kw">git</span> diff origin/master</code></pre></div>
+<h2 id="マスター競合pull忘れ">マスター競合(PULL忘れ)</h2>
+<p>単純マージ</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> fetch <span class="kw">&amp;&amp;</span> <span class="kw">git</span> merge origin/master</code></pre></div>
 <h2 id="最終コミットまで戻す">最終コミットまで戻す</h2>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">git</span> reset --hard HEAD</code></pre></div>
 <h1 id="ntp">ntp</h1>

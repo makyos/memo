@@ -510,8 +510,15 @@ git remote -v
 ## remote との比較
 
 ```{.bash}
-git fetch origin
-git diff origin/master
+git fetch origin && git diff origin/master
+```
+
+## マスター競合(PULL忘れ)
+
+単純マージ
+
+```{.bash}
+git fetch && git merge origin/master
 ```
 
 ## 最終コミットまで戻す
