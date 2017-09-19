@@ -14,6 +14,85 @@
 </li>
 </ul>
 
+# Appium
+
+## Windows Application Driver
+
+### Install
+
+```{.sh}
+msiexec /i WindowsApplicationDriver.msi /q
+setx /M PATH "%PATH%;C:\Program Files (x86)\Windows Application Driver"
+```
+
+### Run
+
+Settings > Update & Security > For Developers
+
+#### New Prompt
+
+```{.sh}
+WinAppDriver.exe
+```
+
+## Appium-Python-Client
+
+### Install
+
+
+```{.sh}
+python-3.6.2-amd64.exe /install /quiet
+setx /M PATH "%PATH%;C:\Users\IEUser\AppData\Local\Programs\Python\Python36\Scripts\"
+setx /M PATH "%PATH%;C:\Users\IEUser\AppData\Local\Programs\Python\Python36\"
+```
+
+#### New Prompt
+
+```{.sh}
+pip install Appium-Python-Client
+```
+
+## TEST
+
+### notepad.exe
+
+```{.py}
+import unittest
+from appium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+
+class NotepadTests(unittest.TestCase):
+
+    def setUp(self):
+        desired_caps = {}
+        desired_caps["app"] = "C:\\Windows\\System32\\notepad.exe"
+        self.driver = webdriver.Remote(command_executor='http://127.0.0.1:4723', desired_capabilities=desired_caps)
+        self.driver.find_element_by_name('Maximize').click()
+
+    def tearDown(self):
+        self.driver.quit()
+
+    def test_01_01_01_helpmenu(self):
+        self.driver.find_element_by_name("Help").click()
+        self.driver.find_element_by_name("About Notepad").click()
+        self.driver.save_screenshot("evi/about.png")
+        self.driver.find_element_by_name("OK").click()
+
+    def test_01_02_01_textinput(self):
+        inputdata = 'hello automation'
+        self.driver.find_element_by_name('Text Editor').send_keys(inputdata)
+        self.driver.save_screenshot("evi/type.png")
+        result = str(self.driver.find_element_by_name('Text Editor').get_attribute('Value.Value'))
+        self.driver.find_element_by_name('Text Editor').clear()
+        self.assertEqual(result, inputdata)
+
+
+if __name__ == '__main__':
+    suite = unittest.TestLoader().loadTestsFromTestCase(NotepadTests)
+    unittest.TextTestRunner(verbosity=2).run(suite)
+```
+
 
 # selenium
 

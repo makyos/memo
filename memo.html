@@ -64,8 +64,60 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <a class="nav-link active" v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
+<h1 id="appium">Appium</h1>
+<h2 id="windows-application-driver">Windows Application Driver</h2>
+<h3 id="install">Install</h3>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">msiexec</span> /i WindowsApplicationDriver.msi /q
+<span class="kw">setx</span> /M PATH <span class="st">&quot;%PATH%;C:\Program Files (x86)\Windows Application Driver&quot;</span></code></pre></div>
+<h3 id="run">Run</h3>
+<p>Settings &gt; Update &amp; Security &gt; For Developers</p>
+<h4 id="new-prompt">New Prompt</h4>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">WinAppDriver.exe</span></code></pre></div>
+<h2 id="appium-python-client">Appium-Python-Client</h2>
+<h3 id="install-1">Install</h3>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">python-3.6.2-amd64.exe</span> /install /quiet
+<span class="kw">setx</span> /M PATH <span class="st">&quot;%PATH%;C:\Users\IEUser\AppData\Local\Programs\Python\Python36\Scripts</span><span class="dt">\&quot;</span>
+<span class="st">setx /M PATH &quot;</span>%PATH%<span class="kw">;C</span>:\Users\IEUser\AppData\Local\Programs\Python\Python36<span class="dt">\&quot;</span></code></pre></div>
+<h4 id="new-prompt-1">New Prompt</h4>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">pip</span> install Appium-Python-Client</code></pre></div>
+<h2 id="test">TEST</h2>
+<h3 id="notepad.exe">notepad.exe</h3>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="im">import</span> unittest
+<span class="im">from</span> appium <span class="im">import</span> webdriver
+<span class="im">from</span> selenium.webdriver.common.keys <span class="im">import</span> Keys
+
+
+<span class="kw">class</span> NotepadTests(unittest.TestCase):
+
+    <span class="kw">def</span> setUp(<span class="va">self</span>):
+        desired_caps <span class="op">=</span> {}
+        desired_caps[<span class="st">&quot;app&quot;</span>] <span class="op">=</span> <span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">Windows</span><span class="ch">\\</span><span class="st">System32</span><span class="ch">\\</span><span class="st">notepad.exe&quot;</span>
+        <span class="va">self</span>.driver <span class="op">=</span> webdriver.Remote(command_executor<span class="op">=</span><span class="st">&#39;http://127.0.0.1:4723&#39;</span>, desired_capabilities<span class="op">=</span>desired_caps)
+        <span class="va">self</span>.driver.find_element_by_name(<span class="st">&#39;Maximize&#39;</span>).click()
+
+    <span class="kw">def</span> tearDown(<span class="va">self</span>):
+        <span class="va">self</span>.driver.quit()
+
+    <span class="kw">def</span> test_01_01_01_helpmenu(<span class="va">self</span>):
+        <span class="va">self</span>.driver.find_element_by_name(<span class="st">&quot;Help&quot;</span>).click()
+        <span class="va">self</span>.driver.find_element_by_name(<span class="st">&quot;About Notepad&quot;</span>).click()
+        <span class="va">self</span>.driver.save_screenshot(<span class="st">&quot;evi/about.png&quot;</span>)
+        <span class="va">self</span>.driver.find_element_by_name(<span class="st">&quot;OK&quot;</span>).click()
+
+    <span class="kw">def</span> test_01_02_01_textinput(<span class="va">self</span>):
+        inputdata <span class="op">=</span> <span class="st">&#39;hello automation&#39;</span>
+        <span class="va">self</span>.driver.find_element_by_name(<span class="st">&#39;Text Editor&#39;</span>).send_keys(inputdata)
+        <span class="va">self</span>.driver.save_screenshot(<span class="st">&quot;evi/type.png&quot;</span>)
+        result <span class="op">=</span> <span class="bu">str</span>(<span class="va">self</span>.driver.find_element_by_name(<span class="st">&#39;Text Editor&#39;</span>).get_attribute(<span class="st">&#39;Value.Value&#39;</span>))
+        <span class="va">self</span>.driver.find_element_by_name(<span class="st">&#39;Text Editor&#39;</span>).clear()
+        <span class="va">self</span>.assertEqual(result, inputdata)
+
+
+<span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:
+    suite <span class="op">=</span> unittest.TestLoader().loadTestsFromTestCase(NotepadTests)
+    unittest.TextTestRunner(verbosity<span class="op">=</span><span class="dv">2</span>).run(suite)</code></pre></div>
 <h1 id="selenium">selenium</h1>
-<h2 id="install">install</h2>
+<h2 id="install-2">install</h2>
 <h3 id="selenium-1">selenium</h3>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="co"># pip</span>
 <span class="kw">sudo</span> apt-get install python-pip
@@ -662,7 +714,7 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 
 [<span class="kw">Install</span>]
 <span class="ot">WantedBy=</span>multi-user.target</code></pre></div>
-<h3 id="install-1">INSTALL</h3>
+<h3 id="install-3">INSTALL</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> ln -s /etc/systemd/system/cp.path    /etc/systemd/system/multi-user.target.wants/
 <span class="kw">sudo</span> ln -s /etc/systemd/system/cp.service /etc/systemd/system/multi-user.target.wants/</code></pre></div>
 <h3 id="enable">ENABLE</h3>
@@ -792,7 +844,7 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><spa
 <h2 id="generator">generator</h2>
 <h3 id="search">search</h3>
 <p><a href="http://yeoman.io/generators/" class="uri">http://yeoman.io/generators/</a></p>
-<h3 id="install-2">install</h3>
+<h3 id="install-4">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install -g generator-webapp</code></pre></div>
 <h2 id="generate-webapp">generate WEBAPP</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkdir</span> WEBAPPDIR <span class="kw">&amp;&amp;</span> <span class="kw">cd</span> WEBAPPDIR
@@ -1157,16 +1209,16 @@ new Vue({el:'#vsqlite',data:{label:''
 <p>M-x packeage-list-packeage</p>
 <h1 id="ruby-1">RUBY</h1>
 <h2 id="rbenv">rbenv</h2>
-<h3 id="install-3">install</h3>
+<h3 id="install-5">install</h3>
 <p>git clone</p>
 <h3 id="available-versions">available versions</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rbenv</span> install --list</code></pre></div>
-<h3 id="install-4">install</h3>
+<h3 id="install-6">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rbenv</span> install 2.1.2</code></pre></div>
 <h3 id="init">init</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rbenv</span> global 2.1.2</code></pre></div>
 <h2 id="ruby-build">ruby-build</h2>
-<h3 id="install-5">install</h3>
+<h3 id="install-7">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> clone https://github.com/sstephenson/ruby-build.git .ruby-build
 <span class="kw">.ruby-build/install.sh</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">rm</span> -fr .ruby-build</code></pre></div>
@@ -1377,7 +1429,7 @@ new Vue({el:'#app-git',data:{label:''
 </div>
 <h1 id="docker">DOCKER</h1>
 <h2 id="setup-2">Setup</h2>
-<h3 id="install-6">Install</h3>
+<h3 id="install-8">Install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> cask install docker</code></pre></div>
 <h3 id="without-sudo">WITHOUT sudo</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># sudo groupadd docker</span>
@@ -1412,7 +1464,7 @@ new Vue({el:'#app-git',data:{label:''
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="dt">{IMAGE}</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="ot">$(</span><span class="kw">docker</span> images -a <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;/^&lt;none&gt;/ { print $3 }&#39;</span><span class="ot">)</span></code></pre></div>
 <h1 id="docker.old">Docker.OLD</h1>
-<h3 id="install-7">install</h3>
+<h3 id="install-9">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> install -y docker-io.x86_64</code></pre></div>
 <h3 id="ps">PS</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">watch</span> -n 2 <span class="st">&#39;df -h; echo; free -m; echo; docker ps -a|head; echo; docker images -a&#39;</span></code></pre></div>
@@ -1531,7 +1583,7 @@ new Vue({el:'#app-docker',data:{label:''
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> build -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> build --rm=true -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> .</code></pre></div>
 <h3 id="run-stop-1">RUN / STOP</h3>
-<h4 id="run">RUN</h4>
+<h4 id="run-1">RUN</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run -i -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> /bin/bash</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run -i -t <span class="dt">{{DOCKER_TARG_REPO}}:{{DOCKER_TARG_TAG}}</span> /usr/sbin/sshd -D</code></pre></div>
 <h4 id="stop">STOP</h4>
@@ -1576,7 +1628,7 @@ new Vue({el:'#app-docker',data:{label:''
 <p>docker rmi $(docker images -a | awk '{print $3}')</p>
 </div>
 <h2 id="boot2docker">boot2docker</h2>
-<h3 id="install-8">install</h3>
+<h3 id="install-10">install</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> install docker boot2docker</code></pre></div>
 <h3 id="up">up</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">boot2docker</span> init
@@ -1700,7 +1752,7 @@ new Vue({el:'#app-docker',data:{label:''
 <div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="kw">-</span> <span class="fu">name:</span> yum install
   <span class="fu">shell:</span> yum --disablerepo=\* -y localinstall /opt/rpm/*.rpm &gt; /opt/rpm/res.txt</code></pre></div>
 <p>command もあるが、なんか違う。</p>
-<h1 id="test">test</h1>
+<h1 id="test-1">test</h1>
 <h2 id="ファイルの有無">ファイルの有無</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">test</span> ! -e /vagrant/rpm/gitlab-7.3.2_omnibus-1.el6.x86_64.rpm<span class="kw">;</span> <span class="kw">echo</span> <span class="ot">$?</span></code></pre></div>
 <h1 id="cut">cut</h1>
