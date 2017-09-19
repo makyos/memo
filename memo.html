@@ -2206,6 +2206,65 @@ new Vue({el:'#app-yum',data:{label:''
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> --disablerepo=<span class="dt">\*</span> -y localinstall ./*.rpm</code></pre></div>
 <h3 id="list-5">LIST</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> <span class="dt">{{YUM_OPT}}</span> list</code></pre></div>
+<h3 id="create-local-repos.">CREATE LOCAL REPOS.</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+
+<span class="kw">function</span><span class="fu"> download_yum</span> <span class="kw">{</span>
+    <span class="kw">if [</span> <span class="ot">!</span> <span class="ot">-e</span> <span class="ot">${YUMDIR}</span>/repodata/repomd.xml<span class="kw"> ]</span> ; <span class="kw">then</span>
+    <span class="kw">sudo</span> yum install -y yum-plugin-downloadonly createrepo
+    <span class="kw">sudo</span> yum install -y --downloadonly --downloaddir=<span class="ot">${YUMDIR}</span> <span class="ot">${YUMPKGS}</span>
+    <span class="kw">sudo</span> createrepo -v <span class="ot">${YUMDIR}</span>
+    <span class="kw">sudo</span> yum clean all
+    <span class="kw">fi</span>
+<span class="kw">}</span>
+
+<span class="kw">function</span><span class="fu"> mk_repofile</span> <span class="kw">{</span>
+    <span class="kw">sudo</span> chmod 777 /etc/yum.repos.d
+    <span class="co"># sudo rm -f /etc/yum.repos.d/*</span>
+    <span class="ot">REPOFILE=</span>/etc/yum.repos.d/<span class="ot">${REPONAME}</span>.repo
+    <span class="kw">echo</span> [<span class="ot">${REPONAME}</span>]             <span class="kw">&gt;</span>  <span class="ot">${REPOFILE}</span>
+    <span class="kw">echo</span> gpgcheck=0                <span class="kw">&gt;&gt;</span> <span class="ot">${REPOFILE}</span>
+    <span class="kw">echo</span> name=<span class="ot">${REPONAME}</span>          <span class="kw">&gt;&gt;</span> <span class="ot">${REPOFILE}</span>
+    <span class="kw">echo</span> baseurl=file://<span class="ot">${YUMDIR}</span>/ <span class="kw">&gt;&gt;</span> <span class="ot">${REPOFILE}</span>
+    <span class="kw">echo</span> enabled=1                 <span class="kw">&gt;&gt;</span> <span class="ot">${REPOFILE}</span>
+    <span class="kw">sudo</span> chmod 755 /etc/yum.repos.d
+    <span class="kw">sudo</span> yum clean all
+<span class="kw">}</span>
+
+<span class="kw">function</span><span class="fu"> download_etc</span> <span class="kw">{</span>
+    <span class="kw">for</span> <span class="kw">url</span> in <span class="ot">${ETCFILES}</span><span class="kw">;</span> <span class="kw">do</span>
+    <span class="ot">savefile=${ETCDIR}</span>/<span class="ot">$(</span><span class="kw">basename</span> <span class="ot">${url})</span>
+    <span class="kw">if [</span> <span class="ot">!</span> <span class="ot">-e</span> <span class="ot">${savefile}</span><span class="kw"> ]</span>; <span class="kw">then</span>
+        <span class="kw">sudo</span> curl <span class="ot">${url}</span> -o <span class="ot">${savefile}</span>
+    <span class="kw">fi</span>
+    <span class="kw">done</span>
+<span class="kw">}</span>
+
+<span class="kw">function</span><span class="fu"> main</span> <span class="kw">{</span>
+    <span class="ot">SHAREDDIR=</span>/vagrant
+    <span class="ot">DOWNLOADDIR=${SHAREDDIR}</span>/download
+
+    <span class="ot">REPONAME=</span>localhost
+    <span class="ot">YUMDIR=${DOWNLOADDIR}</span>/yum ; <span class="kw">sudo</span> mkdir -p <span class="ot">${YUMDIR}</span>
+    <span class="ot">YUMPKGS=</span><span class="st">&quot;ansible git&quot;</span>
+
+    <span class="ot">ETCDIR=${DOWNLOADDIR}</span>/etc ; <span class="kw">sudo</span> mkdir -p <span class="ot">${ETCDIR}</span>
+    <span class="ot">ETCFILES=</span><span class="st">&quot;</span>
+<span class="st">http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6</span>
+<span class="st">http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</span>
+<span class="st">&quot;</span>
+
+    <span class="kw">download_etc</span>
+    <span class="kw">sudo</span> rpm --import file://<span class="ot">${ETCDIR}</span>/RPM-GPG-KEY-EPEL-6
+    <span class="kw">sudo</span> rpm -ihv file://<span class="ot">${ETCDIR}</span>/epel-release-6-8.noarch.rpm
+
+    <span class="kw">download_yum</span>
+    <span class="kw">mk_repofile</span>
+    <span class="kw">sudo</span> yum install -y --disablerepo=* --enablerepo=<span class="ot">${REPONAME}</span> <span class="ot">${YUMPKGS}</span>
+
+<span class="kw">}</span>
+
+<span class="kw">main</span></code></pre></div>
 </div>
 <h1 id="chef">CHEF</h1>
 <h2 id="misc">MISC</h2>

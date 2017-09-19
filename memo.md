@@ -3727,6 +3727,70 @@ yum --disablerepo=\* -y localinstall ./*.rpm
 yum {{YUM_OPT}} list
 ```
 
+### CREATE LOCAL REPOS.
+
+```{.bash}
+#!/bin/bash
+
+function download_yum {
+    if [ ! -e ${YUMDIR}/repodata/repomd.xml ] ; then
+	sudo yum install -y yum-plugin-downloadonly createrepo
+	sudo yum install -y --downloadonly --downloaddir=${YUMDIR} ${YUMPKGS}
+	sudo createrepo -v ${YUMDIR}
+	sudo yum clean all
+    fi
+}
+
+function mk_repofile {
+    sudo chmod 777 /etc/yum.repos.d
+    # sudo rm -f /etc/yum.repos.d/*
+    REPOFILE=/etc/yum.repos.d/${REPONAME}.repo
+    echo [${REPONAME}]             >  ${REPOFILE}
+    echo gpgcheck=0                >> ${REPOFILE}
+    echo name=${REPONAME}          >> ${REPOFILE}
+    echo baseurl=file://${YUMDIR}/ >> ${REPOFILE}
+    echo enabled=1                 >> ${REPOFILE}
+    sudo chmod 755 /etc/yum.repos.d
+    sudo yum clean all
+}
+
+function download_etc {
+    for url in ${ETCFILES}; do
+	savefile=${ETCDIR}/$(basename ${url})
+	if [ ! -e ${savefile} ]; then
+	    sudo curl ${url} -o ${savefile}
+	fi
+    done
+}
+
+function main {
+    SHAREDDIR=/vagrant
+    DOWNLOADDIR=${SHAREDDIR}/download
+
+    REPONAME=localhost
+    YUMDIR=${DOWNLOADDIR}/yum ; sudo mkdir -p ${YUMDIR}
+    YUMPKGS="ansible git"
+
+    ETCDIR=${DOWNLOADDIR}/etc ; sudo mkdir -p ${ETCDIR}
+    ETCFILES="
+http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6
+http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+"
+
+    download_etc
+    sudo rpm --import file://${ETCDIR}/RPM-GPG-KEY-EPEL-6
+    sudo rpm -ihv file://${ETCDIR}/epel-release-6-8.noarch.rpm
+
+    download_yum
+    mk_repofile
+    sudo yum install -y --disablerepo=* --enablerepo=${REPONAME} ${YUMPKGS}
+
+}
+
+main
+```
+
+
 </div>
 
 
