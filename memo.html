@@ -2364,15 +2364,14 @@ new Vue({el:'#app-vagrant',data:{label:''
 </div>
 <h1 id="oracle">ORACLE</h1>
 <h2 id="data-pump">DATA PUMP</h2>
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-oradp',data:{label:''
+,DP_SID: 'sid'
+,DP_DMP: 'filename.dmp'
+}});})</script>
+<div id="app-oradp">
 <form class="form-horizontal">
-<div class="form-group">
-<pre><code>&lt;label class=&quot;control-label col-xs-6&quot;&gt;TARGET SID&lt;/label&gt;&lt;div class=&quot;col-xs-6&quot;&gt;
-&lt;input v-model=&quot;DP_SID&quot; value=&quot;sid&quot; class=&quot;form-control&quot; type=&quot;text&quot; onclick=&quot;this.select();&quot;&gt;&lt;/div&gt;</code></pre>
-</div>
-<div class="form-group">
-<pre><code>&lt;label class=&quot;control-label col-xs-6&quot;&gt;DUMP FILE&lt;/label&gt;&lt;div class=&quot;col-xs-6&quot;&gt;
-&lt;input v-model=&quot;DP_DMP&quot; value=&quot;filename.dmp&quot; class=&quot;form-control&quot; type=&quot;text&quot; onclick=&quot;this.select();&quot;&gt;&lt;/div&gt;</code></pre>
-</div>
+<varin label="SID"   v-model="DP_SID"></varin> <varin label="FILENAME"  v-model="DP_DMP"></varin>
 </form>
 <h3 id="export-1">EXPORT</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">expdp</span> \
@@ -2409,6 +2408,7 @@ new Vue({el:'#app-vagrant',data:{label:''
 <span class="co">-- grant read,write on directory dir_punp to ORAUSERNAME;</span>
 <span class="co">-- commit;</span>
 <span class="co">-- drop directory dir_punp</span></code></pre></div>
+</div>
 <h2 id="schema">SCHEMA</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlplus</span> /nolog</code></pre></div>
 <h3 id="select-all">select all</h3>

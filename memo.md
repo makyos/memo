@@ -3967,16 +3967,16 @@ vagrant sandbox status
 
 ## DATA PUMP
 
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-oradp',data:{label:''
+,DP_SID: 'sid'
+,DP_DMP: 'filename.dmp'
+}});})</script>
 
+<div id="app-oradp">
 <form class="form-horizontal">
-  <div class="form-group">
-    <label class="control-label col-xs-6">TARGET SID</label><div class="col-xs-6">
-    <input v-model="DP_SID" value="sid" class="form-control" type="text" onclick="this.select();"></div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-xs-6">DUMP FILE</label><div class="col-xs-6">
-    <input v-model="DP_DMP" value="filename.dmp" class="form-control" type="text" onclick="this.select();"></div>
-  </div>
+<varin label="SID"   v-model="DP_SID"></varin>
+<varin label="FILENAME"  v-model="DP_DMP"></varin>
 </form>
 
 ### EXPORT
@@ -4022,7 +4022,6 @@ impdp \
 ```
 
 
-
 ### MKDIR
 
 DIR なければ、${ORACLE_HOME}/rdbms/log を探す。
@@ -4033,6 +4032,9 @@ create or replace directory dir_punp as '/usr1/oradba/pump';
 -- commit;
 -- drop directory dir_punp
 ```
+
+</div>
+
 
 ## SCHEMA
 
