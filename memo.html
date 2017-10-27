@@ -225,6 +225,24 @@ match (a_san<span class="ch">:Person</span>),(b_san<span class="ch">:Person</spa
 <h2 id="client">CLIENT</h2>
 <h3 id="connect">CONNECT</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">psql</span> -h <span class="dt">{PG_SRV_ADDRESS}</span> -U <span class="dt">{PG_USER}</span></code></pre></div>
+<h2 id="database">Database</h2>
+<h3 id="list">list</h3>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">\l;</code></pre></div>
+<h2 id="table">Table</h2>
+<h3 id="list-1">list</h3>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">\dt;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> table_name <span class="kw">from</span> INFORMATION_SCHEMA.tables;</code></pre></div>
+<h2 id="view">View</h2>
+<h3 id="list-2">list</h3>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">\dv;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> table_name <span class="kw">from</span> INFORMATION_SCHEMA.views;</code></pre></div>
+<h2 id="column-list">Column List</h2>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">\d {TABLENAME}</code></pre></div>
+<h2 id="batch-file">Batch File</h2>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">\i {FILENAME.sql}</code></pre></div>
+<h2 id="log">Log</h2>
+<h4 id="varlibpostgresqldata">/var/lib/postgresql/data</h4>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">log_statement</span> = <span class="st">&#39;all&#39;</span></code></pre></div>
 <h1 id="syslog">SYSLOG</h1>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="dt">{COMMAND}</span> <span class="kw">2&gt;&amp;1</span> <span class="kw">|</span> <span class="kw">tee</span> <span class="kw">&gt;(logger</span> -i -t <span class="st">&quot;{TAG}&quot;</span><span class="kw">)</span></code></pre></div>
 <h1 id="load">Load</h1>
@@ -929,7 +947,7 @@ type:'mytype'
 <h4 id="deb">deb</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/usr/share/metricbeat/scripts</span></code></pre></div>
 <h2 id="index">INDEX</h2>
-<h3 id="list">List</h3>
+<h3 id="list-3">List</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XGET {{ host }}<span class="kw">/_aliases?pretty</span></code></pre></div>
 <h3 id="create">create</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -XPUT <span class="st">&#39;http://{{ host }}/{{ index }}&#39;</span></code></pre></div>
@@ -1020,7 +1038,7 @@ type:'mytype'
 <h1 id="tcpdump">TCPDUMP</h1>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tcpdump</span> -Xs 256 -n -i eth1 dst port 50012</code></pre></div>
 <h1 id="scheme">SCHEME</h1>
-<h2 id="list-1">LIST</h2>
+<h2 id="list-4">LIST</h2>
 <table>
 <thead>
 <tr class="header">
@@ -1158,15 +1176,15 @@ new Vue({el:'#vsqlite',data:{label:''
 <form class="form-horizontal">
 <varin label="DATABASE NAME" v-model="SQLITE_DB_NAME"></varin> <varin label="TABLE NAME" v-model="SQLITE_TAB_NAME"></varin> <varin label="SQL-FILE NAME" v-model="SQLITE_SQL_FILE"></varin>
 </form>
-<h2 id="database">DATABASE</h2>
+<h2 id="database-1">DATABASE</h2>
 <h3 id="createconnect-database">create/connect DATABASE</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sqlite3</span> <span class="dt">{{SQLITE_DB_NAME}}</span>.sqlite3</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">.databases</code></pre></div>
-<h2 id="table">TABLE</h2>
+<h2 id="table-1">TABLE</h2>
 <h3 id="csv-data-import">CSV DATA IMPORT</h3>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">.separator ,
 .import <span class="kw">FILE</span> TAB</code></pre></div>
-<h3 id="list-2">LIST</h3>
+<h3 id="list-5">LIST</h3>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">.tables</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> name <span class="kw">from</span> sqlite_master <span class="kw">where</span> type=<span class="st">&#39;table&#39;</span> <span class="kw">order</span> <span class="kw">by</span> name;</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="st">&#39;.import ./csv/&#39;</span> || name || <span class="st">&#39;.csv &#39;</span> || name <span class="kw">from</span> sqlite_master <span class="kw">where</span> type=<span class="st">&#39;table&#39;</span> <span class="kw">order</span> <span class="kw">by</span> name;</code></pre></div>
@@ -1450,7 +1468,7 @@ new Vue({el:'#app-git',data:{label:''
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker-compose</span> up</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker-compose</span> down</code></pre></div>
 <h2 id="container">CONTAINER</h2>
-<h3 id="list-3">LIST</h3>
+<h3 id="list-6">LIST</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> ps -a</code></pre></div>
 <h3 id="run-stop">RUN &amp; STOP</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> run -d -p 80:80 --name web nginx</code></pre></div>
@@ -1460,7 +1478,7 @@ new Vue({el:'#app-git',data:{label:''
 <h3 id="connect-1">CONNECT</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> exec -it <span class="dt">{CONTAINER}</span> /bin/bash</code></pre></div>
 <h2 id="image">IMAGE</h2>
-<h3 id="list-4">LIST</h3>
+<h3 id="list-7">LIST</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> images</code></pre></div>
 <h3 id="remove-1">REMOVE</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> rmi <span class="dt">{IMAGE}</span></code></pre></div>
@@ -1899,7 +1917,7 @@ new Vue({el:'#app-fileandfile',data:{label:''
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後<span class="kw">/gc</span></code></pre></div>
 <h4 id="確認なし">確認なし</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">:<span class="kw">%s</span>/前/後<span class="kw">/g</span></code></pre></div>
-<h2 id="view">VIEW</h2>
+<h2 id="view-1">VIEW</h2>
 <h3 id="カーソル移動-1">カーソル移動</h3>
 <table>
 <thead>
@@ -2206,7 +2224,7 @@ new Vue({el:'#app-yum',data:{label:''
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yumdownloader</span> --resolve <span class="dt">{{YUM_PKG}}</span></code></pre></div>
 <h3 id="install-from-local-rpm">INSTALL from LOCAL RPM</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> --disablerepo=<span class="dt">\*</span> -y localinstall ./*.rpm</code></pre></div>
-<h3 id="list-5">LIST</h3>
+<h3 id="list-8">LIST</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">yum</span> <span class="dt">{{YUM_OPT}}</span> list</code></pre></div>
 <h3 id="create-local-repos.">CREATE LOCAL REPOS.</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>

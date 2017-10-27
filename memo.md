@@ -305,6 +305,9 @@ ERROR: for neo4j  Cannot start service neo4j: oci runtime error: process_linux.g
 go get -u github.com/evanmiller/hecate
 ```
 
+
+
+
 # POSTGRES
 
 ## CLIENT
@@ -315,6 +318,59 @@ go get -u github.com/evanmiller/hecate
 psql -h {PG_SRV_ADDRESS} -U {PG_USER}
 ```
 
+## Database
+
+### list
+
+```{.sql}
+\l;
+```
+
+## Table
+
+### list
+
+```{.sql}
+\dt;
+```
+
+```{.sql}
+select table_name from INFORMATION_SCHEMA.tables;
+```
+
+## View
+
+### list
+
+```{.sql}
+\dv;
+```
+
+```{.sql}
+select table_name from INFORMATION_SCHEMA.views;
+```
+
+## Column List
+
+```{.sql}
+\d {TABLENAME}
+```
+
+
+
+## Batch File
+
+```{.sql}
+\i {FILENAME.sql}
+```
+
+## Log
+
+#### /var/lib/postgresql/data
+
+```{.sh}
+log_statement = 'all'
+```
 
 
 # SYSLOG
