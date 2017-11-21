@@ -7,12 +7,46 @@
 </div>
 </template>
 
-
 <ul class="nav flex-column menu">
 <li class="nav-item" v-for="title in titles">
 <a class="nav-link active" v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
+
+# Rust
+
+## cross compile
+
+### win64
+
+#### yum
+
+```{.sh}
+sudo yum install -y mingw64-gcc
+sudo yum install -y mingw64-winpthreads-static
+# ??? sudo yum install -y glibc-static
+```
+
+#### ~/.cargo/config
+
+```{.sh}
+[target.x86_64-pc-windows-gnu]
+linker = "/usr/bin/x86_64-w64-mingw32-gcc"
+```
+
+#### ADD TARGET
+
+```{.sh}
+rustup target add x86_64-pc-windows-gnu
+```
+
+#### BUILD
+
+```{.sh}
+cargo build --target x86_64-pc-windows-gnu
+```
+
+
 
 # Appium
 
