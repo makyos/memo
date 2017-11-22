@@ -15,6 +15,15 @@
 
 # Rust
 
+## Cargo
+
+### create new bin
+
+```{.bash}
+cargo new --bin {binname}
+cd {binname}
+```
+
 ## cross compile
 
 ### win64
@@ -357,15 +366,22 @@ psql -h {PG_SRV_ADDRESS} -U {PG_USER}
 ### list
 
 ```{.sql}
-\l;
+\l
 ```
+
+### Connect
+
+```{.sql}
+\c {TABLENAME}
+```
+
 
 ## Table
 
 ### list
 
 ```{.sql}
-\dt;
+\dt
 ```
 
 ```{.sql}
@@ -377,7 +393,7 @@ select table_name from INFORMATION_SCHEMA.tables;
 ### list
 
 ```{.sql}
-\dv;
+\dv
 ```
 
 ```{.sql}
