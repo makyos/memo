@@ -1779,10 +1779,19 @@ nodetool status KEYSPACE
 
 # TCPDUMP
 
+## on Screen
+
 ``` {.bash}
-tcpdump -Xs 256 -n -i eth1 dst port 50012
+sudo tcpdump -Xs 256 -n -i eth1 dst port 50012
 ```
 
+## to File
+
+``` {.bash}
+sudo tcpdump -G 3600 -w ./eno1_YYYYMM%d_%HMISS.pcap -z gzip -i eth0
+```
+
+-G [sec] が無いと、ファイル名の %. が動かない
 
 
 # SCHEME
