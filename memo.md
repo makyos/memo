@@ -1,8 +1,9 @@
+
 <template id=varin>
 <div class="form-group">
 <label class="control-label col-xs-6">{{ label }}</label>
 <div class="col-xs-6">
-<input :id=label class="form-control" :value="value" v-on:input="onInput" onClick="this.select();"  type="text" />
+<input class="form-control" :id=label :value="value" v-on:input="onInput" onClick="this.select();" type="text" />
 </div>
 </div>
 </template>
@@ -12,6 +13,30 @@
 <a class="nav-link active" v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
+
+
+# tar
+
+「いつもの tar」ベストプラクティス
+
+## 要件
+
+ * 対象はいつも同じファイル（ディレクトリ）
+ * なので対象をリスト化して置いときたい
+ * しかも、フルパスで（どこにインストールされても同じ動き）
+ * だけどたまにはスキップしたいものもある（コメントアウトしたい）
+
+## ある種の実装
+
+```{.bash}
+grep -v -e '^\s*#' -e '^\s*$' ${PWD}/TARGETS.txt > ${PWD}/TARGETS.txt.tmp
+tar zcf ${LOGD}/all.tgz -C / --files-from=${PWD}/TARGETS.txt.tmp
+rm -rf ${PWD}/TARGETS.txt.tmp
+```
+ * TARGETS.txt がアーカイブ対象のリスト（コメント入り、改行区切り）
+ * grep でコメント(#)行、空行を除外
+ * それを tar の --files-from= に食わせている
+ * tar の -C / は、 cd / の動き
 
 # Rust
 
@@ -1788,7 +1813,7 @@ sudo tcpdump -Xs 256 -n -i eth1 dst port 50012
 ## to File
 
 ``` {.bash}
-sudo tcpdump -G 3600 -w ./eno1_YYYYMM%d_%HMISS.pcap -z gzip -i eth0
+sudo tcpdump -G 3600 -w ./eno1_YYYYMM%d_%HMISS.pcap -Z root -z gzip -i eth0
 ```
 
 -G [sec] が無いと、ファイル名の %. が動かない
@@ -3976,6 +4001,21 @@ vagrant box list
 vagrant global-status
 ```
 
+## guest
+
+### scp host to guest
+
+``` {.sh}
+vagrant ssh-config > ssh.config && scp -F ssh.config ./src.tgz vagrant@dummy-1:~
+```
+
+### ssh guest to guest
+
+ゲスト上で公開鍵を作成(ssh-keygen -> ~/.ssh/id_rsa.pub)し、
+対向 guest に公開鍵"内容"を登録(~/.ssh/authorized_keys に追加ペースト)する。
+
+
+
 ## Vagrantfile
 
 ``` {.ruby}
@@ -3983,37 +4023,38 @@ vagrant global-status
 # vi: set ft=ruby :
 
 VAGRANTFILE_API_VERSION = "2"
-
-NUM_INSTANCES = 2
-BASE_IP_ADDR  = ENV['BASE_IP_ADDR'] || "192.168.100"
-
+NUM_INSTANCES = 3
+BASE_IP_ADDR  = ENV['BASE_IP_ADDR'] || "192.168.100.10"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "chef/centos-6.5"
-  config.vm.synced_folder "~/src/", "/vagrant/src"
+  config.vm.box = "centos/7"
+  # config.vm.synced_folder "~/src/", "/vagrant/src"
   config.ssh.insert_key = false
 
-  (1..NUM_INSTANCES).each do |i|
+  if Vagrant.has_plugin?("vagrant-vbguest") then
+    config.vbguest.auto_update = false
+  end
 
+  (1..NUM_INSTANCES).each do |i|
     config.vm.define "dummy-#{i}" do |dummy|
       dummy.vm.box_check_update = false
       dummy.vm.hostname = "dummy-#{i}"
-      dummy.vm.network :private_network, ip: "#{BASE_IP_ADDR}.#{i}"
+      dummy.vm.network :private_network, ip: "#{BASE_IP_ADDR}#{i}"
     end
 
     config.vm.provider "virtualbox" do |vbox|
       vbox.gui = false
       vbox.customize ["modifyvm", :id, "--memory", "1000"]
-      # centos 6.5 slow network fix
-      vbox.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-      vbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     end
 
   end
 
 end
 ```
+
+
+
 
 ## ssh
 
