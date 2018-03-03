@@ -16,7 +16,7 @@ Vue.component('varin', {
 	props: ['label','value'],
 	template: '#varin',
 	methods: { onInput (e) { this.$emit('input', e.target.value) }}
-})
+});
 
 
 

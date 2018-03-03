@@ -345,3 +345,7 @@ pre code, pre tt {
 [v-cloak] {
   display: none;
 }
+
+.control-label.col-xs-6 {
+    margin-top: 9px;
+}
