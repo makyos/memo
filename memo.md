@@ -1,11 +1,3 @@
-
-
-<template id=varin>
-<div class="form-group">
-<label class="control-label col-xs-6">{{ label }}</label>
-<div class="col-xs-6">
-<input class="form-control" :id=label :value="value" v-on:input="onInput" onClick="this.select();" type="text" />
-</div>
 </div>
 </template>
 
@@ -3402,11 +3394,41 @@ scp -P 22 -rq tcp/ username@192.168.33.32:/home/aaa/
  [CTR]+[b]     ページアップ
  [CTR]+[f]     ページダウン
 
+
 # WINDOWS
 
+
+## Product Key
+
+Windows 7 Professional SP1 で取得できた。
+以下のコードを PowerShell ISE で実行する。
+
+
+```{.sh}
+function Get-ProductKey {
+    $map="BCDFGHJKMPQRTVWXY2346789"
+    $key = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+    $value = (get-itemproperty $key).digitalproductid[0x34..0x42]
+    $ProductKey = ""
+    for ($i = 24; $i -ge 0; $i--) {
+      $r = 0
+      for ($j = 14; $j -ge 0; $j--) {
+        $r = ($r * 256) -bxor $value[$j]
+        $value[$j] = [math]::Floor([double]($r/24))
+        $r = $r % 24
+      }
+      $ProductKey = $map[$r] + $ProductKey
+      if (($i % 5) -eq 0 -and $i -ne 0) {
+        $ProductKey = "-" + $ProductKey
+      }
+    }
+    $ProductKey
+}
+Get-ProductKey
+```
+
+
 ## DISK WIPE
-
-
 
 ```
 cipher /w:c:

@@ -33,12 +33,6 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<template id=varin>
-<div class="form-group">
-<label class="control-label col-xs-6">{{ label }}</label>
-<div class="col-xs-6">
-<input class="form-control" :id=label :value="value" v-on:input="onInput" onClick="this.select();" type="text" />
-</div>
 </div>
 <p></template></p>
 <ul class="nav flex-column menu">
@@ -2040,6 +2034,28 @@ new Vue({el:'#app-fileandfile',data:{label:''
 </tbody>
 </table>
 <h1 id="windows-3">WINDOWS</h1>
+<h2 id="product-key">Product Key</h2>
+<p>Windows 7 Professional SP1 で取得できた。 以下のコードを PowerShell ISE で実行する。</p>
+<pre class="sh"><code>function Get-ProductKey {
+    $map=&quot;BCDFGHJKMPQRTVWXY2346789&quot;
+    $key = &quot;HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion&quot;
+    $value = (get-itemproperty $key).digitalproductid[0x34..0x42]
+    $ProductKey = &quot;&quot;
+    for ($i = 24; $i -ge 0; $i--) {
+      $r = 0
+      for ($j = 14; $j -ge 0; $j--) {
+        $r = ($r * 256) -bxor $value[$j]
+        $value[$j] = [math]::Floor([double]($r/24))
+        $r = $r % 24
+      }
+      $ProductKey = $map[$r] + $ProductKey
+      if (($i % 5) -eq 0 -and $i -ne 0) {
+        $ProductKey = &quot;-&quot; + $ProductKey
+      }
+    }
+    $ProductKey
+}
+Get-ProductKey</code></pre>
 <h2 id="disk-wipe">DISK WIPE</h2>
 <pre><code>cipher /w:c:</code></pre>
 <h2 id="network-1">NETWORK</h2>
