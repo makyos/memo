@@ -1,3 +1,9 @@
+<template id=varin>
+<div class="form-group">
+<label class="control-label col-xs-6">{{ label }}</label>
+<div class="col-xs-6">
+<input class="form-control" :id=label :value="value" v-on:input="onInput" onClick="this.select();" type="text" />
+</div>
 </div>
 </template>
 
@@ -568,92 +574,6 @@ MOD + [J]/[K]              タイルフォーカスを移動
 MOD + SHIFT + [J]/[K]      フォーカスタイルと隣接タイルと入れ替える
 MOD + [1]/.../[9]          仮想デスクトップを切り替える
 MOD + SPC                  タイルのレイアウト方法を切り替える
-
-
-
-# github
-
-## COMMAND GRAPH
-
-<div id="gitgraph" style="width: 100%; height: 300px; border: 1px solid lightgray;">
-  <div id="graph-navigation_wrapper" style="position: absolute; width: 100%; height: 300px;">
-    <div id="graph-navigation_zoomExtends" class="graph-navigation zoomExtends">
-    </div>
-  </div>
-  <div class="graph-frame" style="position: relative; overflow: hidden; width: 100%; height: 100%;">
-    <canvas style="position: relative; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%"></canvas>
-  </div>
-</div>
-
-<script type="text/javascript">
-var gitcontainer = document.getElementById('gitgraph');
-var gitdata = {dot: 'digraph { \
-\
-WORKING  [shape=box,   fontColor=black,color=orange]; \
-STAGING  [shape=box,   fontColor=white,color=blue]; \
-LOCAL    [shape=box,   fontColor=white,color=red]; \
-REMORT   [shape=box,   fontColor=white,color=red]; \
-\
-WORKING -> ADD          -> STAGING ; \
-STAGING -> COMMIT       -> LOCAL   ; \
-LOCAL   -> PUSH         -> REMORT  ; \
-LOCAL   -> RESET_COMMIT -> WORKING ; \
-REMORT  -> FETCH        -> LOCAL   ; \
-REMORT  -> PULL         -> LOCAL   ; \
-           PULL         -> WORKING ; \
-\
-}'};
-var gitgraph = new vis.Graph(gitcontainer, gitdata);
-</script>
-
-
-
-
-
-## 公開鍵を登録
-
-テスト
-```{.bash}
-ssh -T git@github.com
-Hi {USERNAME}! You've successfully authenticated, but GitHub does not provide shell access.
-```
-
-## remote URL を変更
-
-変更方法
-
-```{.bash}
-git remote set-url origin git@github.com:{USER}:{REPOS.}
-```
-
-
-確認方法
-
-```
-git remote -v
-```
-
-## remote との比較
-
-```{.bash}
-git fetch origin && git diff origin/master
-```
-
-## マスター競合(PULL忘れ)
-
-単純マージ
-
-```{.bash}
-git fetch && git merge origin/master
-```
-
-## 最終コミットまで戻す
-
-```{.sh}
-git reset --hard HEAD
-```
-
-
 
 
 # ntp
@@ -2371,12 +2291,12 @@ o                                          Pane を移動
 
 <script>window.addEventListener('load', function () {
 new Vue({el:'#app-git',data:{label:''
-,GIT_REPONAME: 'dir/name.git'
+,GIT_REPONAME: 'makyos/name.git'
 ,GIT_ROOT    : '/var/lib/git'
-,GIT_REMOTE  : '192.168.0.10'
-,GIT_USER    : 'git'
-,GIT_SSH     : '2203'
-,GIT_COMMENT : 'テスト'
+,GIT_REMOTE  : 'github.com'
+,GIT_USER    : 'makyos'
+,GIT_SSH     : '22'
+,GIT_COMMENT : '1st commit'
 }});})</script>
 
 <div id="app-git">
@@ -2389,8 +2309,83 @@ new Vue({el:'#app-git',data:{label:''
 <varin label="COMMIT -m" v-model="GIT_COMMENT"></varin>
 </form>
 
-## on the SERVER(REMOTE)
 
+## BASICS
+
+#### CLONE
+``` {.bash}
+git clone ssh://{{GIT_USER}}@{{GIT_REMOTE}}:{{GIT_SSH}}{{GIT_ROOT}}/{{GIT_REPONAME}}
+```
+
+#### COMMIT
+``` {.bash}
+git add .
+git commit -a -m "{{GIT_COMMENT}}"
+```
+
+#### COMMIT LOG
+``` {.bash}
+git log
+```
+
+#### PUSH
+```
+git push origin master
+```
+
+#### PULL
+``` {.bash}
+git pull origin master
+```
+
+#### 最終コミットまで戻す
+```{.sh}
+git reset --hard HEAD
+```
+
+#### remote URL を変更
+
+##### 変更方法
+```{.bash}
+git remote set-url origin git@github.com:{USER}:{REPOS.}
+```
+
+##### 確認方法
+```{.bash}
+git remote -v
+```
+
+#### remote との比較
+```{.bash}
+git fetch origin && git diff origin/master
+```
+
+#### マスター競合(PULL忘れ)
+単純マージ
+
+```{.bash}
+git fetch && git merge origin/master
+```
+
+#### 過去のファイル内容表示
+
+HASH 値は、コミットログ(git log)で探す。
+```{.bash}
+git show {HASH}:{FILEPATH}
+```
+
+## Giihub.com
+
+### 公開鍵を登録
+
+#### テスト方法
+```{.bash}
+ssh -T git@github.com
+Hi {USERNAME}! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+
+## GITLAB
 
 ### CREATE REMOTE REP.
 
@@ -2401,9 +2396,6 @@ sudo git init --bare --shared
 sudo chown -R root:git .
 ls -la
 ```
-
-
-## on the CLIENT(LOCAL)
 
 ### CREATE LOCAL REP.
 
@@ -2421,36 +2413,43 @@ git push origin master
 ```
 
 
-### CLONE
-
-``` {.bash}
-git clone ssh://{{GIT_USER}}@{{GIT_REMOTE}}:{{GIT_SSH}}{{GIT_ROOT}}/{{GIT_REPONAME}}
-```
-
-### COMMIT
-
-``` {.bash}
-git add .
-git commit -a -m "{{GIT_COMMENT}}"
-```
 
 
-### COMMIT LOG
-``` {.bash}
-git log
-```
-
-### PUSH
-```
-git push origin master
-```
-
-### PULL
-``` {.bash}
-git pull origin master
-```
 
 </div>
+
+## COMMAND GRAPH
+
+<div id="gitgraph" style="width: 100%; height: 300px; border: 1px solid lightgray;">
+  <div id="graph-navigation_wrapper" style="position: absolute; width: 100%; height: 300px;">
+    <div id="graph-navigation_zoomExtends" class="graph-navigation zoomExtends">
+    </div>
+  </div>
+  <div class="graph-frame" style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+    <canvas style="position: relative; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%"></canvas>
+  </div>
+</div>
+
+<script type="text/javascript">
+var gitcontainer = document.getElementById('gitgraph');
+var gitdata = {dot: 'digraph { \
+\
+WORKING  [shape=box,   fontColor=black,color=orange]; \
+STAGING  [shape=box,   fontColor=white,color=blue]; \
+LOCAL    [shape=box,   fontColor=white,color=red]; \
+REMORT   [shape=box,   fontColor=white,color=red]; \
+\
+WORKING -> ADD          -> STAGING ; \
+STAGING -> COMMIT       -> LOCAL   ; \
+LOCAL   -> PUSH         -> REMORT  ; \
+LOCAL   -> RESET_COMMIT -> WORKING ; \
+REMORT  -> FETCH        -> LOCAL   ; \
+REMORT  -> PULL         -> LOCAL   ; \
+           PULL         -> WORKING ; \
+\
+}'};
+var gitgraph = new vis.Graph(gitcontainer, gitdata);
+</script>
 
 
 
@@ -3396,6 +3395,14 @@ scp -P 22 -rq tcp/ username@192.168.33.32:/home/aaa/
 
 
 # WINDOWS
+
+## メーカー情報
+
+以下のレジストリ情報を操作すればどうにでもなる。空にすれば削除もできる。
+
+```
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation
+```
 
 
 ## Product Key
