@@ -14,6 +14,26 @@
 </ul>
 
 
+# Varform TEST
+
+<script>window.addEventListener('load', function () {
+new Vue({el:'#app-name',data:{label:''
+,var1: 'i am var1'
+,var2: 'i am var2'
+,var3: 'i am var3'
+}});})</script>
+
+<div id="app-name">
+<form class="form-horizontal">
+<varin label="LABEL1" v-model="var1"></varin>
+<varin label="LABEL2" v-model="var2"></varin>
+<varin label="LABEL3" v-model="var3"></varin>
+</form>
+  * {{var1}}
+  * {{var2}}
+  * {{var3}}
+</div>
+
 # tar
 
 「いつもの tar」ベストプラクティス
