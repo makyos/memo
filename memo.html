@@ -51,6 +51,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </style>
 </head>
 <body>
+<!-- vue.js template -->
 <template id=varin>
 <div class="form-group">
 <label class="control-label col-xs-6">{{ label }}</label>
@@ -59,29 +60,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 </div>
 <p></template></p>
+<!-- H1 MENU -->
 <ul class="nav flex-column menu">
 <li class="nav-item" v-for="title in titles">
 <a class="nav-link active" v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
-<h1 id="varform-test">Varform TEST</h1>
+<!-- VueComponent -->
+<h1 id="vuecomponent">VueComponent</h1>
 <script>window.addEventListener('load', function () {
-new Vue({el:'#app-name',data:{label:''
-,var1: 'i am var1'
-,var2: 'i am var2'
-,var3: 'i am var3'
+new Vue({el:'#app1',data:{label:''
+,input1: '$input1'
+,input2: '$input2'
 }});})</script>
-<div id="app-name">
+<div id="app1">
 <form class="form-horizontal">
-<varin label="LABEL1" v-model="var1"></varin> <varin label="LABEL2" v-model="var2"></varin> <varin label="LABEL3" v-model="var3"></varin>
+<varin label="VAR1" v-model="input1"></varin> <varin label="VAR2" v-model="input2"></varin>
 </form>
-<ul>
-<li>{{var1}}</li>
-<li>{{var2}}</li>
-<li>{{var3}}</li>
-</ul>
+<h2 id="h2">h2</h2>
+<pre><code>VAR1 is {{ input1 }}
+VAR2 is {{ input2 }}</code></pre>
 </div>
-<h1 id="tar">tar</h1>
+<!-- TAR -->
+<h1 id="tar">TAR</h1>
 <p>「いつもの tar」ベストプラクティス</p>
 <h2 id="要件">要件</h2>
 <ul>
@@ -100,6 +101,7 @@ new Vue({el:'#app-name',data:{label:''
 <li>それを tar の --files-from= に食わせている</li>
 <li>tar の -C / は、 cd / の動き</li>
 </ul>
+<!-- RUST -->
 <h1 id="rust">Rust</h1>
 <h2 id="cargo">Cargo</h2>
 <h3 id="create-new-bin">create new bin</h3>
@@ -118,6 +120,7 @@ new Vue({el:'#app-name',data:{label:''
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">rustup</span> target add x86_64-pc-windows-gnu</code></pre></div>
 <h4 id="build">BUILD</h4>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">cargo</span> build --target x86_64-pc-windows-gnu</code></pre></div>
+<!-- Appium -->
 <h1 id="appium">Appium</h1>
 <h2 id="windows-application-driver">Windows Application Driver</h2>
 <h3 id="install">Install</h3>
@@ -170,6 +173,7 @@ new Vue({el:'#app-name',data:{label:''
 <span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:
     suite <span class="op">=</span> unittest.TestLoader().loadTestsFromTestCase(NotepadTests)
     unittest.TextTestRunner(verbosity<span class="op">=</span><span class="dv">2</span>).run(suite)</code></pre></div>
+<!-- selenium -->
 <h1 id="selenium">selenium</h1>
 <h2 id="install-2">install</h2>
 <h3 id="selenium-1">selenium</h3>
@@ -186,9 +190,11 @@ new Vue({el:'#app-name',data:{label:''
 
 browser <span class="op">=</span> webdriver.Firefox()
 browser.get(<span class="st">&#39;http://www.ubuntu.com/&#39;</span>)</code></pre></div>
+<!-- CLAMAV -->
 <h1 id="clamav">CLAMAV</h1>
 <h2 id="hand-scan">hand scan</h2>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">sudo</span> clamscan --infected --remove --recursive ./</code></pre></div>
+<!-- vSRX -->
 <h1 id="vsrx">vSRX</h1>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">vagrant</span> plugin install vagrant-junos
 <span class="kw">vagrant</span> plugin install vagrant-host-shell</code></pre></div>
@@ -202,6 +208,7 @@ browser.get(<span class="st">&#39;http://www.ubuntu.com/&#39;</span>)</code></pr
   config.vm.box_check_update = <span class="dv">false</span>
   config.ssh.insert_key = <span class="dv">false</span>
 <span class="kw">end</span></code></pre></div>
+<!-- RAID -->
 <h1 id="raid">RAID</h1>
 <script>window.addEventListener('load', function () {
 new Vue({el:'#app-raid',data:{label:''
@@ -230,20 +237,6 @@ new Vue({el:'#app-raid',data:{label:''
 <h2 id="check">CHECK</h2>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">watch</span> -d -n 2 cat /proc/mdstat</code></pre></div>
 <p>[UU] is OK</p>
-</div>
-<h1 id="vuecomponent">VueComponent</h1>
-<script>window.addEventListener('load', function () {
-new Vue({el:'#app1',data:{label:''
-,input1: '$input1'
-,input2: '$input2'
-}});})</script>
-<div id="app1">
-<form class="form-horizontal">
-<varin label="input1" v-model="input1"></varin> <varin label="input2" v-model="input2"></varin>
-</form>
-<h2 id="h2">h2</h2>
-<pre><code>L1 is {{ input1 }}
-L2 is {{ input2 }}</code></pre>
 </div>
 <h1 id="checksum">Checksum</h1>
 <script>window.addEventListener('load', function () {

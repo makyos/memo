@@ -1,3 +1,5 @@
+<!-- vue.js template -->
+
 <template id=varin>
 <div class="form-group">
 <label class="control-label col-xs-6">{{ label }}</label>
@@ -7,34 +9,43 @@
 </div>
 </template>
 
+<!-- H1 MENU -->
+
 <ul class="nav flex-column menu">
 <li class="nav-item" v-for="title in titles">
 <a class="nav-link active" v-bind:href="'#'+title.href">{{ title.title }}</a>
 </li>
 </ul>
 
+<!-- VueComponent -->
 
-# Varform TEST
+# VueComponent
 
 <script>window.addEventListener('load', function () {
-new Vue({el:'#app-name',data:{label:''
-,var1: 'i am var1'
-,var2: 'i am var2'
-,var3: 'i am var3'
+new Vue({el:'#app1',data:{label:''
+,input1: '$input1'
+,input2: '$input2'
 }});})</script>
 
-<div id="app-name">
+<div id="app1">
 <form class="form-horizontal">
-<varin label="LABEL1" v-model="var1"></varin>
-<varin label="LABEL2" v-model="var2"></varin>
-<varin label="LABEL3" v-model="var3"></varin>
+<varin label="VAR1" v-model="input1"></varin>
+<varin label="VAR2" v-model="input2"></varin>
 </form>
-  * {{var1}}
-  * {{var2}}
-  * {{var3}}
+
+## h2
+
+```
+VAR1 is {{ input1 }}
+VAR2 is {{ input2 }}
+```
+
 </div>
 
-# tar
+
+<!-- TAR -->
+
+# TAR
 
 「いつもの tar」ベストプラクティス
 
@@ -56,6 +67,8 @@ rm -rf ${PWD}/TARGETS.txt.tmp
  * grep でコメント(#)行、空行を除外
  * それを tar の --files-from= に食わせている
  * tar の -C / は、 cd / の動き
+
+<!-- RUST -->
 
 # Rust
 
@@ -99,7 +112,7 @@ rustup target add x86_64-pc-windows-gnu
 cargo build --target x86_64-pc-windows-gnu
 ```
 
-
+<!-- Appium -->
 
 # Appium
 
@@ -180,6 +193,7 @@ if __name__ == '__main__':
     unittest.TextTestRunner(verbosity=2).run(suite)
 ```
 
+<!-- selenium -->
 
 # selenium
 
@@ -210,6 +224,7 @@ browser = webdriver.Firefox()
 browser.get('http://www.ubuntu.com/')
 ```
 
+<!-- CLAMAV -->
 
 # CLAMAV
 
@@ -218,6 +233,8 @@ browser.get('http://www.ubuntu.com/')
 ```{.sh}
 sudo clamscan --infected --remove --recursive ./
 ```
+
+<!-- vSRX -->
 
 # vSRX
 
@@ -244,11 +261,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-
-
-
-
-
+<!-- RAID -->
 
 # RAID
 
@@ -307,29 +320,6 @@ watch -d -n 2 cat /proc/mdstat
 
 </div>
 
-
-# VueComponent
-
-<script>window.addEventListener('load', function () {
-new Vue({el:'#app1',data:{label:''
-,input1: '$input1'
-,input2: '$input2'
-}});})</script>
-
-<div id="app1">
-<form class="form-horizontal">
-<varin label="input1" v-model="input1"></varin>
-<varin label="input2" v-model="input2"></varin>
-</form>
-
-## h2
-
-```
-L1 is {{ input1 }}
-L2 is {{ input2 }}
-```
-
-</div>
 
 
 # Checksum
