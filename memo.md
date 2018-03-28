@@ -1269,6 +1269,7 @@ tail --bytes=+4 index.unix.txt
 
 ``` {.bash}
 find -type f | xargs file | grep ":.*text" | cut -d : -f1 | xargs -t -I{} iconv -f EUC-JP -t UTF-8 {} -o {}.utf8
+for f in $(find -name "*.utf8"); do rename '.utf8' '' "${f}"; done
 ```
 
 # AWK
