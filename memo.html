@@ -610,6 +610,8 @@ time.strftime(<span class="st">&quot;%Y-%m-</span><span class="ot">%d</span><spa
 <h3 id="cp-date">cp + date</h3>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cp</span> filename{,<span class="kw">`date</span> +<span class="st">&#39;__%Y-%m-%d_%H-%M-%S&#39;</span><span class="kw">`</span>}<span class="kw">.tgz</span>
 <span class="co"># cp filename.tgz filename__2015-01-23_23-05-58.tgz</span></code></pre>
+<h3 id="sctipt-path">Sctipt PATH</h3>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">SCRIPT_PATH=</span><span class="st">&quot;</span><span class="ot">$(</span><span class="kw">dirname</span> <span class="st">&quot;</span><span class="ot">$(</span><span class="kw">readlink</span> -f <span class="st">&quot;</span><span class="ot">$0</span><span class="st">&quot;</span><span class="ot">)</span><span class="st">&quot;</span><span class="ot">)</span><span class="st">&quot;</span></code></pre>
 <h1 id="virtual-box">VIRTUAL BOX</h1>
 <h2 id="disk-1">DISK</h2>
 <h3 id="create-shareable">create shareable</h3>
