@@ -1001,6 +1001,11 @@ cp filename{,`date +'__%Y-%m-%d_%H-%M-%S'`}.tgz
 # cp filename.tgz filename__2015-01-23_23-05-58.tgz
 ```
 
+### Sctipt PATH
+
+```{.bash}
+SCRIPT_PATH="$(dirname "$(readlink -f "$0")")"
+```
 
 
 # VIRTUAL BOX
